@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://liziyang.top').hostname,
+    root: '/',
+    scheme: 'Mist',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="如今图片加载技术已经非常成熟，Glide、Fresco等这些图片加载框架，用法简单，功能强大。但程序员不能止步于使用，这里我们就实现一个简易的图片加载框架，核心内容就是二级缓存，内存缓存和本地缓存。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简单图片加载框架——二级缓存+OkHttp">
+<meta property="og:url" content="http://liziyang.top/2017/02/24/%E7%AE%80%E6%98%93%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E6%A1%86%E6%9E%B6%E2%80%94%E2%80%94%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98+OkHttp/index.html">
+<meta property="og:site_name" content="李子阳的Android笔记">
+<meta property="og:description" content="如今图片加载技术已经非常成熟，Glide、Fresco等这些图片加载框架，用法简单，功能强大。但程序员不能止步于使用，这里我们就实现一个简易的图片加载框架，核心内容就是二级缓存，内存缓存和本地缓存。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://ogxoqrabi.bkt.clouddn.com/image/image_loader/image_loader_01.png">
+<meta property="article:published_time" content="2017-02-24T02:13:36.000Z">
+<meta property="article:modified_time" content="2020-01-14T10:43:36.987Z">
+<meta property="article:author" content="李子阳">
+<meta property="article:tag" content="二级缓存">
+<meta property="article:tag" content="内存缓存">
+<meta property="article:tag" content="本地缓存">
+<meta property="article:tag" content="OkHttp加载图片">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://ogxoqrabi.bkt.clouddn.com/image/image_loader/image_loader_01.png">
+
+<link rel="canonical" href="http://liziyang.top/2017/02/24/%E7%AE%80%E6%98%93%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E6%A1%86%E6%9E%B6%E2%80%94%E2%80%94%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98+OkHttp/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>简单图片加载框架——二级缓存+OkHttp | 李子阳的Android笔记</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">李子阳的Android笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://liziyang.top/2017/02/24/%E7%AE%80%E6%98%93%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E6%A1%86%E6%9E%B6%E2%80%94%E2%80%94%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98+OkHttp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李子阳">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李子阳的Android笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          简单图片加载框架——二级缓存+OkHttp
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-02-24 10:13:36" itemprop="dateCreated datePublished" datetime="2017-02-24T10:13:36+08:00">2017-02-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-14 18:43:36" itemprop="dateModified" datetime="2020-01-14T18:43:36+08:00">2020-01-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index">
+                    <span itemprop="name">图片加载框架</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>如今图片加载技术已经非常成熟，Glide、Fresco等这些图片加载框架，用法简单，功能强大。但程序员不能止步于使用，这里我们就实现一个简易的图片加载框架，核心内容就是二级缓存，内存缓存和本地缓存。</p>
+<a id="more"></a>
+<h2 id="功能分析"><a href="#功能分析" class="headerlink" title="功能分析"></a>功能分析</h2><p>先分析我们这个简易图片加载框架的流程。</p>
+<div id="flowchart-0" class="flow-chart"></div>
+其中主要是三个模块，内存缓存、本地缓存和网络获取图片
+
+<p>看一下整体代码结构，有然后再依次分析<br><img src="http://ogxoqrabi.bkt.clouddn.com/image/image_loader/image_loader_01.png" alt="代码结构"></p>
+<p><code>cache</code>包是缓存相关，<code>download</code>包是下载图片，<code>utils</code>包有两个工具类，<code>ImageLoader</code>对外提供操作。</p>
+<h2 id="内存缓存"><a href="#内存缓存" class="headerlink" title="内存缓存"></a>内存缓存</h2><h3 id="SoftReference和WeakReference"><a href="#SoftReference和WeakReference" class="headerlink" title="SoftReference和WeakReference"></a><code>SoftReference</code>和<code>WeakReference</code></h3><p>在以前，实现内存缓存，比较流行的做法是使用<code>SoftReference</code>或<code>WeakReference</code>。但是从<code>Android 2.3 API 9</code>开始，垃圾收集器对软引用和弱引用的回收更积极了，这导致软引用和弱引用无效。而现在大部分应用最低支持<code>4.0</code>，也就是说<code>SoftReference</code>或<code>WeakReference</code>的做法已经不再适用。</p>
+<h3 id="LruCache"><a href="#LruCache" class="headerlink" title="LruCache"></a>LruCache</h3><p>Android提供了<code>LruCache</code>类，用来实现内存缓存。<code>LruCache</code>将<strong>最近引用的对象</strong>保留在<strong>强引用</strong>的<code>LinkedHashMap</code>中，并且在超过其缓存之前将<strong>最近最少使用</strong>的对象移除出缓存。</p>
+<h3 id="LruCache实现内存缓存"><a href="#LruCache实现内存缓存" class="headerlink" title="LruCache实现内存缓存"></a>LruCache实现内存缓存</h3><p>无论是本地缓存还是内存缓存都需要从缓存中获取对象和将对象放入缓存，所以，首先定义一个<code>Interface</code>，本地缓存和内存缓存都要实现这个接口。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Cache</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">Bitmap <span class="title">getBitmap</span><span class="params">(Context context, String url)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">putBitmap</span><span class="params">(Context context, String url, Bitmap bitmap)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>Cahce</code>声明了两个方法，<code>getBitmap</code>从缓存中获取<code>Bitmap</code>对象。这里参数有<code>Context</code>，是因为在本地缓存的时候需要Context对象来获取缓存目录，具体往下看。<br><code>MemoryCache.java</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MemoryCache</span> <span class="keyword">implements</span> <span class="title">Cache</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> LruCache&lt;String, Bitmap&gt; memoryCache;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MemoryCache</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> maxMemory = (<span class="keyword">int</span>) (Runtime.getRuntime().maxMemory() / <span class="number">1024</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> cacheSize = maxMemory / <span class="number">8</span>;</span><br><span class="line">        memoryCache = <span class="keyword">new</span> LruCache&lt;String, Bitmap&gt;(cacheSize) &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">protected</span> <span class="keyword">int</span> <span class="title">sizeOf</span><span class="params">(String key, Bitmap value)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> value.getByteCount() / <span class="number">1024</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Bitmap <span class="title">getBitmap</span><span class="params">(Context context, String url)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> memoryCache.get(url);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">putBitmap</span><span class="params">(Context context, String url, Bitmap bitmap)</span> </span>&#123;</span><br><span class="line">        memoryCache.put(url, bitmap);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>很容易看懂，先为<code>LruCache</code>初始化缓存大小，然后通过<code>get</code>和<code>put</code>方法获取缓存和存入对象。</p>
+<h2 id="本地缓存"><a href="#本地缓存" class="headerlink" title="本地缓存"></a>本地缓存</h2><h3 id="外置存储缓存目录"><a href="#外置存储缓存目录" class="headerlink" title="外置存储缓存目录"></a>外置存储缓存目录</h3><p>本地缓存可以使用<code>DiskLruCache</code>来实现，这里不这么做，而是将<code>Bitmap</code>缓存到SD卡的应用专属目录<code>/storage/emulated/0/Android/data/{app_package_name}/</code>，这个目录不需要权限，专门用来存放应用相关数据，比如数据库、图片缓存等，当卸载应用时，这个目录也会随之删除。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExternalUtils</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取app的外置存储缓存路径</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> context</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> File <span class="title">getExternalCacheDirectory</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">        File fileCache = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 外置存储是否挂载</span></span><br><span class="line">        <span class="keyword">if</span> (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) &#123;</span><br><span class="line">            <span class="comment">// 缓存图片，所以路径为 /storage/emulated/0/Android/data/&#123;app_package_name&#125;/files/Pictures</span></span><br><span class="line">            fileCache = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> fileCache;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="文件名MD5值"><a href="#文件名MD5值" class="headerlink" title="文件名MD5值"></a>文件名MD5值</h3><p>本地缓存最终要以文件的形式保存在文件系统中，以图片Url的<code>MD5</code>值作为文件名。所以还需要一个获取<code>MD5</code>值的工具</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MD5Utils</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">md5</span><span class="params">(String value)</span> <span class="keyword">throws</span> NoSuchAlgorithmException </span>&#123;</span><br><span class="line">        MessageDigest messageDigest = MessageDigest.getInstance(<span class="string">"MD5"</span>);</span><br><span class="line">        messageDigest.update(value.getBytes());</span><br><span class="line">        <span class="keyword">byte</span>[] bytes = messageDigest.digest();</span><br><span class="line">        <span class="keyword">return</span> bytesToString(bytes);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">bytesToString</span><span class="params">(<span class="keyword">byte</span>[] bytes)</span> </span>&#123;</span><br><span class="line">        StringBuilder stringBuilder = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">byte</span> aByte : bytes) &#123;</span><br><span class="line">            stringBuilder.append(aByte);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> stringBuilder.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="本地缓存实现"><a href="#本地缓存实现" class="headerlink" title="本地缓存实现"></a>本地缓存实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DiskCache</span> <span class="keyword">implements</span> <span class="title">Cache</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Bitmap <span class="title">getBitmap</span><span class="params">(Context context, String url)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        String fileName = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            fileName = MD5Utils.md5(url);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> BitmapFactory.decodeFile(</span><br><span class="line">                ExternalUtils.getExternalCacheDirectory(context).getAbsolutePath()</span><br><span class="line">                        + <span class="string">"/"</span> + fileName</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">putBitmap</span><span class="params">(Context context, String url, Bitmap bitmap)</span> </span>&#123;</span><br><span class="line">        File file;</span><br><span class="line">        String fileName = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            fileName = MD5Utils.md5(url);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        file = <span class="keyword">new</span> File(ExternalUtils.getExternalCacheDirectory(context)</span><br><span class="line">                + <span class="string">"/"</span> + fileName);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!file.getParentFile().exists()) &#123;</span><br><span class="line">            file.getParentFile().mkdirs();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            bitmap.compress(Bitmap.CompressFormat.JPEG, <span class="number">100</span>, <span class="keyword">new</span> FileOutputStream(file));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (FileNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>读取缓存的时候，用<code>BitmapFactory</code>来操作。写入本地文件的时候，用的是<code>Bitmap</code>对象的<code>compress</code>方法。</p>
+<h2 id="网络获取图片"><a href="#网络获取图片" class="headerlink" title="网络获取图片"></a>网络获取图片</h2><p>既然是图片加载框架，总离不开下载文件。这里用<code>OkHttp</code>来实现下载图片，我实在不想写<code>HttpURLConnection</code>和<code>IO操作</code>。</p>
+<p><code>OkHttp</code>的用法在这里就不在赘述，可以参考我写的OkHttp系列笔记：<a href="http://www.liziyang.top/categories/OkHttp/" target="_blank" rel="noopener">http://www.liziyang.top/categories/OkHttp/</a></p>
+<h3 id="回调接口"><a href="#回调接口" class="headerlink" title="回调接口"></a>回调接口</h3><p><code>OkHttp</code>提供了<code>同步</code>和<code>异步</code>两种方式来发起网络请求，我们采用<code>异步</code>的方式，通过<code>回调</code>获取到数据。<br>定义接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">DownloadCallback</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(String message)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(Bitmap bitmap)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一个失败，一个成功，成功的时候返回<code>Bitmap</code>对象。</p>
+<h3 id="OkHttp实现下载图片"><a href="#OkHttp实现下载图片" class="headerlink" title="OkHttp实现下载图片"></a>OkHttp实现下载图片</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ImageDownloader</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    OkHttpClient okHttpClient = <span class="keyword">new</span> OkHttpClient();</span><br><span class="line"></span><br><span class="line">    DownloadCallback callback;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ImageDownloader</span><span class="params">(DownloadCallback callback)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.callback = callback;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getBitmap</span><span class="params">(String url)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        Request request = <span class="keyword">new</span> Request.Builder()</span><br><span class="line">                .url(url)</span><br><span class="line">                .build();</span><br><span class="line"></span><br><span class="line">        okHttpClient.newCall(request).enqueue(<span class="keyword">new</span> Callback() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(Call call, IOException e)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (callback != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    callback.onFailure(e.getMessage());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(Call call, Response response)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (callback != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="keyword">byte</span>[] bytes = response.body().bytes();</span><br><span class="line">                    callback.onSuccess(BitmapFactory.decodeByteArray(bytes, <span class="number">0</span>, bytes.length));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>ImageDownloader</code>的<code>构造方法</code>会传入<code>DownloadCallback</code>对象，这样，在<code>OkHttp</code>成功响应之后，就可以通过回调返回<code>Bitmap</code>对象。</p>
+<h2 id="ImageLoader"><a href="#ImageLoader" class="headerlink" title="ImageLoader"></a>ImageLoader</h2><p>各个模块的功能都有了，按照开头的流程串起来。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ImageLoader</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ImageLoader imageLoader;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> MemoryCache memoryCache;</span><br><span class="line">    <span class="keyword">private</span> DiskCache diskCache;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">ImageLoader</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        memoryCache = <span class="keyword">new</span> MemoryCache();</span><br><span class="line">        diskCache = <span class="keyword">new</span> DiskCache();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ImageLoader <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (imageLoader == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (ImageLoader<span class="class">.<span class="keyword">class</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (imageLoader == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    imageLoader = <span class="keyword">new</span> ImageLoader();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> imageLoader;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">(<span class="keyword">final</span> ImageView imageView, <span class="keyword">final</span> String url)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 可能同时多次调用display()方法，所以每个display过程要独立</span></span><br><span class="line">        <span class="keyword">final</span> Handler handler = <span class="keyword">new</span> Handler(imageView.getContext().getMainLooper()) &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (msg.what == <span class="number">0x01</span>) &#123;</span><br><span class="line">                    imageView.setImageBitmap((Bitmap) msg.obj);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        Bitmap bitmap;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 先判断内存缓存</span></span><br><span class="line">        bitmap = memoryCache.getBitmap(<span class="keyword">null</span>, url);</span><br><span class="line">        <span class="keyword">if</span> (bitmap != <span class="keyword">null</span>) &#123;</span><br><span class="line">            imageView.setImageBitmap(bitmap);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 本地缓存</span></span><br><span class="line">        bitmap = diskCache.getBitmap(imageView.getContext(), url);</span><br><span class="line">        <span class="keyword">if</span> (bitmap != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">// 同时将本地缓存放入内存</span></span><br><span class="line">            memoryCache.putBitmap(imageView.getContext(), url, bitmap);</span><br><span class="line">            imageView.setImageBitmap(bitmap);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 从网络获取图片，使用OKHttp</span></span><br><span class="line">        ImageDownloader imageDownloader = <span class="keyword">new</span> ImageDownloader(<span class="keyword">new</span> DownloadCallback() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(Bitmap bitmap)</span> </span>&#123;</span><br><span class="line">                <span class="comment">// 显示图片</span></span><br><span class="line">                Message message = <span class="keyword">new</span> Message();</span><br><span class="line">                message.what = <span class="number">0x01</span>;</span><br><span class="line">                message.obj = bitmap;</span><br><span class="line">                handler.sendMessage(message);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 缓存到内存</span></span><br><span class="line">                memoryCache.putBitmap(<span class="keyword">null</span>, url, bitmap);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 缓存到本地</span></span><br><span class="line">                diskCache.putBitmap(imageView.getContext(), url, bitmap);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        imageDownloader.getBitmap(url);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从代码中可以看出来，这个图片加载框架的用法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ImageLoader.getInstance().display(imageView, url);</span><br></pre></td></tr></table></figure>
+
+<p><code>ImageLoader</code>这个类是提供给外部使用的，这里用了单例，有一个双重锁来初始化单例对象。</p>
+<p>在构造方法里将内存缓存和本地缓存初始化。</p>
+<p>重点就是<code>display</code>方法，其实就是开头那个流程。</p>
+<p>因为要将最终获取到的<code>Bitmap</code>对象显示在<code>ImageView</code>上，所以需要<code>UI线程</code>，我这里使用<code>Handler</code>，要对<code>Android消息机制</code>很熟悉，怎样让<code>Handler</code>对象的<code>handleMessage()</code>方法运行在<code>UI线程</code>呢？在创建<code>Handler</code>对象的时候传入<code>MainLooper</code>即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Handler handler = <span class="keyword">new</span> Handler(imageView.getContext().getMainLooper()) &#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">start=>start: 加载图片
+end=>end: 结束
+memory_cache=>condition: 内存缓存？
+disk_cache=>condition: 磁盘缓存？
+get_memory=>operation: 取出内存缓存
+display=>operation: 显示
+put_memory=>operation: 缓存到内存
+put_disk=>operation: 缓存到本地
+get_disk=>operation: 读取本地缓存
+get_from_net=>operation: 从网络获取图片
+start->memory_cache
+memory_cache(yes)->get_memory->display->end
+memory_cache(no)->disk_cache
+disk_cache(yes)->get_disk->put_memory->display->end
+disk_cache(no)->get_from_net->put_disk->put_memory->display->end</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98/" rel="tag"># 二级缓存</a>
+              <a href="/tags/%E5%86%85%E5%AD%98%E7%BC%93%E5%AD%98/" rel="tag"># 内存缓存</a>
+              <a href="/tags/%E6%9C%AC%E5%9C%B0%E7%BC%93%E5%AD%98/" rel="tag"># 本地缓存</a>
+              <a href="/tags/OkHttp%E5%8A%A0%E8%BD%BD%E5%9B%BE%E7%89%87/" rel="tag"># OkHttp加载图片</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/01/04/%E5%87%A0%E7%A7%8D%E5%B8%B8%E7%94%A8%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E6%A1%86%E6%9E%B6%E5%88%86%E6%9E%90/" rel="prev" title="几种常用图片加载框架分析">
+      <i class="fa fa-chevron-left"></i> 几种常用图片加载框架分析
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/03/29/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" rel="next" title="设计模式——策略模式">
+      设计模式——策略模式 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#功能分析"><span class="nav-number">1.</span> <span class="nav-text">功能分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存缓存"><span class="nav-number">2.</span> <span class="nav-text">内存缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SoftReference和WeakReference"><span class="nav-number">2.1.</span> <span class="nav-text">SoftReference和WeakReference</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LruCache"><span class="nav-number">2.2.</span> <span class="nav-text">LruCache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LruCache实现内存缓存"><span class="nav-number">2.3.</span> <span class="nav-text">LruCache实现内存缓存</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本地缓存"><span class="nav-number">3.</span> <span class="nav-text">本地缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#外置存储缓存目录"><span class="nav-number">3.1.</span> <span class="nav-text">外置存储缓存目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件名MD5值"><span class="nav-number">3.2.</span> <span class="nav-text">文件名MD5值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地缓存实现"><span class="nav-number">3.3.</span> <span class="nav-text">本地缓存实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络获取图片"><span class="nav-number">4.</span> <span class="nav-text">网络获取图片</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#回调接口"><span class="nav-number">4.1.</span> <span class="nav-text">回调接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OkHttp实现下载图片"><span class="nav-number">4.2.</span> <span class="nav-text">OkHttp实现下载图片</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ImageLoader"><span class="nav-number">5.</span> <span class="nav-text">ImageLoader</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李子阳</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李子阳</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.7.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

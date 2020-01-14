@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://liziyang.top').hostname,
+    root: '/',
+    scheme: 'Mist',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="李子阳的Android笔记">
+<meta property="og:url" content="http://liziyang.top/page/2/index.html">
+<meta property="og:site_name" content="李子阳的Android笔记">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="李子阳">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://liziyang.top/page/2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: true,
+    isPost: false
+  };
+</script>
+
+  <title>李子阳的Android笔记</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">李子阳的Android笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://liziyang.top/2017/01/04/%E5%87%A0%E7%A7%8D%E5%B8%B8%E7%94%A8%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E6%A1%86%E6%9E%B6%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李子阳">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李子阳的Android笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/01/04/%E5%87%A0%E7%A7%8D%E5%B8%B8%E7%94%A8%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E6%A1%86%E6%9E%B6%E5%88%86%E6%9E%90/" class="post-title-link" itemprop="url">几种常用图片加载框架分析</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-01-04 20:44:55" itemprop="dateCreated datePublished" datetime="2017-01-04T20:44:55+08:00">2017-01-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-14 18:07:49" itemprop="dateModified" datetime="2020-01-14T18:07:49+08:00">2020-01-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index">
+                    <span itemprop="name">图片加载框架</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://liziyang.top/2016/12/24/OkHttp%E6%A0%B8%E5%BF%83%E6%9C%BA%E5%88%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李子阳">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李子阳的Android笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/12/24/OkHttp%E6%A0%B8%E5%BF%83%E6%9C%BA%E5%88%B6/" class="post-title-link" itemprop="url">OkHttp核心机制</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-12-24 18:15:56" itemprop="dateCreated datePublished" datetime="2016-12-24T18:15:56+08:00">2016-12-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-14 18:07:49" itemprop="dateModified" datetime="2020-01-14T18:07:49+08:00">2020-01-14</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="整体图解"><a href="#整体图解" class="headerlink" title="整体图解"></a>整体图解</h2><p>先来看一张官方提供的图<br><img src="http://ogxoqrabi.bkt.clouddn.com/image/okhttpokhttp_yuanli_01.png" alt=""></p>
+<p>我们看到有几条灰色的横条，那些东西是Interceptors，横亘在Request和Response之间，那这些Interceptor是什么东西？几个Interceptors又是怎么工作的？</p>
+<h2 id="设计模式中的责任链模式"><a href="#设计模式中的责任链模式" class="headerlink" title="设计模式中的责任链模式"></a>设计模式中的责任链模式</h2><p>在分析Interceptor之前，先了解一下设计模式中的责任链模式（Iterator Pattern）。什么是“链”？多个节点首尾相连所构成的模型，成为链。将每一个节点看作是一个对象，每一个对象拥有不同的处理逻辑，将一个请求从链式的首端发出，沿着链的路径一次传递给每一个节点对象，直到有对象处理这个请求为止。这样的一种模式成为责任链模式。</p>
+<blockquote>
+<p>定义：使多个对象都有机会处理请求，从而避免了请求的发送者和接受者之间的耦合关系。将这些对象连成一条链，并沿着这条链传递该请求，直到有对象处理它为止。</p>
+</blockquote>
+<p>Android中使用责任链模式最有代表性的就是View触摸事件的分发了。当有触摸屏幕的时候，触摸事件会被包装成一个事件对象从ViewTree的顶部自上而下的分发传递，直到有View消耗此事件。</p>
+<h2 id="Interceptor"><a href="#Interceptor" class="headerlink" title="Interceptor"></a>Interceptor</h2><p>OkHttp中的缓存、网络请求等功能都是通过不同层次Interceptor实现的，用户也可以实现<code>Interceptor</code>接口来自定义拦截器，实现对网络请求的监听和处理。</p>
+<p>用户自定义的拦截器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 自定义拦截器</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">XxxInterceptor</span> <span class="keyword">implements</span> <span class="title">Interceptor</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Response <span class="title">intercept</span><span class="params">(Chain chain)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">// 在拦截器中获取Request对象</span></span><br><span class="line">        Request request = chain.request();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 在拦截器中获取Response对象</span></span><br><span class="line">        Response response = chain.proceed(request);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// do something...</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> response;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加拦截器</span></span><br><span class="line">OkHttpClient client = <span class="keyword">new</span> OkHttpClient.Builder()</span><br><span class="line">        .addInterceptor(<span class="keyword">new</span> XxxInterceptor())</span><br><span class="line">        .build();</span><br></pre></td></tr></table></figure>
+
+<p>添加到<code>Client</code>里的拦截器就会和OkHttp默认的拦截器们形成拦截器链。</p>
+<p>OkHttp中具体都有哪些拦截器，看请求的处理流程。</p>
+<h2 id="同步请求的处理流程"><a href="#同步请求的处理流程" class="headerlink" title="同步请求的处理流程"></a>同步请求的处理流程</h2><p>首先，要构造<code>OkHttpClient</code>和<code>Request</code>对象，使用了<code>Builder</code>模式，这在开源框架中非常常见。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">OkHttpClient client = <span class="keyword">new</span> OkHttpClient.Builder()</span><br><span class="line">        .addInterceptor(<span class="keyword">new</span> LoggingInterceptor())</span><br><span class="line">        .build();</span><br><span class="line"></span><br><span class="line">Request request = <span class="keyword">new</span> Request.Builder()</span><br><span class="line">        .url(<span class="string">"http://www.publicobject.com/helloworld.txt"</span>)</span><br><span class="line">        .header(<span class="string">"User-Agent"</span>, <span class="string">"OkHttp Example"</span>)</span><br><span class="line">        .build();</span><br></pre></td></tr></table></figure>
+
+<p>发起请求</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Response response = client.newCall(request).execute();</span><br></pre></td></tr></table></figure>
+
+<p>正在发起网络请求的是<code>Call</code>的实现类<code>RealCall</code>，<code>RealCall</code>实现了<code>Call</code>接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">RealCall</span> <span class="keyword">implements</span> <span class="title">Call</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Client</span></span><br><span class="line">    <span class="keyword">final</span> OkHttpClient client;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 重试和重定向的Interceptor</span></span><br><span class="line">    <span class="keyword">final</span> RetryAndFollowUpInterceptor retryAndFollowUpInterceptor;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Request</span></span><br><span class="line">    <span class="keyword">final</span> Request originalRequest;</span><br><span class="line"></span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> Response <span class="title">execute</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        ......</span><br><span class="line">        <span class="comment">// 获取Response通过拦截器链</span></span><br><span class="line">        Response result = getResponseWithInterceptorChain();</span><br><span class="line">        ......</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">Response <span class="title">getResponseWithInterceptorChain</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">// Build a full stack of interceptors.</span></span><br><span class="line">        List&lt;Interceptor&gt; interceptors = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        interceptors.addAll(client.interceptors());</span><br><span class="line">        interceptors.add(retryAndFollowUpInterceptor);</span><br><span class="line">        interceptors.add(<span class="keyword">new</span> BridgeInterceptor(client.cookieJar()));</span><br><span class="line">        interceptors.add(<span class="keyword">new</span> CacheInterceptor(client.internalCache()));</span><br><span class="line">        interceptors.add(<span class="keyword">new</span> ConnectInterceptor(client));</span><br><span class="line">        <span class="keyword">if</span> (!forWebSocket) &#123;</span><br><span class="line">            interceptors.addAll(client.networkInterceptors());</span><br><span class="line">        &#125;</span><br><span class="line">        interceptors.add(<span class="keyword">new</span> CallServerInterceptor(forWebSocket));</span><br><span class="line"></span><br><span class="line">        Interceptor.Chain chain = <span class="keyword">new</span> RealInterceptorChain(interceptors, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="number">0</span>, originalRequest, <span class="keyword">this</span>, eventListener,  client.connectTimeoutMillis(), client.readTimeoutMillis(), client.writeTimeoutMillis());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> chain.proceed(originalRequest);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>RealCall</code>的<code>execute()</code>方法核心就是<code>getResponseWithInterceptorChain()</code>方法，顾名思义，就是获取<code>Response</code>通过拦截器链。</p>
+<p>首先这个拦截器List添加用户自定义的拦截器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">interceptors.addAll(client.interceptors());</span><br></pre></td></tr></table></figure>
+<p>在开头的代码中，给<code>Client</code>添加了自定义的拦截器</p>
+<p>然后是一些OkHttp默认的拦截器，这些拦截器就是OkHttp的核心，将<strong>监听</strong>、<strong>重试重定向</strong>、<strong>缓存</strong>、<strong>连接</strong>等功能分布在各自的拦截器中。实际上就是功能的分层。</p>
+<ul>
+<li><code>RetryAndFollowUpInterceptor</code>，重试重定向</li>
+<li><code>BridgeInterceptor</code>，用户和服务器的桥梁。把用户的<code>Request</code>转成转换成发送到服务器的<code>Request</code>，把服务器的<code>Response</code>转换成用户的<code>Response</code>。</li>
+<li><code>CacheInterceptor</code>，读取缓存，更新缓存。若缓存可用，直接返回，责任链到此为止。否则继续向下，让其他拦截器/链上的节点处理。</li>
+<li><code>ConnectInterceptor</code>，和服务器建立连接</li>
+<li><code>CallServerInterceptor</code>，从服务器获取数据</li>
+</ul>
+<p>这些拦截器自上而下实现不同的功能，将完整的功能划分成独立不同层次的模块。最后一个一定是从服务器获取数据的拦截器。缓存拦截器一定在其上。</p>
+<p>这样网络请求就从<code>RealCall</code>中剥离出来了，交给<code>InterceptorChain</code>。</p>
+<p>每个拦截器的实现这里就不关心了。</p>
+<h2 id="异步请求"><a href="#异步请求" class="headerlink" title="异步请求"></a>异步请求</h2><p>相对于同步请求，异步请求使用了线程池，这里就不继续分析了</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://liziyang.top/2016/12/08/Http%E8%AF%B7%E6%B1%82%E4%B9%8BRange/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李子阳">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李子阳的Android笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/12/08/Http%E8%AF%B7%E6%B1%82%E4%B9%8BRange/" class="post-title-link" itemprop="url">Http请求之Range</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-12-08 15:31:06" itemprop="dateCreated datePublished" datetime="2016-12-08T15:31:06+08:00">2016-12-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-14 18:07:49" itemprop="dateModified" datetime="2020-01-14T18:07:49+08:00">2020-01-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OkHttp/" itemprop="url" rel="index">
+                    <span itemprop="name">OkHttp</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ol>
+<li><p><strong>Range</strong>，用于Http请求头中，指定第一个字节的位置和最后一个字节的位置，一般格式为：<code>Range:(unit=first byte pos)-[last byte pos]</code><br> 可用于断点续传和多线程下载。</p>
+</li>
+<li><p>举个例子🌰<br> 这是我在Youku上扒的一张图片：<a href="https://static.youku.com/user/img/avatar/310/33.jpg" target="_blank" rel="noopener">https://static.youku.com/user/img/avatar/310/33.jpg</a><br> 看一下它的响应头</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HttpRangeExample</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    OkHttpClient client = <span class="keyword">new</span> OkHttpClient();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">(String url)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        Request request = <span class="keyword">new</span> Request.Builder()</span><br><span class="line">            .url(url)</span><br><span class="line">            .build();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> (Response response = client.newCall(request).execute()) &#123;</span><br><span class="line">            Headers headers = response.headers();</span><br><span class="line">            System.out.println(<span class="string">"响应头信息："</span>);</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; headers.size(); i ++) &#123;</span><br><span class="line">                System.out.println(<span class="string">"    "</span> + headers.name(i) + <span class="string">" : "</span> + headers.get(headers.name(i)));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        HttpRangeExample example = <span class="keyword">new</span> HttpRangeExample();</span><br><span class="line">        example.run(<span class="string">"https://static.youku.com/user/img/avatar/310/33.jpg"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 请求这个url地址，并且打印出响应头信息，我们看一下打印信息(部分)：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">响应头信息：</span><br><span class="line">       Server : Tengine</span><br><span class="line">       Content-Type : image/jpeg</span><br><span class="line">       Content-Length : <span class="number">73416</span></span><br><span class="line">       Accept-Ranges : bytes</span><br></pre></td></tr></table></figure>
+<p> <code>Content-Length</code>是<code>73416</code><br> 这时，我们通过在请求头中设置<code>Range</code>来请求部分数据，修改<code>Request</code>部分代码</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Request request = <span class="keyword">new</span> Request.Builder()</span><br><span class="line">           .url(url)</span><br><span class="line">           .addHeader(<span class="string">"Range"</span>, <span class="string">"bytes=0-100"</span>)</span><br><span class="line">           .build();</span><br></pre></td></tr></table></figure>
+<p> 将请求头的<code>Range</code>设为<code>btyes=0-100</code>，这意思是请求第0个字节到第100个字节共101个字节。然后我们看一下打印信息(部分)：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">响应头信息：</span><br><span class="line">       Server : Tengine</span><br><span class="line">       Content-Type : image/jpeg</span><br><span class="line">       Content-Length : <span class="number">101</span></span><br><span class="line">       Accept-Ranges : bytes</span><br><span class="line">       Content-Range : bytes <span class="number">0</span>-<span class="number">100</span>/<span class="number">73416</span></span><br></pre></td></tr></table></figure>
+<p> 我们发现<code>Content-Length</code>是101了，确实是我们指定的大小，并且响应头中多了一个<code>Content-Range</code>，其值是<code>bytes 0-100/73416</code>，<code>/</code>前是返回的数据范围，<code>/</code>后面是数据总大小。</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://liziyang.top/2016/12/05/OkHttp%E4%B9%8BMultipartBody%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李子阳">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李子阳的Android笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/12/05/OkHttp%E4%B9%8BMultipartBody%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6/" class="post-title-link" itemprop="url">OkHttp之MultipartBody上传文件</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-12-05 13:11:52" itemprop="dateCreated datePublished" datetime="2016-12-05T13:11:52+08:00">2016-12-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-14 18:07:49" itemprop="dateModified" datetime="2020-01-14T18:07:49+08:00">2020-01-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OkHttp/" itemprop="url" rel="index">
+                    <span itemprop="name">OkHttp</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>在OkHttp 3.x版本，已经取消了<code>MultipartBuilder</code>这个类，上传文件时使用<code>MultipartBody</code></p>
+</blockquote>
+<blockquote>
+<p>本篇笔记不光介绍<code>MultipartBody</code>的使用，还通过具体的<code>Request</code>数据来分析其传输过程。</p>
+</blockquote>
+<ol>
+<li><p><strong>Post之Content-Type</strong></p>
+<ul>
+<li>在<a href="http://www.liziyang.top/2016/12/04/Hello-OkHttp/" target="_blank" rel="noopener">Hello OkHttp</a>一文中我们介绍过Http请求与响应的格式，还有Post常见的提交数据的方式</li>
+<li>浏览器原生提交表单数据使用的就是<code>application/x-www-form-urlencoded</code>，会将需要提交的数据进行编码，编码之后的数据即<code>request body</code>，与<code>request header</code>之间隔一行，例如<img src="http://ogxoqrabi.bkt.clouddn.com/image/okhttp/http/http_post.png" alt="enter image description here"><br>观察右侧上部也就是Request，可以发现，Content-Type是<code>application/x-www-form-urlencoded</code>，<code>request body</code>是<code>username=Stefan&amp;password=123456</code>，这是将两对数据编码的数据</li>
+<li>1995年，<code>Content-Type</code>的类型扩充了<code>multipart/form-data</code>用以支持向服务器发送二进制数据（RFC1867）</li>
+</ul>
+</li>
+<li><p><strong>Content-Type之boundary</strong><br> 如果一次提交多个数据，例如一张图片和一条评论（文本信息），这时候该怎么办呢？<br> <strong>boundary</strong>，boundary使得POST提交复杂数据这样的request变得功能强大，但也变得复杂，通过<strong>boundary</strong>实现多个不同类型的数据同时在一个Request中，<strong>两个boundary之间就是一个类型的数据，并且可以重新设置<code>Content-Type</code>，因为不同的数据类型可能不同</strong>。<br> 我们来看这种情况下的request数据</p>
+<blockquote>
+<p>POST /web/UploadServlet HTTP/1.1<br> Content-Type: multipart/form-data; boundary=e1b05ca4-fc4e-4944-837d-cc32c43c853a<br> Content-Length: 66089<br> Host: localhost.charlesproxy.com:8080<br> Connection: Keep-Alive<br> Accept-Encoding: gzip<br> User-Agent: okhttp/3.5.0</p>
+</blockquote>
+<p> –e1b05ca4-fc4e-4944-837d-cc32c43c853a<br> Content-Disposition: form-data; name=”filename”; filename=”xxx.png”<br> Content-Type: image/png<br> Content-Length: 65744</p>
+<blockquote>
+</blockquote>
+<p> �PNG<br> IHDR�0B7M�iCCPICC ProfileH��……………………IEND�B`�<br> –e1b05ca4-fc4e-4944-837d-cc32c43c853a<br> Content-Disposition: form-data; name=”comment”<br> Content-Length: 30</p>
+<blockquote>
+</blockquote>
+<p> 上传一个图片哈哈哈哈<br> –e1b05ca4-fc4e-4944-837d-cc32c43c853a–</p>
+<p> 第一个数据，是png图片，重新设置了<code>Content-Type: image/png</code>，中间那一大堆乱码就是图片的数据，用文本表示所有乱码了。这一堆数据之前有一空行，表示上下分别是<code>request header</code>和<code>request body</code>。<br> 第二个数据，文本信息</p>
+<blockquote>
+<p>Content-Disposition: form-data; name=”comment”<br>  Content-Length: 30</p>
+</blockquote>
+<p>  上传一个图片哈哈哈哈</p>
+<p> <code>request body</code>是一行文字，并且与<code>request header</code>之间有一行空行。这里没有重新设置<code>Content-Type</code>，所以它的<code>Content-Type</code>还是<code>multipart/form-data</code></p>
+</li>
+<li><p><strong>OkHttp使用MultipartBody</strong><br> 说了那么多，现在来看OkHttp如何操作<br> 我在本地搭建了一个Post服务器，用来接收文件和附加文字，成功后返回相关信息，这里不关心服务器如何实现，只看Android部分</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MultipartExample</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    OkHttpClient client = <span class="keyword">new</span> OkHttpClient();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">uploadFile</span><span class="params">(String url, File file)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 创建一个RequestBody，文件的类型是image/png</span></span><br><span class="line">        RequestBody requestBody = RequestBody.create(MediaType.parse(<span class="string">"image/png"</span>), file);</span><br><span class="line"></span><br><span class="line">        MultipartBody multipartBody = <span class="keyword">new</span> MultipartBody.Builder()</span><br><span class="line">            <span class="comment">// 设置type为"multipart/form-data"，不然无法上传参数</span></span><br><span class="line">            .setType(MultipartBody.FORM)</span><br><span class="line">            .addFormDataPart(<span class="string">"filename"</span>, <span class="string">"xxx.png"</span>, requestBody)</span><br><span class="line">            .addFormDataPart(<span class="string">"comment"</span>, <span class="string">"上传一个图片哈哈哈哈"</span>)</span><br><span class="line">            .build();</span><br><span class="line"></span><br><span class="line">        Request request = <span class="keyword">new</span> Request.Builder()</span><br><span class="line">            .url(url)</span><br><span class="line">            .post(multipartBody)</span><br><span class="line">            .build();</span><br><span class="line"></span><br><span class="line">        client.newCall(request).enqueue(<span class="keyword">new</span> Callback() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(Call call, IOException e)</span> </span>&#123;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(Call call, Response response)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">                System.out.println(<span class="string">"上传返回：\n"</span> + response.body().string());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        MultipartExample example = <span class="keyword">new</span> MultipartExample();</span><br><span class="line">        example.uploadFile(</span><br><span class="line">                <span class="string">"http://localhost.charlesproxy.com:8080/web/UploadServlet"</span>,</span><br><span class="line">                <span class="keyword">new</span> File(<span class="string">"/Users/liziyang/Desktop/test.png"</span>)</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 构建<code>MultipartBody</code>这个类时，需要手动设置type为<code>multipart/form-data</code>，不然无法上传<code>&lt;name, value&gt;</code>类型的<code>form</code>数据。原因是<code>MultipartBody</code>默认的type是mixed，我们看一下源码：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Set the MIME type. Expected values for &#123;<span class="doctag">@code</span> type&#125; are &#123;<span class="doctag">@link</span> #MIXED&#125; (the default), &#123;<span class="doctag">@link</span></span></span><br><span class="line"><span class="comment"> * #ALTERNATIVE&#125;, &#123;<span class="doctag">@link</span> #DIGEST&#125;, &#123;<span class="doctag">@link</span> #PARALLEL&#125; and &#123;<span class="doctag">@link</span> #FORM&#125;.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Builder <span class="title">setType</span><span class="params">(MediaType type)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (type == <span class="keyword">null</span>) &#123;</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException(<span class="string">"type == null"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (!type.type().equals(<span class="string">"multipart"</span>)) &#123;</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"multipart != "</span> + type);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">this</span>.type = type;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> Mixed the default<br> 通过第二节<strong>boundary</strong>的分析，我们知道需要给图片设置<code>Content-Type</code>为<code>image/png</code>，给form类型的数据设置<code>Content-type</code>为<code>multipart/form-data</code><br> 运行结果<img src="http://ogxoqrabi.bkt.clouddn.com/image/okhttp/okhttp_multipart.png" alt="enter image description here"><br> 这个打印信息是response返回的</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://liziyang.top/2016/12/04/Hello-OkHttp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李子阳">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李子阳的Android笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/12/04/Hello-OkHttp/" class="post-title-link" itemprop="url">Hello OkHttp</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-12-04 18:11:04" itemprop="dateCreated datePublished" datetime="2016-12-04T18:11:04+08:00">2016-12-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-14 18:07:49" itemprop="dateModified" datetime="2020-01-14T18:07:49+08:00">2020-01-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OkHttp/" itemprop="url" rel="index">
+                    <span itemprop="name">OkHttp</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>那么久了，终于开始学习OKHttp了，从HttpClient和HttpURLConnection到异步的AsyncTask再到Google的Volley，还有各个公司自己的网络框架……现在看起来OkHttp是个不错的选择。</p>
+</blockquote>
+<ol>
+<li><p><strong>OkHttp简介</strong><br> OkHttp是Square公司开发的一款HTTP客户端，默认有以下特性：</p>
+<ul>
+<li><p>支持HTTP/2，允许同一个主机的所有请求共享同一个Socket</p>
+</li>
+<li><p>如果HTTP/2不可用，使用连接池减少请求延迟</p>
+</li>
+<li><p>gzip压缩</p>
+</li>
+<li><p>响应缓存避免重复的网络请求</p>
+<p>官方地址：<br><a href="http://square.github.io/okhttp/" target="_blank" rel="noopener">http://square.github.io/okhttp/</a><br><a href="https://github.com/square" target="_blank" rel="noopener">https://github.com/square</a></p>
+</li>
+</ul>
+</li>
+<li><p><strong>你了解HTTP吗</strong><br> 开始之前，我觉得有必要对<code>HTTP协议</code>进行一些说明</p>
+<ul>
+<li><p><strong>Url</strong><br>  是的，我们每天都在使用Url，比如这样一个查询广州实时天气的Url：<br>  <a href="https://free-api.heweather.com/v5/now?city=CN101280101&amp;key=60f48be405054c98beb8c5ee35705e12" target="_blank" rel="noopener">https://free-api.heweather.com/v5/now?city=CN101280101&amp;key=60f48be405054c98beb8c5ee35705e12</a><br>  Url的结构是这样的：</p>
+  <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">schema://host[<span class="string">:port#</span>]/path/.../[<span class="string">?query-string</span>][<span class="symbol">#anchor</span>]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>schema</strong>，使用的协议，比如http、https、ftp等</li>
+<li><strong>host</strong>，http服务器的IP地址或域名，比如这个Url里的<code>free-api.heweather.com</code></li>
+<li><strong>port#</strong>，端口，默认是80，默认可以省略，如果是其他端口不能省略</li>
+<li><strong>path</strong>，要访问的资源的路径，比如这个Url里的<code>v5/now</code></li>
+<li><strong>query-string</strong>，发送给服务器的数据，比如这个Url里的<code>city=CN101280101&amp;key=60f48be...</code></li>
+<li><strong>anchor</strong>，锚</li>
+</ul>
+</li>
+<li><p><strong>HTTP协议</strong><br>  <code>HTTP协议</code>是应用层的协议，以<code>ASCII码</code>传输，建立在<code>TCP/IP协议</code>之上</p>
+</li>
+<li><p><strong>HTTP请求</strong><br>  我们常说的<code>Get</code>、<code>Post</code>和<code>Http请求</code>有什么关系呢？<br>  <code>Http Request</code>由三部分组成，<code>request line</code>、<code>request header</code>、<code>request body</code>。<br>  用Chrome浏览器访问上述Url，并用Chrome的开发者工具抓包，分析其<code>Request</code><img src="http://ogxoqrabi.bkt.clouddn.com/image/okhttp/http/http_request_detail.png" alt="enter image description here"><br>  第一行就是<code>request line</code>，<code>GET /v5/now?city=CN10... HTTP/1.1</code>，由三部分组成，<code>请求方法</code>、<code>请求的资源</code>、<code>HTTP协议版本</code>，request line以一个请求方法开始，请求方法有好几个，常用的就是<code>Get</code>、<code>Post</code>。这个http请求是一个GET请求。<br>  下面那一大块是request header。<br>  <strong>所以，Http请求都是以Get、Post或其他方法开始的</strong><br>  <code>request body</code>我们稍后以一个<code>Post</code>请求为例进行分析。</p>
+</li>
+<li><p><strong>HTTP响应</strong><br><code>HTTP响应</code>也是由三个部分组成，<code>response line</code>、<code>response header</code>、<code>response body</code><img src="http://ogxoqrabi.bkt.clouddn.com/image/okhttp/http/http_response_detail.png" alt="enter image description here"><br>同样第一行<code>HTTP/1.1 200 OK</code>是<code>response line</code>，也是由三部分组成，<code>HTTP协议版本</code>、<code>状态码</code>、<code>消息</code>。</p>
+</li>
+</ul>
+<p> <strong>状态码</strong>，常见的有<code>404</code>、<code>502</code>等，详细的可以另外查阅，我们只要知道<code>2xx</code>代表成功，<code>3xx</code>重定向，<code>4xx</code>客户端错误，语法错误或地址不正确等，<code>5xx</code>服务器错误。</p>
+</li>
+<li><p><strong>OkHttp之Get</strong></p>
+<ul>
+<li><p><strong>get例子</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GetExample</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> OkHttpClient client = <span class="keyword">new</span> OkHttpClient();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">run</span><span class="params">(String url)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        Request request = <span class="keyword">new</span> Request.Builder()</span><br><span class="line">                .url(url)</span><br><span class="line">                .build();</span><br><span class="line">        <span class="keyword">try</span> (Response response = client.newCall(request).execute();) &#123;</span><br><span class="line">            <span class="keyword">return</span> response.body().string();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        GetExample example = <span class="keyword">new</span> GetExample();</span><br><span class="line">        String response = example.run(<span class="string">"https://raw.github.com/square/okhttp/master/README.md"</span>);</span><br><span class="line">        System.out.println(response);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  创建一个<code>OkHttpClient</code>对象，然后通过<code>Builder模式</code>build一个<code>Request</code>对象，最后通过client和request创建<code>Response</code>对象并<code>execute</code>。<br>  运行结果：<img src="http://ogxoqrabi.bkt.clouddn.com/hello_okhttp_get.png" alt="enter image description here"></p>
+</li>
+<li><p><strong>带参数的Get</strong><br>  这里使用<em>和风天气API</em>来演示查询实时天气，构造Url的时候有两种办法：</p>
+<ul>
+<li><p>自己直接拼凑完成的Url，参数和api之间通过<code>?</code>连接，参数与参数之间通过<code>&amp;</code>连接，每一个参数通过<code>=</code>连接<code>name</code>和<code>value</code>，比如这个Url，有两个参数，<code>city</code>和<code>key</code>，<br><code>https://free-api.heweather.com/v5/now?city=CN101280101&amp;key=60f48be405054c98beb8c5ee35705e12</code><br>这种方法不方便并且容易出错。</p>
+</li>
+<li><p>OkHttp中通过构建<code>HttpUrl</code>来确定参数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">HttpUrl httpUrl = HttpUrl.parse(<span class="string">"https://free-api.heweather.com/v5/now"</span>)</span><br><span class="line">              .newBuilder()</span><br><span class="line">              .addQueryParameter(<span class="string">"city"</span>, <span class="string">"CN101280101"</span>)</span><br><span class="line">              .addQueryParameter(<span class="string">"key"</span>, <span class="string">"60f48be405054c98beb8c5ee35705e12"</span>)</span><br><span class="line">              .build();</span><br><span class="line">      String url = httpUrl.toString();</span><br><span class="line">      System.out.println(<span class="string">"地址："</span> + url);</span><br><span class="line"></span><br><span class="line">      String response = example.run(url);</span><br><span class="line">      System.out.println(<span class="string">"响应："</span> + response);</span><br></pre></td></tr></table></figure>
+
+<p>  运行结果：<img src="http://ogxoqrabi.bkt.clouddn.com/image/okhttp/hello_okhttp_params_get.png" alt="enter image description here"><br>  我们发现，这样构造出来的url和我们手动拼接的url是一样的。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>OkHttp之Post</strong><br> Get请求的缺点：参数太直观容易泄露信息，并且大小有限制。</p>
+<ul>
+<li><p><strong>Post例子</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PostJsonExample</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> MediaType MEDIA_TYPE_JSON = MediaType.parse(<span class="string">"application/json; charset=utf-8"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> OkHttpClient client = <span class="keyword">new</span> OkHttpClient();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">post</span><span class="params">(String url, String json)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        RequestBody requestBody = RequestBody.create(MEDIA_TYPE_JSON, json);</span><br><span class="line">        Request request = <span class="keyword">new</span> Request.Builder()</span><br><span class="line">            .url(url)</span><br><span class="line">            .post(requestBody)</span><br><span class="line">            .build();</span><br><span class="line">        <span class="keyword">try</span> (Response response = client.newCall(request).execute()) &#123;</span><br><span class="line">            <span class="keyword">return</span> response.body().string();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">bowlingJson</span><span class="params">(String player1, String player2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"&#123;'winCondition':'HIGH_SCORE',"</span> +</span><br><span class="line">                <span class="string">"'name':'Bowling',"</span> +</span><br><span class="line">                <span class="string">"'round':4,"</span> +</span><br><span class="line">                <span class="string">"'lastSaved':1367702411696,"</span> +</span><br><span class="line">                <span class="string">"'dateStarted':1367702378785,"</span> +</span><br><span class="line">                <span class="string">"'players':["</span> +</span><br><span class="line">                <span class="string">"&#123;'name':'"</span> + player1 + <span class="string">"','history':[10,8,6,7,8],'color':-13388315,'total':39&#125;,"</span> +</span><br><span class="line">                <span class="string">"&#123;'name':'"</span> + player2 + <span class="string">"','history':[6,10,5,10,10],'color':-48060,'total':41&#125;"</span> +</span><br><span class="line">                <span class="string">"]&#125;"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        PostJsonExample example = <span class="keyword">new</span> PostJsonExample();</span><br><span class="line">        System.out.println(example.post(<span class="string">"http://www.roundsapp.com/post"</span>, example.bowlingJson(<span class="string">"Stefan"</span>, <span class="string">"Peter"</span>)));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  在构建<code>Request</code>对象时调用<code>post()</code>传入<code>RequestBody</code>，创建<code>RequestBody</code>对象时需要指定<code>MediaType</code>和具体的Json内容<br>  这个server和json数据是官方给的参考，具体什么意思不用管了，只要post成功即可，运行结果参考：<img src="http://ogxoqrabi.bkt.clouddn.com/image/okhttp/hello_okhttp_post.png" alt="enter image description here"></p>
+</li>
+<li><p><strong>Post的几种方式</strong></p>
+<ul>
+<li>上个例子我们使用了json进行post，从代码中可以看到<code>Content-Type</code>是<code>application/json</code></li>
+<li>form，<code>Content-Type</code>是<code>application/x-www-form-urlencoded</code>,浏览器原生的向服务器提交表单数据，会将内容编码</li>
+<li><code>multipart/form-data</code>，用于向服务器发送二进制数据</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>同步和异步</strong></p>
+<ul>
+<li><strong>同步</strong><br>  以上的例子🌰都是使用<code>execute()</code>来发起网络请求，这是就是一个同步的过程。</li>
+<li><strong>异步</strong><br>  OkHttp中异步使用<code>enqueue(Callback callback)</code>方法发起网络请求，请求结果通过回调返回<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AsyncExample</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> OkHttpClient client = <span class="keyword">new</span> OkHttpClient();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">(String url)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        Request request = <span class="keyword">new</span> Request.Builder()</span><br><span class="line">            .url(url)</span><br><span class="line">            .build();</span><br><span class="line"></span><br><span class="line">        client.newCall(request).enqueue(<span class="keyword">new</span> Callback() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(Call call, IOException e)</span> </span>&#123;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(Call call, Response response)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">                System.out.println(<span class="string">"响应："</span> + response.body().string());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        AsyncExample example = <span class="keyword">new</span> AsyncExample();</span><br><span class="line"></span><br><span class="line">        HttpUrl httpUrl = HttpUrl.parse(<span class="string">"https://free-api.heweather.com/v5/now"</span>)</span><br><span class="line">            .newBuilder()</span><br><span class="line">            .addQueryParameter(<span class="string">"city"</span>, <span class="string">"CN101280101"</span>)</span><br><span class="line">            .addQueryParameter(<span class="string">"key"</span>, <span class="string">"60f48be405054c98beb8c5ee35705e12"</span>)</span><br><span class="line">            .build();</span><br><span class="line">        String url = httpUrl.toString();</span><br><span class="line">        System.out.println(<span class="string">"地址："</span> + url);</span><br><span class="line"></span><br><span class="line">        example.run(url);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><strong>OkHttp之FormBody</strong><br> Post时，<code>Http Request</code>中的<code>request header</code>里的<code>Content-Type</code>字段代表Post提交数据时使用哪种方式，<code>application/x-www-form-urlencoded</code>就是浏览器的原生form表单，这里我在本地搭建了一个Post服务器，接受两个参数<code>username</code>和<code>password</code>来模拟<code>Login</code>，当<em>username</em>是<em>Stefan</em>并且<em>password</em>是<em>123456</em>是服务器判断为登陆成功，并且返回信息。<br> 这里使用<strong>Charles</strong>来抓包<img src="http://ogxoqrabi.bkt.clouddn.com/image/okhttp/http/http_post.png" alt="enter image description here"><br> 右侧上半部为Request信息，下半部为Response信息<br> <code>Content-Type</code>是<code>application/x-www-form-urlencoded</code>，Request中最后一行<code>username=Stefan&amp;password=123456</code>这就是<code>Http Request</code>中的第三部分<code>request body</code><br> <strong>Content-Type类型和Request Body的内容一起用来代表Post提交的数据类型及内容，这样服务器才能根据类型和内容解析出来，注意：<code>Request Body</code>与<code>Request Header</code>之间要隔一行！</strong><br> 说了这么多，我们来看这个Post在OkHttp中怎么操作</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PostFormExample</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> OkHttpClient client = <span class="keyword">new</span> OkHttpClient();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">login</span><span class="params">(String url, String username, String password)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        FormBody formBody = <span class="keyword">new</span> FormBody.Builder()</span><br><span class="line">            .add(<span class="string">"username"</span>, username)</span><br><span class="line">            .add(<span class="string">"password"</span>, password)</span><br><span class="line">            .build();</span><br><span class="line"></span><br><span class="line">        Request request = <span class="keyword">new</span> Request.Builder()</span><br><span class="line">            .url(url)</span><br><span class="line">            .post(formBody)</span><br><span class="line">            .build();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> (Response response = client.newCall(request).execute();) &#123;</span><br><span class="line">            <span class="keyword">return</span> response.body().string();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        PostFormExample example = <span class="keyword">new</span> PostFormExample();</span><br><span class="line">        String userName = <span class="string">"Stefan"</span>;</span><br><span class="line">        String password = <span class="string">"123456"</span>;</span><br><span class="line">        System.out.println(example.login(<span class="string">"http://localhost.charlesproxy.com:8080/web/HelloServlet"</span>, userName, password));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 这里使用了<code>FormBody</code>这个类，构建的时候通过<code>add()</code>方法传入参数，我们来看一下<code>FormBody</code>这个类的源码：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">FormBody</span> <span class="keyword">extends</span> <span class="title">RequestBody</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> MediaType CONTENT_TYPE = MediaType.parse(<span class="string">"application/x-www-form-urlencoded"</span>);</span><br><span class="line"></span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 发现其类型就是Form表单</p>
+</li>
+<li><p><strong>总结</strong><br> 这篇笔记不光说明<code>OkHttp</code>的一些基本用法，还简单介绍了<code>Url</code>、<code>Http请求与响应</code>、<code>Get与Post</code>、<code>Post的几种方法</code>等知识，还有一些实践的东西，通过<code>Chrome开发者工具</code>和<code>Charles</code>软件来抓包分析Http请求和响应时具体的数据信息。<br> 另外，关于Multipart文件上传和对OkHttp封装，会在另外的笔记中单独记录。</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://liziyang.top/2016/09/01/Method%E5%92%8Cinvoke/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李子阳">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李子阳的Android笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/09/01/Method%E5%92%8Cinvoke/" class="post-title-link" itemprop="url">Method和invoke</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-09-01 15:57:23" itemprop="dateCreated datePublished" datetime="2016-09-01T15:57:23+08:00">2016-09-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-14 18:07:49" itemprop="dateModified" datetime="2020-01-14T18:07:49+08:00">2020-01-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java%E5%8F%8D%E5%B0%84/" itemprop="url" rel="index">
+                    <span itemprop="name">Java反射</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ol>
+<li><p><strong>方法Method</strong><br><code>方法</code>也是对象，是<code>Method</code>类的对象<br>通过<code>Class</code>类的方法获取<code>Method</code>对象</p>
+<ul>
+<li><code>getMethod()</code>和<code>getMethods()</code><br>获取类的public方法，包括自身的public方法、从基类继承的、从接口实现的public方法。</li>
+<li><code>getDeclaredMethod()</code>、<code>getDeclaredMethods()</code>获取类自身声明的方法，也包括覆写父类的方法、实现接口的方法。</li>
+</ul>
+<p>有了<code>Method对象</code>，就可以获取方法更详细的信息</p>
+<ul>
+<li><strong>返回值类型</strong><br>通过<code>Method</code>的<code>Class getReturnType()</code>获取方法的返回值类型，当然这个返回值类型也是Class类型的。</li>
+<li><strong>方法名</strong><br>通过<code>Method</code>的<code>String getName()</code>方法获取方法的方法名，String类型。</li>
+<li><strong>参数</strong><br>通过<code>Method</code>的<code>Class[] getParameterTypes()</code>方法获取参数的类类型的数组。</li>
+</ul>
+</li>
+<li><p><strong>成员变量Field</strong><br><code>Field</code>是成员变量的对象</p>
+<ul>
+<li><code>getField()</code>和<code>getFields()</code>，获取public的成员变量</li>
+<li><code>getDeclaredField()</code>和<code>getDeclaredFields()</code>，获取类自身声明的成员变量</li>
+</ul>
+<p>有了<code>Feild</code>对象，就获取类型和名称了</p>
+<ul>
+<li><code>Class getType()</code>，成员变量的类型</li>
+<li><code>String getName()</code>，成员变量的变量名</li>
+</ul>
+</li>
+<li><p><strong>方法反射invoke</strong><br> 说了这么多，<code>Class</code>、<code>Method</code>、<code>Field</code>等等，目的无非是通过反射来执行一个实际的方法，调用<code>Method对象</code>的<code>invoke()</code>方法。<br> <code>invoke(Object o, Object... objects)</code>，第一个参数是类的对象。</p>
+</li>
+<li><p><strong>实战</strong><br> Android设备上面都有一个<strong>多任务</strong>按键，按下之后出现<code>系统最近运行的应用列表</code>，这部分属于系统部分的功能，应用层不可以直接使用这个功能，我们可以通过反射来调用系统的Recent功能。</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showRecentApps</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	Class serviceManagerClass;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		serviceManagerClass = Class.forName(<span class="string">"android.os.ServiceManager"</span>);</span><br><span class="line">		Method getService = serviceManagerClass.getMethod(<span class="string">"getService"</span>, String<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">		IBinder retbinder = (IBinder) getService.invoke(serviceManagerClass, <span class="string">"statusbar"</span>);</span><br><span class="line">		Class statusBarClass = Class.forName(retbinder.getInterfaceDescriptor());</span><br><span class="line">		Object statusBarObject = statusBarClass.getClasses()[<span class="number">0</span>].getMethod(</span><br><span class="line">				<span class="string">"asInterface"</span>, IBinder<span class="class">.<span class="keyword">class</span>).<span class="title">invoke</span>(<span class="title">null</span>,</span></span><br><span class="line">				new Object[] &#123; retbinder &#125;);</span><br><span class="line">		Method clearAll = statusBarClass.getMethod(<span class="string">"toggleRecentApps"</span>);</span><br><span class="line">		clearAll.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">		clearAll.invoke(statusBarObject);</span><br><span class="line">	&#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125; <span class="keyword">catch</span> (NoSuchMethodException e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125; <span class="keyword">catch</span> (IllegalArgumentException e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125; <span class="keyword">catch</span> (InvocationTargetException e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125; <span class="keyword">catch</span> (RemoteException e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> <em>PS：以上方法在Android 7.0失效，在7.0以前的系统是可以的。</em></p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://liziyang.top/2016/09/01/Class%E7%B1%BBjava.lang.Class/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李子阳">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李子阳的Android笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/09/01/Class%E7%B1%BBjava.lang.Class/" class="post-title-link" itemprop="url">Class类java.lang.Class</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-09-01 14:09:27" itemprop="dateCreated datePublished" datetime="2016-09-01T14:09:27+08:00">2016-09-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-14 18:07:49" itemprop="dateModified" datetime="2020-01-14T18:07:49+08:00">2020-01-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java%E5%8F%8D%E5%B0%84/" itemprop="url" rel="index">
+                    <span itemprop="name">Java反射</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ol>
+<li><p><strong>Java中的Class类</strong><br> 在面向对象的世界里，一切皆对象，<strong>类也是一种对象</strong>。系统中所有的类都是实例，是<code>java.lang.Class</code>的实例。<br> 比如，我们定义一个类<code>XXX</code></p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">XXX</span> </span>&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> <code>XXX</code>就是Class类的对象</p>
+</li>
+<li><p><strong>获取Class类的对象</strong><br> 任何一个类，一旦加载到内存中（或者说是类初始化，更加详细的介绍参考后续文章），系统都会为之建立一个<code>java.lang.Class</code>对象。<br> 获取一个<code>Class</code>对象，有<strong>3</strong>种方法：</p>
+<ul>
+<li>任何一个类都有一个隐含的<code>静态成员变量</code>——<code>class</code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class c = XXX<span class="class">.<span class="keyword">class</span></span>;</span><br></pre></td></tr></table></figure></li>
+<li>还可以通过对象获取<code>Class对象</code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">XXX xxx;</span><br><span class="line">Class c = xxx.getClass();</span><br></pre></td></tr></table></figure></li>
+<li>通过<code>Class</code>类的<code>forName()</code>方法<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Class c = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">	c = Class.forName(<span class="string">"top.liziyang.reflection.XXX"</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">	e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><strong>获取类的对象</strong><br> 第二小节，通过<code>Class</code>类的<code>forName()</code>方法可以获取到<code>java.lang.Class</code>的对象。<br> 通过<code>Class对象</code>的<code>newInstance()</code>方法可以获取到类的对象。</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Class c = <span class="keyword">null</span>;</span><br><span class="line">XXX xxx;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">	<span class="comment">// 通过Class.forName()方法获取Class实例</span></span><br><span class="line">	c = Class.forName(<span class="string">"top.liziyang.reflection.XXX"</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">	e.printStackTrace();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">XXX xxx = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">	<span class="comment">// 通过Class对象的newInstance()方法获取</span></span><br><span class="line">	xxx = (XXX) c.newInstance();</span><br><span class="line">&#125; <span class="keyword">catch</span> (java.lang.InstantiationException e) &#123;</span><br><span class="line">	e.printStackTrace();</span><br><span class="line">&#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</span><br><span class="line">	e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>其他<br> <strong>基本数据类型</strong>也是Class的实例</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Class class1 = <span class="keyword">int</span><span class="class">.<span class="keyword">class</span></span>;</span><br><span class="line">Class class2 = Integer<span class="class">.<span class="keyword">class</span></span>;</span><br><span class="line">Class class3 = <span class="keyword">void</span><span class="class">.<span class="keyword">class</span></span>;</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>总结</strong><br> 至此，我们了解了Java中的<code>java.lang.Class</code>，以及如何获取<code>Class</code>的对象，还有如何通过<code>Class对象</code>获取<code>一般类</code>的对象。</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://liziyang.top/2016/08/26/Android%E4%B8%AD%E7%9A%84%E7%BA%BF%E7%A8%8B%E2%80%94%E2%80%94%E7%BA%BF%E7%A8%8B%E6%B1%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李子阳">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李子阳的Android笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/08/26/Android%E4%B8%AD%E7%9A%84%E7%BA%BF%E7%A8%8B%E2%80%94%E2%80%94%E7%BA%BF%E7%A8%8B%E6%B1%A0/" class="post-title-link" itemprop="url">Android中的线程——线程池</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-08-26 15:08:51" itemprop="dateCreated datePublished" datetime="2016-08-26T15:08:51+08:00">2016-08-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-14 18:07:49" itemprop="dateModified" datetime="2020-01-14T18:07:49+08:00">2020-01-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android%E4%B8%AD%E7%9A%84%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index">
+                    <span itemprop="name">Android中的线程</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>通常，我们启动子线程的的时候都是使用<code>Thread</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="comment">// 子线程逻辑</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;).start();</span><br></pre></td></tr></table></figure>
+<p>但是这样频繁创建和销毁线程所带来的性能开销是很大的，所以就凸显线程池的优势了。</p>
+<h2 id="线程池的优势"><a href="#线程池的优势" class="headerlink" title="线程池的优势"></a><strong>线程池的优势</strong></h2><ul>
+<li>重用线程池中的线程，避免因为线程的创建和销毁所带来的性能开销。</li>
+<li>能有效控制线程池的最大并发数，避免大量的线程之间因互相抢占系统资源而导致阻塞。</li>
+<li>能够对线程进行简单管理，并提供定时执行以及指定间隔循环执行等功能。</li>
+</ul>
+<h2 id="线程池的使用"><a href="#线程池的使用" class="headerlink" title="线程池的使用"></a><strong>线程池的使用</strong></h2><p>Android中的<code>线程池</code>来源于Java中的<code>Executor</code>，真正的线程池的实现是<code>ThreadPoolExecutor</code>。<br><code>ThreadPoolExecutor</code>提供了一系列参数来配置线程池，通过不同的参数创建不同的线程池。我们从OpenJDK中找到<code>ThreadPoolExecutor</code>的源码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> corePoolSize the number of threads to keep in the pool, even if they are idle, unless &#123;<span class="doctag">@code</span> allowCoreThreadTimeOut&#125; is set</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> maximumPoolSize the maximum number of threads to allow in the pool</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> keepAliveTime when the number of threads is greater than the core, this is the maximum time that excess idle threads will wait for new tasks before terminating.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> unit the time unit for the &#123;<span class="doctag">@code</span> keepAliveTime&#125; argument</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> workQueue the queue to use for holding tasks before they are executed. This queue will hold only the &#123;<span class="doctag">@code</span> Runnable&#125; tasks submitted by the &#123;<span class="doctag">@code</span> execute&#125; method.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> threadFactory the factory to use when the executor creates a new thread</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> handler the handler to use when execution is blocked because the thread bounds and queue capacities are reached</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ThreadPoolExecutor</span><span class="params">(<span class="keyword">int</span> corePoolSize,</span></span></span><br><span class="line"><span class="function"><span class="params">			<span class="keyword">int</span> maximumPoolSize,</span></span></span><br><span class="line"><span class="function"><span class="params">			<span class="keyword">long</span> keepAliveTime,</span></span></span><br><span class="line"><span class="function"><span class="params">			TimeUnit unit,</span></span></span><br><span class="line"><span class="function"><span class="params">			BlockingQueue&lt;Runnable&gt; workQueue,</span></span></span><br><span class="line"><span class="function"><span class="params">			ThreadFactory threadFactory,</span></span></span><br><span class="line"><span class="function"><span class="params">			RejectedExecutionHandler handler)</span> </span>&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结合源码中的注释来分析几个参数的意义</p>
+<ul>
+<li><strong>corePoolSize</strong><br>  线程池的核心线程数，默认情况下，核心线程会在线程池中一直存活，即使他们处于闲置状态。如果将<code>ThreadPoolExecutor</code>的<code>allowCoreThreadTimeOut</code>属性设置为<code>true</code>，那么核心线程的闲置超时时间受参数<code>keepAliveTime</code>约束。</li>
+<li><strong>maximumPoolSize</strong><br>线程池所能容纳的最大线程数，如果线程池中线程达到这个值，再添加任务将会被拒绝</li>
+<li><strong>keepAliveTime</strong><br>非核心线程闲置超时时长，非核心线程如果闲置时间超过这个值，将被回收。如果将<code>ThreadPoolExecutor</code>的<code>allowCoreThreadTimeOut</code>属性设置为<code>true</code>，那核心线程的闲置超时时长也受这个值的约束。</li>
+<li><strong>unit</strong><br><code>keepAliveTime</code>参数的单位，比如<code>TimeUnit.MILLISECONDS</code>、<code>TimeUnit.SECONDS</code>、<code>TimeUnit.MINIUTES</code>等。</li>
+<li><strong>workQueue</strong><br>线程池中的任务队列，通过<code>execute()</code>方法提交的<code>Runnable</code>对象都存储在任务队列中。</li>
+<li><strong>threadFactory</strong><br>线程工厂，当线程池创建一个新的线程时使用。</li>
+<li><strong>handler</strong><br>当线程池无法执行新任务时，一般是线程池的最大线程数达到上限并且工作队列也满了，这时候线程池拒绝执行新的任务，调用handler的<code>rejectedExecution()</code>方法通知调用者。<br>不过一般情况下可以不使用这个参数，默认抛出<code>RejectedExecutionException</code>异常。</li>
+</ul>
+<h2 id="线程池执行任务的规则"><a href="#线程池执行任务的规则" class="headerlink" title="线程池执行任务的规则"></a><strong>线程池执行任务的规则</strong></h2><ul>
+<li>如果所需执行的任务数量&lt;=<code>corePoolSize</code>，那么会直接使用线程池中的核心线程来执行任务，不需要创建新的线程，也不需要等待。</li>
+<li>如果线程池中正在执行任务的线程数量达到了<code>corePoolSize</code>，那么新的任务会被插入到<code>workQueue</code>中等待执行。</li>
+<li>如果一直往<code>workQueue</code>插入新的任务，直到<code>workQueue</code>满了无法继续插入，这时启动<strong>非核心线程</strong>来执行新的任务。</li>
+<li>如果<code>workQueue</code>满了，线程池中正在执行任务的线程数量也达到了<code>maximumPoolSize</code>，这时候线程池就会拒绝执行新的任务，抛出<code>RejectedExecutionException</code>异常或者调用<code>RejectedExecutionHandler</code>的<code>rejectedExecution()</code>方法通知调用者。</li>
+</ul>
+<h2 id="四种线程池"><a href="#四种线程池" class="headerlink" title="四种线程池"></a><strong>四种线程池</strong></h2><ul>
+<li><p><strong>FixedThreadPool</strong><br>  通过<code>Executors</code>的<code>newFixedThreadPool()</code>方法创建</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newFixedThreadPool</span><span class="params">(<span class="keyword">int</span> nThreads)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> ThreadPoolExecutor(nThreads, nThreads,</span><br><span class="line">			<span class="number">0L</span>, TimeUnit.MILLISECONDS,</span><br><span class="line">			<span class="keyword">new</span> LinkedBlockingQueue&lt;Runnable&gt;());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  核心线程数量=最大线程数量，线程数量固定，只有核心线程，没有超时机制，任务队列大小也没有限制。</p>
+</li>
+<li><p><strong>CachedThreadPool</strong><br>  通过<code>Executors</code>的<code>newCachedThreadPool()</code>方法创建</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newCachedThreadPool</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> ThreadPoolExecutor(<span class="number">0</span>, Integer.MAX_VALUE,</span><br><span class="line">			<span class="number">60L</span>, TimeUnit.SECONDS,</span><br><span class="line">			<span class="keyword">new</span> SynchronousQueue&lt;Runnable&gt;());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  没有核心线程，非核心线程相当于无限大，任务队列相当于一个空集合，这会导致任何任务会立即被执行，直接开启非核心线程。</p>
+</li>
+<li><p><strong>ScheduledThreadPool</strong><br>  通过<code>Executors</code>的<code>newCachedThreadPool()</code>方法创建</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// File : Executors.java</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ScheduledExecutorService <span class="title">newScheduledThreadPool</span><span class="params">(<span class="keyword">int</span> corePoolSize)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> ScheduledThreadPoolExecutor(corePoolSize);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// File : ScheduledThreadPoolExecutor.java</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ScheduledThreadPoolExecutor</span> <span class="keyword">extends</span> <span class="title">ThreadPoolExecutor</span> <span class="keyword">implements</span> <span class="title">ScheduledExecutorService</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">ScheduledThreadPoolExecutor</span><span class="params">(<span class="keyword">int</span> corePoolSize,</span></span></span><br><span class="line"><span class="function"><span class="params">				ThreadFactory threadFactory,</span></span></span><br><span class="line"><span class="function"><span class="params">				RejectedExecutionHandler handler)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>(corePoolSize, Integer.MAX_VALUE, <span class="number">0</span>, NANOSECONDS, <span class="keyword">new</span> DelayedWorkQueue(), threadFactory, handler);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	...</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  核心线程数量固定，非核心线程数量没有限制，<code>Integer.MAX_VALUE</code>，非核心线程没有闲置超时时间，一旦闲置立即被回收。<br>  <code>ScheduledThreadPool</code>这类线程池用于执行定时任务或者具有周期的重复任务。使用举例：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Runnable runnable = <span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		Log.d(<span class="string">"Scheduled"</span>, <span class="string">"正在执行任务..."</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">ScheduledExecutorService scheduledExecutor = Executors.newScheduledThreadPool(<span class="number">2</span>);</span><br><span class="line"><span class="comment">// 1000ms后执行runnable</span></span><br><span class="line">scheduledExecutor.schedule(runnable, <span class="number">1000</span>, TimeUnit.MILLISECONDS);</span><br><span class="line"><span class="comment">// 延时500ms后，每隔1000ms执行一次runnable</span></span><br><span class="line">scheduledExecutor.scheduleAtFixedRate(runnable, <span class="number">500</span>, <span class="number">1000</span>, TimeUnit.MILLISECONDS);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>SingleThreadExecutor</strong><br>  通过<code>Executors</code>的<code>newCachedThreadPool()</code>方法创建</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newSingleThreadExecutor</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> FinalizableDelegatedExecutorService</span><br><span class="line">		(<span class="keyword">new</span> ThreadPoolExecutor(<span class="number">1</span>, <span class="number">1</span>,</span><br><span class="line">				<span class="number">0L</span>, TimeUnit.MILLISECONDS,</span><br><span class="line">				<span class="keyword">new</span> LinkedBlockingQueue&lt;Runnable&gt;()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  只有一个核心线程，所以所有的任务在同一个线程中按照先后顺序逐一执行。</p>
+</li>
+</ul>
+<h2 id="AsyncTask中线程池的配置"><a href="#AsyncTask中线程池的配置" class="headerlink" title="AsyncTask中线程池的配置"></a><strong>AsyncTask中线程池的配置</strong></h2><p>在之前介绍<code>AsyncTask</code>原理的时候，我们说<code>AsyncTask</code>中线程池的配置在本文讲解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// AsyncTask.java</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> CPU_COUNT = Runtime.getRuntime().availableProcessors();</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> CORE_POOL_SIZE = CPU_COUNT + <span class="number">1</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAXIMUM_POOL_SIZE = CPU_COUNT * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> KEEP_ALIVE = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> BlockingQueue&lt;Runnable&gt; sPoolWorkQueue =</span><br><span class="line">		<span class="keyword">new</span> LinkedBlockingQueue&lt;Runnable&gt;(<span class="number">128</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Executor THREAD_POOL_EXECUTOR</span><br><span class="line">	= <span class="keyword">new</span> ThreadPoolExecutor(CORE_POOL_SIZE, MAXIMUM_POOL_SIZE, KEEP_ALIVE,</span><br><span class="line">			TimeUnit.SECONDS, sPoolWorkQueue, sThreadFactory);</span><br></pre></td></tr></table></figure>
+
+<p>我们假设CPU个数是4，那核心线程数量就是5，最大线程数量是9，非核心线程闲置超时时间为1秒，工作队列长度是128。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://liziyang.top/2016/08/26/Android%E4%B8%AD%E7%9A%84%E7%BA%BF%E7%A8%8B%E2%80%94%E2%80%94IntentService%E5%AE%9E%E7%8E%B0%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李子阳">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李子阳的Android笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/08/26/Android%E4%B8%AD%E7%9A%84%E7%BA%BF%E7%A8%8B%E2%80%94%E2%80%94IntentService%E5%AE%9E%E7%8E%B0%E5%88%86%E6%9E%90/" class="post-title-link" itemprop="url">Android中的线程——IntentService实现分析</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-08-26 11:13:49" itemprop="dateCreated datePublished" datetime="2016-08-26T11:13:49+08:00">2016-08-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-14 18:07:49" itemprop="dateModified" datetime="2020-01-14T18:07:49+08:00">2020-01-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android%E4%B8%AD%E7%9A%84%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index">
+                    <span itemprop="name">Android中的线程</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><code>IntentService</code>是一种特殊<code>Service</code>，是一个继承了<code>Service</code>的抽象类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">IntentService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	...</span><br><span class="line"></span><br><span class="line">	<span class="meta">@WorkerThread</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">onHandleIntent</span><span class="params">(Intent intent)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p><strong>IntentService使用</strong><br> <code>IntentService</code>是一个抽象类，所以要继承<code>IntentService</code>并且Override它的<code>onHandleIntent()</code>方法，在这个方法中添加你需要执行的功能。</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IntentServiceExample</span> <span class="keyword">extends</span> <span class="title">IntentService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">IntentServiceExample</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>(name);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onHandleIntent</span><span class="params">(Intent intent)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (intent.getAction().equals(<span class="string">"top.liziyang.INTENT_SERVICE_EXAMPLE"</span>)) &#123;</span><br><span class="line">			<span class="comment">// do something...</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 然后在外部启动</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent();</span><br><span class="line">intent.setAction(<span class="string">"top.liziyang.INTENT_SERVICE_EXAMPLE"</span>);</span><br><span class="line">startService(intent);</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>IntentService实现分析</strong></p>
+<ul>
+<li><code>IntentService</code>可用于执行后台耗时的任务，任务执行后会自动停止。由于<code>IntentService</code>是<code>Service</code>，所以它的优先级比单纯的线程要高很多。所以<code>IntentService</code>适合执行一些高优先级的后台任务。</li>
+<li><strong>onCreate()</strong><br>  <code>IntentService</code>第一次启动时调用。  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">super</span>.onCreate();</span><br><span class="line">	HandlerThread thread = <span class="keyword">new</span> HandlerThread(<span class="string">"IntentService["</span> + mName + <span class="string">"]"</span>);</span><br><span class="line">	thread.start();</span><br><span class="line"></span><br><span class="line">	mServiceLooper = thread.getLooper();</span><br><span class="line">	mServiceHandler = <span class="keyword">new</span> ServiceHandler(mServiceLooper);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  <code>IntentService</code>封装了<code>HandlerThread</code>和<code>Handler</code>。<code>onCreate()</code>方法会创建一个<code>HandlerThread</code>对象，然后获取它的<code>Looper</code>，并使用这个<code>Looper</code>来构造一个<code>Handler</code>对象<code>mServiceThread</code>，这样通过<code>Handler(mServiceHandler)</code>发送的消息最终都会在<code>HandlerThread</code>中执行。所以是执行后台任务。</li>
+<li><strong>onStart()</strong><br>  每次启动<code>IntentService</code>，都会执行<code>onStart()</code>方法  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStart</span><span class="params">(Intent intent, <span class="keyword">int</span> startId)</span> </span>&#123;</span><br><span class="line">	Message msg = mServiceHandler.obtainMessage();</span><br><span class="line">	msg.arg1 = startId;</span><br><span class="line">	msg.obj = intent;</span><br><span class="line">	mServiceHandler.sendMessage(msg);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  <code>mServiceHandler.sendMessage(msg);</code>，通过发送消息进入到<code>handleMessage()</code></li>
+<li><strong>ServiceHandler、handleMessage()</strong>  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceHandler</span> <span class="keyword">extends</span> <span class="title">Handler</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">ServiceHandler</span><span class="params">(Looper looper)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>(looper);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</span><br><span class="line">		onHandleIntent((Intent)msg.obj);</span><br><span class="line">		stopSelf(msg.arg1);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  如上所讲，<code>onStart()</code>方法中<code>ServiceHandler</code>通过<code>sendMessage()</code>进入<code>handleMessage()</code>方法。<br>  <code>ServiceHandler</code>覆写了<code>handleMessage()</code>方法<br>  <code>onHandleIntent()</code> –&gt; <code>stopSelf()</code>，所以，<code>IntentService</code>在执行完后台任务会自动退出（没有后续任务需要执行的时候）。</li>
+<li><strong>onHandleIntent()</strong><br>通过文章一开始的代码，我们发现，<code>onHandleIntent()</code>是<code>abstract</code>的，用户需要实现该方法，并且自定义后台任务。</li>
+<li><strong>多次调用<code>startService()</code>启动<code>IntentService</code>，执行顺序是怎样的？</strong><br>  我们知道，<code>IntentService</code>封装了<code>HandlerThread</code>和<code>Handler</code>，内部也是通过消息的方式来请求执行任务，并且<code>Handler</code>中的<code>Looper</code>是顺序处理消息的，所以，多次启动<code>IntentService</code>，内部先后顺序执行的。</li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://liziyang.top/2016/08/26/Android%E4%B8%AD%E7%9A%84%E7%BA%BF%E7%A8%8B%E2%80%94%E2%80%94HandlerThread/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李子阳">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李子阳的Android笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/08/26/Android%E4%B8%AD%E7%9A%84%E7%BA%BF%E7%A8%8B%E2%80%94%E2%80%94HandlerThread/" class="post-title-link" itemprop="url">Android中的线程——HandlerThread</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-08-26 00:45:18" itemprop="dateCreated datePublished" datetime="2016-08-26T00:45:18+08:00">2016-08-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-14 18:07:49" itemprop="dateModified" datetime="2020-01-14T18:07:49+08:00">2020-01-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android%E4%B8%AD%E7%9A%84%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index">
+                    <span itemprop="name">Android中的线程</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><code>HandlerThread</code>，顾名思义，就是可以使用<code>Handler</code>的<code>Thread</code>。直接分析源码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HandlerThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	...</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		mTid = Process.myTid();</span><br><span class="line">		Looper.prepare();</span><br><span class="line">		<span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">			mLooper = Looper.myLooper();</span><br><span class="line">			notifyAll();</span><br><span class="line">		&#125;</span><br><span class="line">		Process.setThreadPriority(mPriority);</span><br><span class="line">		onLooperPrepared();</span><br><span class="line">		Looper.loop();</span><br><span class="line">		mTid = -<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>HandlerThread</code>继承了<code>Thread</code>，并且<code>Override</code>了<code>run()</code>方法。<br><code>Looper.prepare();</code>创建消息队列，并且<code>Looper.loop();</code>启动消息循环，这样，<code>HandlerThread</code>就能使用<code>Handler</code>了。<br>Android中，<code>IntentService</code>就使用了<code>HandlerThread</code>，关于<code>IntentService</code>请参考后续文章《Android中的线程——IntentService实现分析》。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+  </div>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李子阳</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李子阳</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.7.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

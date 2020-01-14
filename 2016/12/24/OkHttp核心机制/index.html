@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://liziyang.top').hostname,
+    root: '/',
+    scheme: 'Mist',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="整体图解先来看一张官方提供的图 我们看到有几条灰色的横条，那些东西是Interceptors，横亘在Request和Response之间，那这些Interceptor是什么东西？几个Interceptors又是怎么工作的？ 设计模式中的责任链模式在分析Interceptor之前，先了解一下设计模式中的责任链模式（Iterator Pattern）。什么是“链”？多个节点首尾相连所构成的模型，成为链">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OkHttp核心机制">
+<meta property="og:url" content="http://liziyang.top/2016/12/24/OkHttp%E6%A0%B8%E5%BF%83%E6%9C%BA%E5%88%B6/index.html">
+<meta property="og:site_name" content="李子阳的Android笔记">
+<meta property="og:description" content="整体图解先来看一张官方提供的图 我们看到有几条灰色的横条，那些东西是Interceptors，横亘在Request和Response之间，那这些Interceptor是什么东西？几个Interceptors又是怎么工作的？ 设计模式中的责任链模式在分析Interceptor之前，先了解一下设计模式中的责任链模式（Iterator Pattern）。什么是“链”？多个节点首尾相连所构成的模型，成为链">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://ogxoqrabi.bkt.clouddn.com/image/okhttpokhttp_yuanli_01.png">
+<meta property="article:published_time" content="2016-12-24T10:15:56.000Z">
+<meta property="article:modified_time" content="2020-01-14T10:07:49.598Z">
+<meta property="article:author" content="李子阳">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://ogxoqrabi.bkt.clouddn.com/image/okhttpokhttp_yuanli_01.png">
+
+<link rel="canonical" href="http://liziyang.top/2016/12/24/OkHttp%E6%A0%B8%E5%BF%83%E6%9C%BA%E5%88%B6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>OkHttp核心机制 | 李子阳的Android笔记</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">李子阳的Android笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://liziyang.top/2016/12/24/OkHttp%E6%A0%B8%E5%BF%83%E6%9C%BA%E5%88%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李子阳">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李子阳的Android笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OkHttp核心机制
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-12-24 18:15:56" itemprop="dateCreated datePublished" datetime="2016-12-24T18:15:56+08:00">2016-12-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-14 18:07:49" itemprop="dateModified" datetime="2020-01-14T18:07:49+08:00">2020-01-14</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="整体图解"><a href="#整体图解" class="headerlink" title="整体图解"></a>整体图解</h2><p>先来看一张官方提供的图<br><img src="http://ogxoqrabi.bkt.clouddn.com/image/okhttpokhttp_yuanli_01.png" alt=""></p>
+<p>我们看到有几条灰色的横条，那些东西是Interceptors，横亘在Request和Response之间，那这些Interceptor是什么东西？几个Interceptors又是怎么工作的？</p>
+<h2 id="设计模式中的责任链模式"><a href="#设计模式中的责任链模式" class="headerlink" title="设计模式中的责任链模式"></a>设计模式中的责任链模式</h2><p>在分析Interceptor之前，先了解一下设计模式中的责任链模式（Iterator Pattern）。什么是“链”？多个节点首尾相连所构成的模型，成为链。将每一个节点看作是一个对象，每一个对象拥有不同的处理逻辑，将一个请求从链式的首端发出，沿着链的路径一次传递给每一个节点对象，直到有对象处理这个请求为止。这样的一种模式成为责任链模式。</p>
+<blockquote>
+<p>定义：使多个对象都有机会处理请求，从而避免了请求的发送者和接受者之间的耦合关系。将这些对象连成一条链，并沿着这条链传递该请求，直到有对象处理它为止。</p>
+</blockquote>
+<p>Android中使用责任链模式最有代表性的就是View触摸事件的分发了。当有触摸屏幕的时候，触摸事件会被包装成一个事件对象从ViewTree的顶部自上而下的分发传递，直到有View消耗此事件。</p>
+<h2 id="Interceptor"><a href="#Interceptor" class="headerlink" title="Interceptor"></a>Interceptor</h2><p>OkHttp中的缓存、网络请求等功能都是通过不同层次Interceptor实现的，用户也可以实现<code>Interceptor</code>接口来自定义拦截器，实现对网络请求的监听和处理。</p>
+<p>用户自定义的拦截器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 自定义拦截器</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">XxxInterceptor</span> <span class="keyword">implements</span> <span class="title">Interceptor</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Response <span class="title">intercept</span><span class="params">(Chain chain)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">// 在拦截器中获取Request对象</span></span><br><span class="line">        Request request = chain.request();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 在拦截器中获取Response对象</span></span><br><span class="line">        Response response = chain.proceed(request);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// do something...</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> response;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加拦截器</span></span><br><span class="line">OkHttpClient client = <span class="keyword">new</span> OkHttpClient.Builder()</span><br><span class="line">        .addInterceptor(<span class="keyword">new</span> XxxInterceptor())</span><br><span class="line">        .build();</span><br></pre></td></tr></table></figure>
+
+<p>添加到<code>Client</code>里的拦截器就会和OkHttp默认的拦截器们形成拦截器链。</p>
+<p>OkHttp中具体都有哪些拦截器，看请求的处理流程。</p>
+<h2 id="同步请求的处理流程"><a href="#同步请求的处理流程" class="headerlink" title="同步请求的处理流程"></a>同步请求的处理流程</h2><p>首先，要构造<code>OkHttpClient</code>和<code>Request</code>对象，使用了<code>Builder</code>模式，这在开源框架中非常常见。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">OkHttpClient client = <span class="keyword">new</span> OkHttpClient.Builder()</span><br><span class="line">        .addInterceptor(<span class="keyword">new</span> LoggingInterceptor())</span><br><span class="line">        .build();</span><br><span class="line"></span><br><span class="line">Request request = <span class="keyword">new</span> Request.Builder()</span><br><span class="line">        .url(<span class="string">"http://www.publicobject.com/helloworld.txt"</span>)</span><br><span class="line">        .header(<span class="string">"User-Agent"</span>, <span class="string">"OkHttp Example"</span>)</span><br><span class="line">        .build();</span><br></pre></td></tr></table></figure>
+
+<p>发起请求</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Response response = client.newCall(request).execute();</span><br></pre></td></tr></table></figure>
+
+<p>正在发起网络请求的是<code>Call</code>的实现类<code>RealCall</code>，<code>RealCall</code>实现了<code>Call</code>接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">RealCall</span> <span class="keyword">implements</span> <span class="title">Call</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Client</span></span><br><span class="line">    <span class="keyword">final</span> OkHttpClient client;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 重试和重定向的Interceptor</span></span><br><span class="line">    <span class="keyword">final</span> RetryAndFollowUpInterceptor retryAndFollowUpInterceptor;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Request</span></span><br><span class="line">    <span class="keyword">final</span> Request originalRequest;</span><br><span class="line"></span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> Response <span class="title">execute</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        ......</span><br><span class="line">        <span class="comment">// 获取Response通过拦截器链</span></span><br><span class="line">        Response result = getResponseWithInterceptorChain();</span><br><span class="line">        ......</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">Response <span class="title">getResponseWithInterceptorChain</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">// Build a full stack of interceptors.</span></span><br><span class="line">        List&lt;Interceptor&gt; interceptors = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        interceptors.addAll(client.interceptors());</span><br><span class="line">        interceptors.add(retryAndFollowUpInterceptor);</span><br><span class="line">        interceptors.add(<span class="keyword">new</span> BridgeInterceptor(client.cookieJar()));</span><br><span class="line">        interceptors.add(<span class="keyword">new</span> CacheInterceptor(client.internalCache()));</span><br><span class="line">        interceptors.add(<span class="keyword">new</span> ConnectInterceptor(client));</span><br><span class="line">        <span class="keyword">if</span> (!forWebSocket) &#123;</span><br><span class="line">            interceptors.addAll(client.networkInterceptors());</span><br><span class="line">        &#125;</span><br><span class="line">        interceptors.add(<span class="keyword">new</span> CallServerInterceptor(forWebSocket));</span><br><span class="line"></span><br><span class="line">        Interceptor.Chain chain = <span class="keyword">new</span> RealInterceptorChain(interceptors, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="number">0</span>, originalRequest, <span class="keyword">this</span>, eventListener,  client.connectTimeoutMillis(), client.readTimeoutMillis(), client.writeTimeoutMillis());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> chain.proceed(originalRequest);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>RealCall</code>的<code>execute()</code>方法核心就是<code>getResponseWithInterceptorChain()</code>方法，顾名思义，就是获取<code>Response</code>通过拦截器链。</p>
+<p>首先这个拦截器List添加用户自定义的拦截器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">interceptors.addAll(client.interceptors());</span><br></pre></td></tr></table></figure>
+<p>在开头的代码中，给<code>Client</code>添加了自定义的拦截器</p>
+<p>然后是一些OkHttp默认的拦截器，这些拦截器就是OkHttp的核心，将<strong>监听</strong>、<strong>重试重定向</strong>、<strong>缓存</strong>、<strong>连接</strong>等功能分布在各自的拦截器中。实际上就是功能的分层。</p>
+<ul>
+<li><code>RetryAndFollowUpInterceptor</code>，重试重定向</li>
+<li><code>BridgeInterceptor</code>，用户和服务器的桥梁。把用户的<code>Request</code>转成转换成发送到服务器的<code>Request</code>，把服务器的<code>Response</code>转换成用户的<code>Response</code>。</li>
+<li><code>CacheInterceptor</code>，读取缓存，更新缓存。若缓存可用，直接返回，责任链到此为止。否则继续向下，让其他拦截器/链上的节点处理。</li>
+<li><code>ConnectInterceptor</code>，和服务器建立连接</li>
+<li><code>CallServerInterceptor</code>，从服务器获取数据</li>
+</ul>
+<p>这些拦截器自上而下实现不同的功能，将完整的功能划分成独立不同层次的模块。最后一个一定是从服务器获取数据的拦截器。缓存拦截器一定在其上。</p>
+<p>这样网络请求就从<code>RealCall</code>中剥离出来了，交给<code>InterceptorChain</code>。</p>
+<p>每个拦截器的实现这里就不关心了。</p>
+<h2 id="异步请求"><a href="#异步请求" class="headerlink" title="异步请求"></a>异步请求</h2><p>相对于同步请求，异步请求使用了线程池，这里就不继续分析了</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2016/12/08/Http%E8%AF%B7%E6%B1%82%E4%B9%8BRange/" rel="prev" title="Http请求之Range">
+      <i class="fa fa-chevron-left"></i> Http请求之Range
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/01/04/%E5%87%A0%E7%A7%8D%E5%B8%B8%E7%94%A8%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E6%A1%86%E6%9E%B6%E5%88%86%E6%9E%90/" rel="next" title="几种常用图片加载框架分析">
+      几种常用图片加载框架分析 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#整体图解"><span class="nav-number">1.</span> <span class="nav-text">整体图解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计模式中的责任链模式"><span class="nav-number">2.</span> <span class="nav-text">设计模式中的责任链模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Interceptor"><span class="nav-number">3.</span> <span class="nav-text">Interceptor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步请求的处理流程"><span class="nav-number">4.</span> <span class="nav-text">同步请求的处理流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步请求"><span class="nav-number">5.</span> <span class="nav-text">异步请求</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李子阳</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李子阳</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.7.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

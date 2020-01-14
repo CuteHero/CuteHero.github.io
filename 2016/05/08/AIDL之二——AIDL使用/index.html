@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://liziyang.top').hostname,
+    root: '/',
+    scheme: 'Mist',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="AIDL，Android Interface Definition Language （Android接口定义语言）通过AIDL实现进程间通信（IPC），Service提供服务（比如一些供客户端调用的方法）给客户端使用，Service所在的进程我们称为服务端（下文的服务端也指该Service），去绑定Service的那个进程我们称为客户端，客户端使用Service所提供的服务   AIDL使用简">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AIDL之二——AIDL使用">
+<meta property="og:url" content="http://liziyang.top/2016/05/08/AIDL%E4%B9%8B%E4%BA%8C%E2%80%94%E2%80%94AIDL%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="李子阳的Android笔记">
+<meta property="og:description" content="AIDL，Android Interface Definition Language （Android接口定义语言）通过AIDL实现进程间通信（IPC），Service提供服务（比如一些供客户端调用的方法）给客户端使用，Service所在的进程我们称为服务端（下文的服务端也指该Service），去绑定Service的那个进程我们称为客户端，客户端使用Service所提供的服务   AIDL使用简">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2016-05-08T09:32:13.000Z">
+<meta property="article:modified_time" content="2020-01-14T10:07:49.579Z">
+<meta property="article:author" content="李子阳">
+<meta property="article:tag" content="AIDL">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://liziyang.top/2016/05/08/AIDL%E4%B9%8B%E4%BA%8C%E2%80%94%E2%80%94AIDL%E4%BD%BF%E7%94%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>AIDL之二——AIDL使用 | 李子阳的Android笔记</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">李子阳的Android笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://liziyang.top/2016/05/08/AIDL%E4%B9%8B%E4%BA%8C%E2%80%94%E2%80%94AIDL%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李子阳">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李子阳的Android笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          AIDL之二——AIDL使用
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-05-08 17:32:13" itemprop="dateCreated datePublished" datetime="2016-05-08T17:32:13+08:00">2016-05-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-14 18:07:49" itemprop="dateModified" datetime="2020-01-14T18:07:49+08:00">2020-01-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AIDL/" itemprop="url" rel="index">
+                    <span itemprop="name">AIDL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>AIDL，Android Interface Definition Language （Android接口定义语言）<br>通过AIDL实现进程间通信（IPC），Service提供服务（比如一些供客户端调用的方法）给客户端使用，Service所在的进程我们称为服务端（下文的服务端也指该Service），去绑定Service的那个进程我们称为客户端，客户端使用Service所提供的服务</p>
+</blockquote>
+<ul>
+<li><p><strong>AIDL使用简介</strong>：</p>
+<ul>
+<li>两个进程需要有相同的aidl文件</li>
+<li>服务端里的Service类，定义一个IBinder对象继承自<code>Stub</code>，并且实现AIDL文件中的方法，这个对象通过<code>onBinder()</code>方法返回给Client端</li>
+<li><strong>两个进程之间的桥梁就是这个IBinder对象</strong></li>
+<li>客户端通过绑定Service获取到这个IBinder对象，两个进程就建立起了联系</li>
+</ul>
+</li>
+<li><p><strong>AIDL使用</strong>：</p>
+<ul>
+<li><p><strong>aidl文件</strong>，定义接口，比如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> top.liziyang.aidlservice;</span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">IAIDLDemo</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> number1, <span class="keyword">int</span> number2)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  这样，Android Studio在编译时会自动生成<code>IAIDLDemo.java</code>文件，这个文件我们以后再谈。</p>
+</li>
+<li><p><strong>服务端</strong></p>
+<ul>
+<li><p>在<code>AndroidManifest.xml</code>中设置<code>android:exported=&quot;true&quot;</code>，不然外部App无法bind</p>
+</li>
+<li><p>定义一个<code>IAIDLDemo.Stub</code>类型的对象，并且实现在aidl文件中定义的接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">IBinder iBinder = <span class="keyword">new</span> IAIDLDemo.Stub() &#123;</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 远程实际操作</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">       <span class="meta">@Override</span></span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> number1, <span class="keyword">int</span> number2)</span> <span class="keyword">throws</span> RemoteException </span>&#123;</span><br><span class="line">           <span class="keyword">return</span> number1 + number2;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Override <code>onBind()</code> 方法，并且返回<code>IAIDLDemo.Stub</code>（<code>IBinder</code>）对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> iBinder;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>  客户端绑定Service之后会得到这个IBinder对象</p>
+</li>
+</ul>
+</li>
+<li><p><strong>客户端</strong></p>
+<ul>
+<li>客户端执行<code>bindService(Intent intent, ServiceConnection conn, int flags)</code>绑定Service，这时，Service回调<code>onBind()</code>方法，并且返回<code>IAIDLDemo.Stub</code>（<code>IBinder</code>）对象，这样客户端在<code>ServiceConnection</code>的<code>onServiceConnected()</code>方法中就得到了这个<code>IBinder</code>对象<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">IAIDLDemo iaidlDemo;</span><br><span class="line"></span><br><span class="line">bindService(intent, <span class="keyword">new</span> ServiceConnection() &#123;</span><br><span class="line">          <span class="meta">@Override</span></span><br><span class="line">          <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceConnected</span><span class="params">(ComponentName name, IBinder service)</span> </span>&#123;</span><br><span class="line">              iaidlDemo = IAIDLDemo.Stub.asInterface(service);</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">          <span class="meta">@Override</span></span><br><span class="line">          <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceDisconnected</span><span class="params">(ComponentName name)</span> </span>&#123;</span><br><span class="line">              iaidlDemo = <span class="keyword">null</span>;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;, BIND_AUTO_CREATE);</span><br></pre></td></tr></table></figure></li>
+<li>Client里也要有和Server里相同的aidl文件，<strong>包名也要一样！！！</strong>，负责类型不一样，无法调用。</li>
+<li>客户端获取到的服务端Service的<code>IBinder</code>对象的类型是<code>IAIDLDemo.Stub</code>，所以要转换成’IAIDLDemo’<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// onServiceConnected()里</span></span><br><span class="line">iAIDLDemo = IAIDLDemo.Stub.asInterface(iBinder);</span><br></pre></td></tr></table></figure>
+  这时，客户端就可以通过<code>IAIDLDemo</code>对象直接调用服务端Service提供的方法了</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>其他</strong>：</p>
+<ul>
+<li><p><strong>参数</strong></p>
+<ul>
+<li>除short外的所有基本数据类型，byte、int、long、boolean、float、double、char等</li>
+<li>String、CharSequence</li>
+<li>List、Map</li>
+</ul>
+</li>
+<li><p><strong>传递自定义参数</strong></p>
+<ul>
+<li><p>传递参数时，非基本数据类型需要指定方向，in、out、inout，基本数据类型默认是in，即只向Server传递数据</p>
+<ul>
+<li>Client只向Server传递数据，<code>in</code></li>
+<li>Client只接收Server传回来的数据，<code>out</code></li>
+<li>Client向Server传递数据且需要Server返回，<code>inout</code></li>
+</ul>
+</li>
+<li><p>Service：</p>
+<ul>
+<li><strong>自定义数据类型</strong>，新建实现Parcelable接口的类，实现<code>describeContents()</code>、<code>writeToParcel（）</code>等接口，并创建<code>CREATEOR</code>变量</li>
+<li><strong>新建同名aidl文件</strong>作为该类的描述：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> top.liziyang.aidlservice;</span><br><span class="line">parcelable Person;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>Client:</p>
+<ul>
+<li>需要有相同的自定义数据类型的类和aidl文件，包名也要一样</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>与Binder的比较</strong></p>
+<ul>
+<li>本地后台播放音乐不需要使用AIDL，使用Binder即可</li>
+<li>在播放音乐的<code>Service</code>的<code>onBind()</code>方法中返回<code>Binder</code>对象，通过<code>Binder</code>对象可以获取<code>Service</code>对象，然后就可以调用<code>Service</code>里的方法了</li>
+<li>这种场景需要混合启动，如果只bind，Activity退出的时候Service也退出了</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>代码：<a href="https://github.com/CuteHero/AIDLDemo" target="_blank" rel="noopener">https://github.com/CuteHero/AIDLDemo</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AIDL/" rel="tag"># AIDL</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2016/05/04/AIDL%E4%B9%8B%E4%B8%80%E2%80%94%E2%80%94Binder%EF%BC%8C%E8%BF%9B%E7%A8%8B%E5%86%85Binder%E4%BD%BF%E7%94%A8/" rel="prev" title="AIDL之一——Binder，进程内Binder使用">
+      <i class="fa fa-chevron-left"></i> AIDL之一——Binder，进程内Binder使用
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2016/08/26/Android%E4%B8%AD%E7%9A%84%E7%BA%BF%E7%A8%8B%E2%80%94%E2%80%94AsycTask%E5%8E%9F%E7%90%86/" rel="next" title="Android中的线程——AsycTask原理">
+      Android中的线程——AsycTask原理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李子阳</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李子阳</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.7.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

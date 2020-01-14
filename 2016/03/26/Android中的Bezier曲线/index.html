@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://liziyang.top').hostname,
+    root: '/',
+    scheme: 'Mist',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="Android给我们提供了绘制二阶Bezier曲线和三阶Bezier曲线的方法。我们通过自定义View实现二阶和三阶Bezier曲线，起点和终点固定，控制点可以拖动。  效果演示 达到的效果  思路分析  二阶Bezier曲线的起点和终点固定，起点在View左侧1&#x2F;6处，垂直方向上居中，终点在View右侧5&#x2F;6处，下方也是5&#x2F;6处。 控制点的起始位置水平方向上居中，垂直方向上在1&#x2F;6处。 View">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android中的Bezier曲线">
+<meta property="og:url" content="http://liziyang.top/2016/03/26/Android%E4%B8%AD%E7%9A%84Bezier%E6%9B%B2%E7%BA%BF/index.html">
+<meta property="og:site_name" content="李子阳的Android笔记">
+<meta property="og:description" content="Android给我们提供了绘制二阶Bezier曲线和三阶Bezier曲线的方法。我们通过自定义View实现二阶和三阶Bezier曲线，起点和终点固定，控制点可以拖动。  效果演示 达到的效果  思路分析  二阶Bezier曲线的起点和终点固定，起点在View左侧1&#x2F;6处，垂直方向上居中，终点在View右侧5&#x2F;6处，下方也是5&#x2F;6处。 控制点的起始位置水平方向上居中，垂直方向上在1&#x2F;6处。 View">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://ogxoqrabi.bkt.clouddn.com/image/bezier/bezier_2nd_view.gif">
+<meta property="og:image" content="http://ogxoqrabi.bkt.clouddn.com/image/bezier/bezier_3rd_view.gif">
+<meta property="article:published_time" content="2016-03-26T15:53:07.000Z">
+<meta property="article:modified_time" content="2020-01-14T10:07:49.580Z">
+<meta property="article:author" content="李子阳">
+<meta property="article:tag" content="Bezier">
+<meta property="article:tag" content="贝塞尔曲线">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://ogxoqrabi.bkt.clouddn.com/image/bezier/bezier_2nd_view.gif">
+
+<link rel="canonical" href="http://liziyang.top/2016/03/26/Android%E4%B8%AD%E7%9A%84Bezier%E6%9B%B2%E7%BA%BF/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Android中的Bezier曲线 | 李子阳的Android笔记</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">李子阳的Android笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://liziyang.top/2016/03/26/Android%E4%B8%AD%E7%9A%84Bezier%E6%9B%B2%E7%BA%BF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李子阳">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李子阳的Android笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Android中的Bezier曲线
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-03-26 23:53:07" itemprop="dateCreated datePublished" datetime="2016-03-26T23:53:07+08:00">2016-03-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-14 18:07:49" itemprop="dateModified" datetime="2020-01-14T18:07:49+08:00">2020-01-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/" itemprop="url" rel="index">
+                    <span itemprop="name">贝塞尔曲线</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Android给我们提供了绘制二阶Bezier曲线和三阶Bezier曲线的方法。我们通过自定义View实现二阶和三阶Bezier曲线，起点和终点固定，控制点可以拖动。</p>
+<ol>
+<li><p><strong>效果演示</strong><br> 达到的效果<img src="http://ogxoqrabi.bkt.clouddn.com/image/bezier/bezier_2nd_view.gif" alt="enter image description here"></p>
+</li>
+<li><p><strong>思路分析</strong></p>
+<ul>
+<li>二阶Bezier曲线的起点和终点固定，起点在View左侧1/6处，垂直方向上居中，终点在View右侧5/6处，下方也是5/6处。</li>
+<li>控制点的起始位置水平方向上居中，垂直方向上在1/6处。</li>
+<li><code>View</code>的<code>onSizeChanged()</code>方法在View大小改变时回调，所以在<code>onSizeChanged()</code>里对起点、终点和控制点初始化</li>
+<li>在<code>onDraw()</code>方法里，通过<code>canvas.drawLine()</code>画出两条直线，起点到控制点，控制点到终点。通过<code>canvas.drawCircle()</code>方法画出三个点。</li>
+<li>画Bezier曲线的时候要通过<code>Path</code>去画，然后通过<code>canvas.drawPath()</code>画出<code>Path</code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// path移动到起点</span></span><br><span class="line">path.moveTo(pointStart.x, pointStart.y);</span><br><span class="line"><span class="comment">// 画Bezier曲线，经过控制点和终点</span></span><br><span class="line">path.quadTo(pointFlag.x, pointFlag.y, pointEnd.x, pointEnd.y);</span><br></pre></td></tr></table></figure></li>
+<li>为了实现拖动控制点功能，需要覆写<code>onTouchEvent()</code>方法，改变控制点的坐标，然后调用<code>invalidate()</code>发起<code>onDraw()</code>。</li>
+</ul>
+</li>
+<li><p><strong>代码实现</strong></p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SecondBezierView</span> <span class="keyword">extends</span> <span class="title">View</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> PointF pointStart;</span><br><span class="line">	<span class="keyword">private</span> PointF pointEnd;</span><br><span class="line">	<span class="keyword">private</span> PointF pointFlag;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> Path path;</span><br><span class="line">	<span class="keyword">private</span> Paint paintBezier;</span><br><span class="line">	<span class="keyword">private</span> Paint paintPoint;</span><br><span class="line">	<span class="keyword">private</span> Paint paintLine;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">SecondBezierView</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>(context, <span class="keyword">null</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">SecondBezierView</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>(context, attrs, <span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">SecondBezierView</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>(context, attrs, defStyleAttr);</span><br><span class="line"></span><br><span class="line">		init();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		pointStart = <span class="keyword">new</span> PointF();</span><br><span class="line">		pointEnd = <span class="keyword">new</span> PointF();</span><br><span class="line">		pointFlag = <span class="keyword">new</span> PointF();</span><br><span class="line"></span><br><span class="line">		path = <span class="keyword">new</span> Path();</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Bezier Paint 红色实线</span></span><br><span class="line">		paintBezier = <span class="keyword">new</span> Paint(Paint.ANTI_ALIAS_FLAG);</span><br><span class="line">		paintBezier.setStrokeWidth(<span class="number">4</span>);</span><br><span class="line">		paintBezier.setColor(Color.RED);</span><br><span class="line">		paintBezier.setStyle(Paint.Style.STROKE);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Point Paint</span></span><br><span class="line">		paintPoint = <span class="keyword">new</span> Paint(Paint.ANTI_ALIAS_FLAG);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Line Paint</span></span><br><span class="line">		paintLine = <span class="keyword">new</span> Paint(Paint.ANTI_ALIAS_FLAG);</span><br><span class="line">		paintLine.setColor(Color.GRAY);</span><br><span class="line">		paintLine.setStrokeWidth(<span class="number">2</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onSizeChanged</span><span class="params">(<span class="keyword">int</span> w, <span class="keyword">int</span> h, <span class="keyword">int</span> oldw, <span class="keyword">int</span> oldh)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.onSizeChanged(w, h, oldw, oldh);</span><br><span class="line"></span><br><span class="line">		pointStart.x = w / <span class="number">6f</span>;</span><br><span class="line">		pointStart.y = h / <span class="number">2f</span>;</span><br><span class="line"></span><br><span class="line">		pointFlag.x = w / <span class="number">2f</span>;</span><br><span class="line">		pointFlag.y = h / <span class="number">6f</span>;</span><br><span class="line"></span><br><span class="line">		pointEnd.x = w / <span class="number">6f</span> * <span class="number">5</span>;</span><br><span class="line">		pointEnd.y = h / <span class="number">6f</span> * <span class="number">5</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.onDraw(canvas);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 画直线</span></span><br><span class="line">		canvas.drawLine(pointStart.x, pointStart.y, pointFlag.x, pointFlag.y, paintLine);</span><br><span class="line">		canvas.drawLine(pointFlag.x, pointFlag.y, pointEnd.x, pointEnd.y, paintLine);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 画点</span></span><br><span class="line">		canvas.drawCircle(pointStart.x, pointStart.y, <span class="number">8</span>, paintPoint);</span><br><span class="line">		canvas.drawCircle(pointFlag.x, pointFlag.y, <span class="number">8</span>, paintPoint);</span><br><span class="line">		canvas.drawCircle(pointEnd.x, pointEnd.y, <span class="number">8</span>, paintPoint);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 画贝塞尔曲线</span></span><br><span class="line">		path.reset();</span><br><span class="line">		path.moveTo(pointStart.x, pointStart.y);</span><br><span class="line"></span><br><span class="line">		path.quadTo(pointFlag.x, pointFlag.y, pointEnd.x, pointEnd.y);</span><br><span class="line"></span><br><span class="line">		canvas.drawPath(path, paintBezier);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">switch</span> (event.getAction()) &#123;</span><br><span class="line">			<span class="keyword">case</span> MotionEvent.ACTION_MOVE:</span><br><span class="line">				pointFlag.x = event.getX();</span><br><span class="line">				pointFlag.y = event.getY();</span><br><span class="line">				invalidate();</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 在<code>构造函数</code>里，将需要的<code>Paint</code>和<code>Path</code>等都初始化<br> 在<code>onSizeChanged()</code>方法，确定起始点的坐标<br> 在<code>onDraw()</code>方法，画出起始点，画出起点和控制点的连线、控制点和终点的连线，通过<code>Path</code>画出Bezier曲线的路径，最后调用<code>canvas.drawPath()</code>绘制出<code>Path</code><br> 拖动控制点时，在<code>onTouchEvent()</code>方法，改变控制点坐标，然后重新绘制<code>View</code></p>
+</li>
+<li><p><strong>三阶贝塞尔曲线</strong><br> Android也提供了绘制三阶Bezier曲线的方法，<code>path.cubicTo()</code>，实现思路和上面是一样的，我这里仅仅给出一个效果，如有兴趣，读着可自行实现。<img src="http://ogxoqrabi.bkt.clouddn.com/image/bezier/bezier_3rd_view.gif" alt="enter image description here"></p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Bezier/" rel="tag"># Bezier</a>
+              <a href="/tags/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/" rel="tag"># 贝塞尔曲线</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2016/03/26/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/" rel="prev" title="贝塞尔曲线">
+      <i class="fa fa-chevron-left"></i> 贝塞尔曲线
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2016/03/27/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF%E5%BA%94%E7%94%A8%E4%B9%8B%E4%B8%80%E2%80%94%E2%80%94%E6%89%8B%E5%86%99%E7%99%BD%E6%9D%BF%E7%9A%84%E7%AC%94%E8%BF%B9%E5%B9%B3%E6%BB%91%E5%A4%84%E7%90%86/" rel="next" title="贝塞尔曲线应用之一——手写白板的笔迹平滑处理">
+      贝塞尔曲线应用之一——手写白板的笔迹平滑处理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李子阳</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李子阳</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.7.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

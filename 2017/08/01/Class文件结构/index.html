@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://liziyang.top').hostname,
+    root: '/',
+    scheme: 'Mist',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="Class文件是以8bit（字节）为基础的二进制文件。各个数据依次排列，中间没有间隙。如果一个数据需要多个字节，高位在前。 Class文件结构采用一种类似于C语言结构体的伪结构来存储，数据类型有无符号数和表。无符号数用u1、u2、u4、u8表示，分别代表1、2、4、8个字节（感觉像在写单片机程序[捂脸]）。表由无符号数和其他表构成。 Class文件本质上就是一个表。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Class文件结构">
+<meta property="og:url" content="http://liziyang.top/2017/08/01/Class%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:site_name" content="李子阳的Android笔记">
+<meta property="og:description" content="Class文件是以8bit（字节）为基础的二进制文件。各个数据依次排列，中间没有间隙。如果一个数据需要多个字节，高位在前。 Class文件结构采用一种类似于C语言结构体的伪结构来存储，数据类型有无符号数和表。无符号数用u1、u2、u4、u8表示，分别代表1、2、4、8个字节（感觉像在写单片机程序[捂脸]）。表由无符号数和其他表构成。 Class文件本质上就是一个表。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-08-01T08:57:13.000Z">
+<meta property="article:modified_time" content="2020-01-14T10:35:54.156Z">
+<meta property="article:author" content="李子阳">
+<meta property="article:tag" content="Jvm">
+<meta property="article:tag" content="Class文件">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://liziyang.top/2017/08/01/Class%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Class文件结构 | 李子阳的Android笔记</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">李子阳的Android笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://liziyang.top/2017/08/01/Class%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李子阳">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李子阳的Android笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Class文件结构
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-08-01 16:57:13" itemprop="dateCreated datePublished" datetime="2017-08-01T16:57:13+08:00">2017-08-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-14 18:35:54" itemprop="dateModified" datetime="2020-01-14T18:35:54+08:00">2020-01-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java%E8%99%9A%E6%8B%9F%E6%9C%BA/" itemprop="url" rel="index">
+                    <span itemprop="name">Java虚拟机</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p><code>Class</code>文件是以8bit（字节）为基础的二进制文件。各个数据依次排列，中间没有间隙。如果一个数据需要多个字节，高位在前。</p>
+<p>Class文件结构采用一种类似于C语言结构体的<code>伪结构</code>来存储，数据类型有<code>无符号数</code>和<code>表</code>。<code>无符号数</code>用u1、u2、u4、u8表示，分别代表1、2、4、8个字节（感觉像在写单片机程序[捂脸]）。<code>表</code>由<code>无符号数</code>和其他<code>表</code>构成。</p>
+<p>Class文件本质上就是一个表。</p>
+</blockquote>
+<a id="more"></a>
+
+<h2 id="Class文件的数据结构"><a href="#Class文件的数据结构" class="headerlink" title="Class文件的数据结构"></a>Class文件的数据结构</h2><table>
+<thead>
+<tr>
+<th align="center">类型</th>
+<th align="left">名称</th>
+<th align="center">数量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">u4</td>
+<td align="left">magic</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">u2</td>
+<td align="left">minor_version</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">u2</td>
+<td align="left">major_version</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">u2</td>
+<td align="left">constant_pool_count</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">cp_info</td>
+<td align="left">constant_pool</td>
+<td align="center">constant_pool - 1</td>
+</tr>
+<tr>
+<td align="center">u2</td>
+<td align="left">access_flag</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">u2</td>
+<td align="left">this_class</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">u2</td>
+<td align="left">super_class</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">u2</td>
+<td align="left">interfaces_count</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">u2</td>
+<td align="left">interfaces</td>
+<td align="center">interfaces_count</td>
+</tr>
+<tr>
+<td align="center">u2</td>
+<td align="left">fields_count</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">field_info</td>
+<td align="left">fields</td>
+<td align="center">fields_count</td>
+</tr>
+<tr>
+<td align="center">u2</td>
+<td align="left">methods_count</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">method_info</td>
+<td align="left">methods</td>
+<td align="center">methods_count</td>
+</tr>
+<tr>
+<td align="center">u2</td>
+<td align="left">attributes_count</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">attribute_info</td>
+<td align="left">attributes</td>
+<td align="center">attributes_count</td>
+</tr>
+</tbody></table>
+<h2 id="magic"><a href="#magic" class="headerlink" title="magic"></a>magic</h2><p>魔数，固定值<code>0xCAFEBABE</code></p>
+<h2 id="常量池"><a href="#常量池" class="headerlink" title="常量池"></a>常量池</h2><p>常量池中主要存放两大类常量：<code>字面量</code>和<code>符号引用</code>。</p>
+<h3 id="符号引用"><a href="#符号引用" class="headerlink" title="符号引用"></a>符号引用</h3><p>符号引用主要包括三类常量：</p>
+<ul>
+<li>类和接口的全限定名<code>（top.liziyang.example.MainActivity）</code></li>
+<li>字段的名称和描述符</li>
+<li>方法的名称和描述符</li>
+</ul>
+<h3 id="常量表"><a href="#常量表" class="headerlink" title="常量表"></a>常量表</h3><p>常量池中的每一项常量都是一个表，有11种，代表不同类型的常量</p>
+
+<table border="1">
+	<th>常量</th>
+	<th>name</th>
+	<th>长度</th>
+	<th>描述</th>
+
+	<tr>
+		<td rowspan=3 style="vertical-align:middle">CONSTANT_Utf8</td>
+		<td>tag</td>
+		<td>u1</td>
+		<td>标志位，代表当前常量的常量类型，1代表CONSTANT_Utf8</td>
+	</tr>
+	<tr>
+		<td>length</td>
+		<td>u2</td>
+		<td>utf-8编码的字符串的字节数。比如“Hello”这个常量的length就是5</td>
+	</tr>
+	<tr>
+		<td>bytes</td>
+		<td>char/u1 数组</td>
+		<td>实际的值，比如，['H', 'e', 'l', 'l', 'o']</td>
+	</tr>
+
+	<tr>
+		<td rowspan=2 style="vertical-align:middle">CONSTANT_Integer</td>
+		<td>tag</td>
+		<td>u1</td>
+		<td>标志位，代表当前常量的常量类型，3代表CONSTANT_Integer</td>
+	</tr>
+	<tr>
+		<td>bytes</td>
+		<td>u4</td>
+		<td>int常量的值，高位在前，如果是10，则这个bytes的值就是 00 00 00 0A</td>
+	</tr>
+	<tr>
+		<td colspan=4 style="vertical-align:middle">CONSTANT_Float(结构类似Integer)</td>
+	</tr>
+
+	<tr>
+		<td colspan=4 style="vertical-align:middle">CONSTANT_Long(结构类似Integer)</td>
+	</tr>
+
+	<tr>
+		<td colspan=4 style="vertical-align:middle">CONSTANT_Double(结构类似Integer)</td>
+	</tr>
+
+	<tr>
+		<td rowspan=2 style="vertical-align:middle">CONSTANT_Class(一个类或接口的符号引用)</td>
+		<td>tag</td>
+		<td>u1</td>
+		<td>标志位，代表当前常量的常量类型，7代表CONSTANT_Class</td>
+	</tr>
+	<tr>
+		<td>name_index</td>
+		<td>u2</td>
+		<td>指向全限定名常量项的索引，struct cp_info constant_pool[x]</td>
+	</tr>
+
+	<tr>
+		<td rowspan=2 style="vertical-align:middle">CONSTANT_String(字符串类型字面量)</td>
+		<td>tag</td>
+		<td>u1</td>
+		<td>标志位，8</td>
+	</tr>
+	<tr>
+		<td>string_index</td>
+		<td>u2</td>
+		<td>索引，指向字符串字面量</td>
+	</tr>
+
+	<tr>
+		<td rowspan=3 style="vertical-align:middle">CONSTANT_Fieldref(类的方法的符号引用)</td>
+		<td>tag</td>
+		<td>u1</td>
+		<td>标志位，9</td>
+	</tr>
+	<tr>
+		<td>class_index</td>
+		<td>u2</td>
+		<td>索引，指向声明该字段的类的符号引用CONSTANT_Class</td>
+	</tr>
+	<tr>
+		<td>name_and_value_index</td>
+		<td>u2</td>
+		<td>索引，指向方法名称和类型描述符CONSTANT_NameAndType</td>
+	</tr>
+
+	<tr>
+		<td rowspan=3 style="vertical-align:middle">CONSTANT_Methodref(类的方法的符号引用)</td>
+		<td>tag</td>
+		<td>u1</td>
+		<td>标志位，代表当前常量的常量类型，10代表CONSTANT_Methodref</td>
+	</tr>
+	<tr>
+		<td>class_index</td>
+		<td>u2</td>
+		<td>索引，指向声明方法的类的符号引用CONSTANT_Class</td>
+	</tr>
+	<tr>
+		<td>name_and_value_index</td>
+		<td>u2</td>
+		<td>索引，指向方法名称和类型描述符CONSTANT_NameAndType</td>
+	</tr>
+
+	<tr>
+		<td colspan=4 style="vertical-align:middle">CONSTANT_InterfaceMethodref(接口的方法的符号引用，类似CONSTANT_Methodref)</td>
+	</tr>
+
+	<tr>
+		<td rowspan=3 style="vertical-align:middle">CONSTANT_NameAndType(字段或方法的名称和描述符)</td>
+		<td>tag</td>
+		<td>u1</td>
+		<td>标志位，代表当前常量的常量类型，12</td>
+	</tr>
+	<tr>
+		<td>name_index</td>
+		<td>u2</td>
+		<td>索引，方法或字段的名称，比如int abc = 0; 这个索引指向的常量就是“abc”</td>
+	</tr>
+	<tr>
+		<td>name_and_value_index</td>
+		<td>u2</td>
+		<td>索引，方法或字段的描述符，比如int abc = 0; 这个索引指向的就是“I”</td>
+	</tr>
+</table>
+
+
+
+<h2 id="this-class、super-class"><a href="#this-class、super-class" class="headerlink" title="this_class、super_class"></a>this_class、super_class</h2><p>常量池的索引，指向<code>CONSTANT_Class</code></p>
+<h2 id="interfaces-count、interfaces"><a href="#interfaces-count、interfaces" class="headerlink" title="interfaces_count、interfaces"></a>interfaces_count、interfaces</h2><p><code>interfaces_count</code>，直接继承或实现的接口或类的个数<br><code>interfaces</code>，数组，索引，指向接口或类的符号引用</p>
+<h2 id="fields-count、fields"><a href="#fields-count、fields" class="headerlink" title="fields_count、fields"></a>fields_count、fields</h2><p><code>fields_count</code>，类或接口声明的字段的个数<br><code>fields</code>，数组，字段的描述</p>
+<h2 id="methods-count、methods"><a href="#methods-count、methods" class="headerlink" title="methods_count、methods"></a>methods_count、methods</h2><h2 id="attributes-count、attributes"><a href="#attributes-count、attributes" class="headerlink" title="attributes_count、attributes"></a>attributes_count、attributes</h2>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Jvm/" rel="tag"># Jvm</a>
+              <a href="/tags/Class%E6%96%87%E4%BB%B6/" rel="tag"># Class文件</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/06/08/Kotlin%E7%AC%94%E8%AE%B0/" rel="prev" title="Kotlin笔记">
+      <i class="fa fa-chevron-left"></i> Kotlin笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/08/02/%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B/" rel="next" title="类的加载过程">
+      类的加载过程 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Class文件的数据结构"><span class="nav-number">1.</span> <span class="nav-text">Class文件的数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#magic"><span class="nav-number">2.</span> <span class="nav-text">magic</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常量池"><span class="nav-number">3.</span> <span class="nav-text">常量池</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#符号引用"><span class="nav-number">3.1.</span> <span class="nav-text">符号引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常量表"><span class="nav-number">3.2.</span> <span class="nav-text">常量表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#this-class、super-class"><span class="nav-number">4.</span> <span class="nav-text">this_class、super_class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#interfaces-count、interfaces"><span class="nav-number">5.</span> <span class="nav-text">interfaces_count、interfaces</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fields-count、fields"><span class="nav-number">6.</span> <span class="nav-text">fields_count、fields</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#methods-count、methods"><span class="nav-number">7.</span> <span class="nav-text">methods_count、methods</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#attributes-count、attributes"><span class="nav-number">8.</span> <span class="nav-text">attributes_count、attributes</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李子阳</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李子阳</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.7.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

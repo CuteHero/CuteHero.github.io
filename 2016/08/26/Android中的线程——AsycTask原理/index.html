@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://liziyang.top').hostname,
+    root: '/',
+    scheme: 'Mist',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="Android中的线程 Android中的线程分为主线程和子线程，主线程即UI线程。UI线程运行四大组件并且处理他们和用户的交互，子线程用来执行耗时任务，比如网络请求，I&#x2F;O操作等。这样做的好处是避免UI线程被阻塞，避免出现卡顿或者ANR等现象。 当需要创建子线程的时候，我们最常用的做法就是使用Thread，其实扮演线程的角色还有很多，比如AsyncTask、HandlerThread、Inte">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android中的线程——AsycTask原理">
+<meta property="og:url" content="http://liziyang.top/2016/08/26/Android%E4%B8%AD%E7%9A%84%E7%BA%BF%E7%A8%8B%E2%80%94%E2%80%94AsycTask%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:site_name" content="李子阳的Android笔记">
+<meta property="og:description" content="Android中的线程 Android中的线程分为主线程和子线程，主线程即UI线程。UI线程运行四大组件并且处理他们和用户的交互，子线程用来执行耗时任务，比如网络请求，I&#x2F;O操作等。这样做的好处是避免UI线程被阻塞，避免出现卡顿或者ANR等现象。 当需要创建子线程的时候，我们最常用的做法就是使用Thread，其实扮演线程的角色还有很多，比如AsyncTask、HandlerThread、Inte">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2016-08-25T16:20:12.000Z">
+<meta property="article:modified_time" content="2020-01-14T10:07:49.581Z">
+<meta property="article:author" content="李子阳">
+<meta property="article:tag" content="AsyncTask">
+<meta property="article:tag" content="线程">
+<meta property="article:tag" content="Thread">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://liziyang.top/2016/08/26/Android%E4%B8%AD%E7%9A%84%E7%BA%BF%E7%A8%8B%E2%80%94%E2%80%94AsycTask%E5%8E%9F%E7%90%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Android中的线程——AsycTask原理 | 李子阳的Android笔记</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">李子阳的Android笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://liziyang.top/2016/08/26/Android%E4%B8%AD%E7%9A%84%E7%BA%BF%E7%A8%8B%E2%80%94%E2%80%94AsycTask%E5%8E%9F%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李子阳">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李子阳的Android笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Android中的线程——AsycTask原理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-08-26 00:20:12" itemprop="dateCreated datePublished" datetime="2016-08-26T00:20:12+08:00">2016-08-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-14 18:07:49" itemprop="dateModified" datetime="2020-01-14T18:07:49+08:00">2020-01-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android%E4%B8%AD%E7%9A%84%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index">
+                    <span itemprop="name">Android中的线程</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <ol>
+<li><p><strong>Android中的线程</strong><br> Android中的线程分为主线程和子线程，主线程即UI线程。UI线程运行四大组件并且处理他们和用户的交互，子线程用来执行耗时任务，比如网络请求，I/O操作等。这样做的好处是避免UI线程被阻塞，避免出现卡顿或者<code>ANR</code>等现象。<br> 当需要创建子线程的时候，我们最常用的做法就是使用<code>Thread</code>，其实扮演线程的角色还有很多，比如<code>AsyncTask</code>、<code>HandlerThread</code>、<code>IntentService</code>等。</p>
+</li>
+<li><p><strong>Out的AsyncTask</strong><br> 在几年以前，我们经常使用<code>AsyncTask</code>来处理异步请求，特别是网络请求，随着Android技术的发展，<code>AsyncTask</code>逐渐被打入冷宫，可是说到Android的<code>线程</code>，AsyncTask还是非常具有代表性的。<br> <code>AsyncTask</code>是轻量级的异步任务类，在<code>线程池</code>中执行后台任务，封装了<code>线程池</code>和<code>Handler</code>。<br> <code>AsyncTask</code>的使用方法我们就不再赘述，主要是4个核心方法</p>
+<ul>
+<li><code>onPreExecute()</code>，异步任务执行之前被调用，一些准备工作</li>
+<li><code>doInBackground()</code>，在<code>线程池</code>中执行异步任务</li>
+<li><code>onProgressUpdate()</code>，运行在<code>UI线程</code>，更新进度</li>
+<li><code>onPostExecute()</code>，运行在<code>UI线程</code>，异步任务执行之后被调用</li>
+</ul>
+</li>
+<li><p><strong>并行还是串行</strong><br> 相信很多人都曾经迷惑过<code>AsyncTask</code>到底是串行还是并行。<br> Android 1.6之前，是串行的，1.6的时候是并行，但是从Android 3.0开始，默认采用一个线程来串行执行任务，但是也可以通过<code>executeOnExecutor()</code>来并行执行。具体实现下面的章节再描述。</p>
+</li>
+<li><p><strong>原理分析</strong></p>
+<ul>
+<li><p><strong>入口</strong><br>  从<code>execute()</code>方法入手，<code>AsyncTask</code>的代码：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@MainThread</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> AsyncTask&lt;Params, Progress, Result&gt; <span class="title">execute</span><span class="params">(Params... params)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> executeOnExecutor(sDefaultExecutor, params);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  这里使用了注解<code>@MainThread</code>，是一种线程注解，基本和<code>UiThread</code>一致，代表需要运行在UI线程。<br>  <code>execute()</code>调用<code>executeOnExecutor()</code>，并且传入<code>Executor</code>——<code>sDefaultExecutor</code>，这是一个<code>串行Executor</code>，具体是什么等一下分析。</p>
+</li>
+<li><p><strong>第二步：executeOnExecutor()</strong><br>  <code>execute()</code>–&gt;<code>executeOnExecutor()</code>，我们看<code>executeOnExecutor()</code>的代码：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@MainThread</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> AsyncTask&lt;Params, Progress, Result&gt; <span class="title">executeOnExecutor</span><span class="params">(Executor exec, Params... params)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (mStatus != Status.PENDING) &#123;</span><br><span class="line">		<span class="keyword">switch</span> (mStatus) &#123;</span><br><span class="line">			<span class="keyword">case</span> RUNNING:</span><br><span class="line">				<span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"Cannot execute task:"</span> + <span class="string">" the task is already running."</span>);</span><br><span class="line">			<span class="keyword">case</span> FINISHED:</span><br><span class="line">				<span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"Cannot execute task:"</span> + <span class="string">" the task has already been executed "</span> + <span class="string">"(a task can be executed only once)"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	mStatus = Status.RUNNING;</span><br><span class="line">	<span class="comment">// execute() --&gt; executeOnExecutor() --&gt; onPreExecute() --&gt; Executor.execute()</span></span><br><span class="line">	onPreExecute();</span><br><span class="line">	mWorker.mParams = params;</span><br><span class="line">	exec.execute(mFuture);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  执行的顺序：<code>execute()</code> –&gt; <code>executeOnExecutor()</code> –&gt; <code>onPreExecute()</code> –&gt; <code>Executor.execute()</code>，这里的<code>Executor.execute()</code>就是<code>sDefaultExecutor</code>的<code>execute()</code>，<br>  我们看看<code>sDefaultExecutor</code>到底是什么鬼：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Executor SERIAL_EXECUTOR = <span class="keyword">new</span> SerialExecutor();</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> Executor sDefaultExecutor = SERIAL_EXECUTOR;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SerialExecutor</span> <span class="keyword">implements</span> <span class="title">Executor</span> </span>&#123;</span><br><span class="line">	<span class="keyword">final</span> ArrayDeque&lt;Runnable&gt; mTasks = <span class="keyword">new</span> ArrayDeque&lt;Runnable&gt;();</span><br><span class="line">	Runnable mActive;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(<span class="keyword">final</span> Runnable r)</span> </span>&#123;</span><br><span class="line">		mTasks.offer(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">				<span class="keyword">try</span> &#123;</span><br><span class="line">					r.run();</span><br><span class="line">				&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">					scheduleNext();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;);</span><br><span class="line">		<span class="keyword">if</span> (mActive == <span class="keyword">null</span>) &#123;</span><br><span class="line">			scheduleNext();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">scheduleNext</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> ((mActive = mTasks.poll()) != <span class="keyword">null</span>) &#123;</span><br><span class="line">			THREAD_POOL_EXECUTOR.execute(mActive);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  <code>sDefaultExecutor</code>是<code>SerialExecutor</code>类的对象，这是一个串行的<code>Executor</code>。<br>  <code>SerialExecutor</code>内部有一个<code>Runnable</code>类型的<code>Deque（双端队列）</code>。<br>  <code>execute()</code>方法就是将待执行的<code>Runnable</code>对象加入<code>Deque</code></p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mTasks.offer(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">	...</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>  这个<code>Runnable</code>对象的<code>run()</code>方法，会先执行完需要执行的逻辑<code>r.run()</code>，然后执行<strong><code>scheduleNext()</code></strong>，这样，就实现了任务的排队和任务的串行执行。这也是从Android 3.0开始，<code>AsyncTask</code>串行执行任务的原因。<br>  当然，这里加入<code>Deque</code>的<code>Runnable</code>对象并不会立即执行，要等待<code>scheduleNext()</code>才会启动<br>  把任务加入<code>Deque</code>之后，如果当前没有活动的任务会立即执行<code>scheduleNext()</code>以启动当前任务，如果当前有任务在执行，那就等待正在执行的任务执行完毕自动调用<code>scheduleNext()</code>以启动下一个。</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (mActive == <span class="keyword">null</span>) &#123;</span><br><span class="line">	scheduleNext();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  <code>scheduleNext()</code>执行的其实是</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">THREAD_POOL_EXECUTOR.execute(mActive);</span><br></pre></td></tr></table></figure>
+<p>  这里的<code>mActive</code>就是待执行的<code>Runnable</code>对象。</p>
+</li>
+<li><p>通过以上分析，<code>SerialExecutor</code>用于任务排队，真正执行任务的是<code>THREAD_POOL_EXECUTOR</code>。</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Executor THREAD_POOL_EXECUTOR</span><br><span class="line">	= <span class="keyword">new</span> ThreadPoolExecutor(CORE_POOL_SIZE, MAXIMUM_POOL_SIZE, KEEP_ALIVE,</span><br><span class="line">		TimeUnit.SECONDS, sPoolWorkQueue, sThreadFactory);</span><br></pre></td></tr></table></figure>
+
+<p>  <code>THREAD_POOL_EXECUTOR</code>是一个线程池，用于执行任务，关于创建这个对象参数的详解参考后续文章《Android中的线程——线程池》。</p>
+</li>
+</ul>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AsyncTask/" rel="tag"># AsyncTask</a>
+              <a href="/tags/%E7%BA%BF%E7%A8%8B/" rel="tag"># 线程</a>
+              <a href="/tags/Thread/" rel="tag"># Thread</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2016/05/08/AIDL%E4%B9%8B%E4%BA%8C%E2%80%94%E2%80%94AIDL%E4%BD%BF%E7%94%A8/" rel="prev" title="AIDL之二——AIDL使用">
+      <i class="fa fa-chevron-left"></i> AIDL之二——AIDL使用
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2016/08/26/Android%E4%B8%AD%E7%9A%84%E7%BA%BF%E7%A8%8B%E2%80%94%E2%80%94HandlerThread/" rel="next" title="Android中的线程——HandlerThread">
+      Android中的线程——HandlerThread <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李子阳</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李子阳</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.7.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

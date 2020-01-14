@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://liziyang.top').hostname,
+    root: '/',
+    scheme: 'Mist',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="那么久了，终于开始学习OKHttp了，从HttpClient和HttpURLConnection到异步的AsyncTask再到Google的Volley，还有各个公司自己的网络框架……现在看起来OkHttp是个不错的选择。   OkHttp简介 OkHttp是Square公司开发的一款HTTP客户端，默认有以下特性：  支持HTTP&#x2F;2，允许同一个主机的所有请求共享同一个Socket  如果HT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hello OkHttp">
+<meta property="og:url" content="http://liziyang.top/2016/12/04/Hello-OkHttp/index.html">
+<meta property="og:site_name" content="李子阳的Android笔记">
+<meta property="og:description" content="那么久了，终于开始学习OKHttp了，从HttpClient和HttpURLConnection到异步的AsyncTask再到Google的Volley，还有各个公司自己的网络框架……现在看起来OkHttp是个不错的选择。   OkHttp简介 OkHttp是Square公司开发的一款HTTP客户端，默认有以下特性：  支持HTTP&#x2F;2，允许同一个主机的所有请求共享同一个Socket  如果HT">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://ogxoqrabi.bkt.clouddn.com/image/okhttp/http/http_request_detail.png">
+<meta property="og:image" content="http://ogxoqrabi.bkt.clouddn.com/image/okhttp/http/http_response_detail.png">
+<meta property="og:image" content="http://ogxoqrabi.bkt.clouddn.com/hello_okhttp_get.png">
+<meta property="og:image" content="http://ogxoqrabi.bkt.clouddn.com/image/okhttp/hello_okhttp_params_get.png">
+<meta property="og:image" content="http://ogxoqrabi.bkt.clouddn.com/image/okhttp/hello_okhttp_post.png">
+<meta property="og:image" content="http://ogxoqrabi.bkt.clouddn.com/image/okhttp/http/http_post.png">
+<meta property="article:published_time" content="2016-12-04T10:11:04.000Z">
+<meta property="article:modified_time" content="2020-01-14T10:07:49.586Z">
+<meta property="article:author" content="李子阳">
+<meta property="article:tag" content="OkHttp">
+<meta property="article:tag" content="Http">
+<meta property="article:tag" content="Get">
+<meta property="article:tag" content="Post">
+<meta property="article:tag" content="Url">
+<meta property="article:tag" content="FormBody">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://ogxoqrabi.bkt.clouddn.com/image/okhttp/http/http_request_detail.png">
+
+<link rel="canonical" href="http://liziyang.top/2016/12/04/Hello-OkHttp/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Hello OkHttp | 李子阳的Android笔记</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">李子阳的Android笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://liziyang.top/2016/12/04/Hello-OkHttp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李子阳">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李子阳的Android笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hello OkHttp
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-12-04 18:11:04" itemprop="dateCreated datePublished" datetime="2016-12-04T18:11:04+08:00">2016-12-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-14 18:07:49" itemprop="dateModified" datetime="2020-01-14T18:07:49+08:00">2020-01-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OkHttp/" itemprop="url" rel="index">
+                    <span itemprop="name">OkHttp</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>那么久了，终于开始学习OKHttp了，从HttpClient和HttpURLConnection到异步的AsyncTask再到Google的Volley，还有各个公司自己的网络框架……现在看起来OkHttp是个不错的选择。</p>
+</blockquote>
+<ol>
+<li><p><strong>OkHttp简介</strong><br> OkHttp是Square公司开发的一款HTTP客户端，默认有以下特性：</p>
+<ul>
+<li><p>支持HTTP/2，允许同一个主机的所有请求共享同一个Socket</p>
+</li>
+<li><p>如果HTTP/2不可用，使用连接池减少请求延迟</p>
+</li>
+<li><p>gzip压缩</p>
+</li>
+<li><p>响应缓存避免重复的网络请求</p>
+<p>官方地址：<br><a href="http://square.github.io/okhttp/" target="_blank" rel="noopener">http://square.github.io/okhttp/</a><br><a href="https://github.com/square" target="_blank" rel="noopener">https://github.com/square</a></p>
+</li>
+</ul>
+</li>
+<li><p><strong>你了解HTTP吗</strong><br> 开始之前，我觉得有必要对<code>HTTP协议</code>进行一些说明</p>
+<ul>
+<li><p><strong>Url</strong><br>  是的，我们每天都在使用Url，比如这样一个查询广州实时天气的Url：<br>  <a href="https://free-api.heweather.com/v5/now?city=CN101280101&amp;key=60f48be405054c98beb8c5ee35705e12" target="_blank" rel="noopener">https://free-api.heweather.com/v5/now?city=CN101280101&amp;key=60f48be405054c98beb8c5ee35705e12</a><br>  Url的结构是这样的：</p>
+  <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">schema://host[<span class="string">:port#</span>]/path/.../[<span class="string">?query-string</span>][<span class="symbol">#anchor</span>]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>schema</strong>，使用的协议，比如http、https、ftp等</li>
+<li><strong>host</strong>，http服务器的IP地址或域名，比如这个Url里的<code>free-api.heweather.com</code></li>
+<li><strong>port#</strong>，端口，默认是80，默认可以省略，如果是其他端口不能省略</li>
+<li><strong>path</strong>，要访问的资源的路径，比如这个Url里的<code>v5/now</code></li>
+<li><strong>query-string</strong>，发送给服务器的数据，比如这个Url里的<code>city=CN101280101&amp;key=60f48be...</code></li>
+<li><strong>anchor</strong>，锚</li>
+</ul>
+</li>
+<li><p><strong>HTTP协议</strong><br>  <code>HTTP协议</code>是应用层的协议，以<code>ASCII码</code>传输，建立在<code>TCP/IP协议</code>之上</p>
+</li>
+<li><p><strong>HTTP请求</strong><br>  我们常说的<code>Get</code>、<code>Post</code>和<code>Http请求</code>有什么关系呢？<br>  <code>Http Request</code>由三部分组成，<code>request line</code>、<code>request header</code>、<code>request body</code>。<br>  用Chrome浏览器访问上述Url，并用Chrome的开发者工具抓包，分析其<code>Request</code><img src="http://ogxoqrabi.bkt.clouddn.com/image/okhttp/http/http_request_detail.png" alt="enter image description here"><br>  第一行就是<code>request line</code>，<code>GET /v5/now?city=CN10... HTTP/1.1</code>，由三部分组成，<code>请求方法</code>、<code>请求的资源</code>、<code>HTTP协议版本</code>，request line以一个请求方法开始，请求方法有好几个，常用的就是<code>Get</code>、<code>Post</code>。这个http请求是一个GET请求。<br>  下面那一大块是request header。<br>  <strong>所以，Http请求都是以Get、Post或其他方法开始的</strong><br>  <code>request body</code>我们稍后以一个<code>Post</code>请求为例进行分析。</p>
+</li>
+<li><p><strong>HTTP响应</strong><br><code>HTTP响应</code>也是由三个部分组成，<code>response line</code>、<code>response header</code>、<code>response body</code><img src="http://ogxoqrabi.bkt.clouddn.com/image/okhttp/http/http_response_detail.png" alt="enter image description here"><br>同样第一行<code>HTTP/1.1 200 OK</code>是<code>response line</code>，也是由三部分组成，<code>HTTP协议版本</code>、<code>状态码</code>、<code>消息</code>。</p>
+</li>
+</ul>
+<p> <strong>状态码</strong>，常见的有<code>404</code>、<code>502</code>等，详细的可以另外查阅，我们只要知道<code>2xx</code>代表成功，<code>3xx</code>重定向，<code>4xx</code>客户端错误，语法错误或地址不正确等，<code>5xx</code>服务器错误。</p>
+</li>
+<li><p><strong>OkHttp之Get</strong></p>
+<ul>
+<li><p><strong>get例子</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GetExample</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> OkHttpClient client = <span class="keyword">new</span> OkHttpClient();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">run</span><span class="params">(String url)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        Request request = <span class="keyword">new</span> Request.Builder()</span><br><span class="line">                .url(url)</span><br><span class="line">                .build();</span><br><span class="line">        <span class="keyword">try</span> (Response response = client.newCall(request).execute();) &#123;</span><br><span class="line">            <span class="keyword">return</span> response.body().string();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        GetExample example = <span class="keyword">new</span> GetExample();</span><br><span class="line">        String response = example.run(<span class="string">"https://raw.github.com/square/okhttp/master/README.md"</span>);</span><br><span class="line">        System.out.println(response);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  创建一个<code>OkHttpClient</code>对象，然后通过<code>Builder模式</code>build一个<code>Request</code>对象，最后通过client和request创建<code>Response</code>对象并<code>execute</code>。<br>  运行结果：<img src="http://ogxoqrabi.bkt.clouddn.com/hello_okhttp_get.png" alt="enter image description here"></p>
+</li>
+<li><p><strong>带参数的Get</strong><br>  这里使用<em>和风天气API</em>来演示查询实时天气，构造Url的时候有两种办法：</p>
+<ul>
+<li><p>自己直接拼凑完成的Url，参数和api之间通过<code>?</code>连接，参数与参数之间通过<code>&amp;</code>连接，每一个参数通过<code>=</code>连接<code>name</code>和<code>value</code>，比如这个Url，有两个参数，<code>city</code>和<code>key</code>，<br><code>https://free-api.heweather.com/v5/now?city=CN101280101&amp;key=60f48be405054c98beb8c5ee35705e12</code><br>这种方法不方便并且容易出错。</p>
+</li>
+<li><p>OkHttp中通过构建<code>HttpUrl</code>来确定参数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">HttpUrl httpUrl = HttpUrl.parse(<span class="string">"https://free-api.heweather.com/v5/now"</span>)</span><br><span class="line">              .newBuilder()</span><br><span class="line">              .addQueryParameter(<span class="string">"city"</span>, <span class="string">"CN101280101"</span>)</span><br><span class="line">              .addQueryParameter(<span class="string">"key"</span>, <span class="string">"60f48be405054c98beb8c5ee35705e12"</span>)</span><br><span class="line">              .build();</span><br><span class="line">      String url = httpUrl.toString();</span><br><span class="line">      System.out.println(<span class="string">"地址："</span> + url);</span><br><span class="line"></span><br><span class="line">      String response = example.run(url);</span><br><span class="line">      System.out.println(<span class="string">"响应："</span> + response);</span><br></pre></td></tr></table></figure>
+
+<p>  运行结果：<img src="http://ogxoqrabi.bkt.clouddn.com/image/okhttp/hello_okhttp_params_get.png" alt="enter image description here"><br>  我们发现，这样构造出来的url和我们手动拼接的url是一样的。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>OkHttp之Post</strong><br> Get请求的缺点：参数太直观容易泄露信息，并且大小有限制。</p>
+<ul>
+<li><p><strong>Post例子</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PostJsonExample</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> MediaType MEDIA_TYPE_JSON = MediaType.parse(<span class="string">"application/json; charset=utf-8"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> OkHttpClient client = <span class="keyword">new</span> OkHttpClient();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">post</span><span class="params">(String url, String json)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        RequestBody requestBody = RequestBody.create(MEDIA_TYPE_JSON, json);</span><br><span class="line">        Request request = <span class="keyword">new</span> Request.Builder()</span><br><span class="line">            .url(url)</span><br><span class="line">            .post(requestBody)</span><br><span class="line">            .build();</span><br><span class="line">        <span class="keyword">try</span> (Response response = client.newCall(request).execute()) &#123;</span><br><span class="line">            <span class="keyword">return</span> response.body().string();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">bowlingJson</span><span class="params">(String player1, String player2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"&#123;'winCondition':'HIGH_SCORE',"</span> +</span><br><span class="line">                <span class="string">"'name':'Bowling',"</span> +</span><br><span class="line">                <span class="string">"'round':4,"</span> +</span><br><span class="line">                <span class="string">"'lastSaved':1367702411696,"</span> +</span><br><span class="line">                <span class="string">"'dateStarted':1367702378785,"</span> +</span><br><span class="line">                <span class="string">"'players':["</span> +</span><br><span class="line">                <span class="string">"&#123;'name':'"</span> + player1 + <span class="string">"','history':[10,8,6,7,8],'color':-13388315,'total':39&#125;,"</span> +</span><br><span class="line">                <span class="string">"&#123;'name':'"</span> + player2 + <span class="string">"','history':[6,10,5,10,10],'color':-48060,'total':41&#125;"</span> +</span><br><span class="line">                <span class="string">"]&#125;"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        PostJsonExample example = <span class="keyword">new</span> PostJsonExample();</span><br><span class="line">        System.out.println(example.post(<span class="string">"http://www.roundsapp.com/post"</span>, example.bowlingJson(<span class="string">"Stefan"</span>, <span class="string">"Peter"</span>)));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  在构建<code>Request</code>对象时调用<code>post()</code>传入<code>RequestBody</code>，创建<code>RequestBody</code>对象时需要指定<code>MediaType</code>和具体的Json内容<br>  这个server和json数据是官方给的参考，具体什么意思不用管了，只要post成功即可，运行结果参考：<img src="http://ogxoqrabi.bkt.clouddn.com/image/okhttp/hello_okhttp_post.png" alt="enter image description here"></p>
+</li>
+<li><p><strong>Post的几种方式</strong></p>
+<ul>
+<li>上个例子我们使用了json进行post，从代码中可以看到<code>Content-Type</code>是<code>application/json</code></li>
+<li>form，<code>Content-Type</code>是<code>application/x-www-form-urlencoded</code>,浏览器原生的向服务器提交表单数据，会将内容编码</li>
+<li><code>multipart/form-data</code>，用于向服务器发送二进制数据</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>同步和异步</strong></p>
+<ul>
+<li><strong>同步</strong><br>  以上的例子🌰都是使用<code>execute()</code>来发起网络请求，这是就是一个同步的过程。</li>
+<li><strong>异步</strong><br>  OkHttp中异步使用<code>enqueue(Callback callback)</code>方法发起网络请求，请求结果通过回调返回<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AsyncExample</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> OkHttpClient client = <span class="keyword">new</span> OkHttpClient();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">(String url)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        Request request = <span class="keyword">new</span> Request.Builder()</span><br><span class="line">            .url(url)</span><br><span class="line">            .build();</span><br><span class="line"></span><br><span class="line">        client.newCall(request).enqueue(<span class="keyword">new</span> Callback() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(Call call, IOException e)</span> </span>&#123;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(Call call, Response response)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">                System.out.println(<span class="string">"响应："</span> + response.body().string());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        AsyncExample example = <span class="keyword">new</span> AsyncExample();</span><br><span class="line"></span><br><span class="line">        HttpUrl httpUrl = HttpUrl.parse(<span class="string">"https://free-api.heweather.com/v5/now"</span>)</span><br><span class="line">            .newBuilder()</span><br><span class="line">            .addQueryParameter(<span class="string">"city"</span>, <span class="string">"CN101280101"</span>)</span><br><span class="line">            .addQueryParameter(<span class="string">"key"</span>, <span class="string">"60f48be405054c98beb8c5ee35705e12"</span>)</span><br><span class="line">            .build();</span><br><span class="line">        String url = httpUrl.toString();</span><br><span class="line">        System.out.println(<span class="string">"地址："</span> + url);</span><br><span class="line"></span><br><span class="line">        example.run(url);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><strong>OkHttp之FormBody</strong><br> Post时，<code>Http Request</code>中的<code>request header</code>里的<code>Content-Type</code>字段代表Post提交数据时使用哪种方式，<code>application/x-www-form-urlencoded</code>就是浏览器的原生form表单，这里我在本地搭建了一个Post服务器，接受两个参数<code>username</code>和<code>password</code>来模拟<code>Login</code>，当<em>username</em>是<em>Stefan</em>并且<em>password</em>是<em>123456</em>是服务器判断为登陆成功，并且返回信息。<br> 这里使用<strong>Charles</strong>来抓包<img src="http://ogxoqrabi.bkt.clouddn.com/image/okhttp/http/http_post.png" alt="enter image description here"><br> 右侧上半部为Request信息，下半部为Response信息<br> <code>Content-Type</code>是<code>application/x-www-form-urlencoded</code>，Request中最后一行<code>username=Stefan&amp;password=123456</code>这就是<code>Http Request</code>中的第三部分<code>request body</code><br> <strong>Content-Type类型和Request Body的内容一起用来代表Post提交的数据类型及内容，这样服务器才能根据类型和内容解析出来，注意：<code>Request Body</code>与<code>Request Header</code>之间要隔一行！</strong><br> 说了这么多，我们来看这个Post在OkHttp中怎么操作</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PostFormExample</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> OkHttpClient client = <span class="keyword">new</span> OkHttpClient();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">login</span><span class="params">(String url, String username, String password)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        FormBody formBody = <span class="keyword">new</span> FormBody.Builder()</span><br><span class="line">            .add(<span class="string">"username"</span>, username)</span><br><span class="line">            .add(<span class="string">"password"</span>, password)</span><br><span class="line">            .build();</span><br><span class="line"></span><br><span class="line">        Request request = <span class="keyword">new</span> Request.Builder()</span><br><span class="line">            .url(url)</span><br><span class="line">            .post(formBody)</span><br><span class="line">            .build();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> (Response response = client.newCall(request).execute();) &#123;</span><br><span class="line">            <span class="keyword">return</span> response.body().string();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        PostFormExample example = <span class="keyword">new</span> PostFormExample();</span><br><span class="line">        String userName = <span class="string">"Stefan"</span>;</span><br><span class="line">        String password = <span class="string">"123456"</span>;</span><br><span class="line">        System.out.println(example.login(<span class="string">"http://localhost.charlesproxy.com:8080/web/HelloServlet"</span>, userName, password));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 这里使用了<code>FormBody</code>这个类，构建的时候通过<code>add()</code>方法传入参数，我们来看一下<code>FormBody</code>这个类的源码：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">FormBody</span> <span class="keyword">extends</span> <span class="title">RequestBody</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> MediaType CONTENT_TYPE = MediaType.parse(<span class="string">"application/x-www-form-urlencoded"</span>);</span><br><span class="line"></span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 发现其类型就是Form表单</p>
+</li>
+<li><p><strong>总结</strong><br> 这篇笔记不光说明<code>OkHttp</code>的一些基本用法，还简单介绍了<code>Url</code>、<code>Http请求与响应</code>、<code>Get与Post</code>、<code>Post的几种方法</code>等知识，还有一些实践的东西，通过<code>Chrome开发者工具</code>和<code>Charles</code>软件来抓包分析Http请求和响应时具体的数据信息。<br> 另外，关于Multipart文件上传和对OkHttp封装，会在另外的笔记中单独记录。</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OkHttp/" rel="tag"># OkHttp</a>
+              <a href="/tags/Http/" rel="tag"># Http</a>
+              <a href="/tags/Get/" rel="tag"># Get</a>
+              <a href="/tags/Post/" rel="tag"># Post</a>
+              <a href="/tags/Url/" rel="tag"># Url</a>
+              <a href="/tags/FormBody/" rel="tag"># FormBody</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2016/09/01/Method%E5%92%8Cinvoke/" rel="prev" title="Method和invoke">
+      <i class="fa fa-chevron-left"></i> Method和invoke
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2016/12/05/OkHttp%E4%B9%8BMultipartBody%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6/" rel="next" title="OkHttp之MultipartBody上传文件">
+      OkHttp之MultipartBody上传文件 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李子阳</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李子阳</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.7.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://liziyang.top').hostname,
+    root: '/',
+    scheme: 'Mist',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="李子阳的Android笔记">
+<meta property="og:url" content="http://liziyang.top/page/3/index.html">
+<meta property="og:site_name" content="李子阳的Android笔记">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="李子阳">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://liziyang.top/page/3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: true,
+    isPost: false
+  };
+</script>
+
+  <title>李子阳的Android笔记</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">李子阳的Android笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://liziyang.top/2016/08/26/Android%E4%B8%AD%E7%9A%84%E7%BA%BF%E7%A8%8B%E2%80%94%E2%80%94AsycTask%E5%8E%9F%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李子阳">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李子阳的Android笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/08/26/Android%E4%B8%AD%E7%9A%84%E7%BA%BF%E7%A8%8B%E2%80%94%E2%80%94AsycTask%E5%8E%9F%E7%90%86/" class="post-title-link" itemprop="url">Android中的线程——AsycTask原理</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-08-26 00:20:12" itemprop="dateCreated datePublished" datetime="2016-08-26T00:20:12+08:00">2016-08-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-14 18:07:49" itemprop="dateModified" datetime="2020-01-14T18:07:49+08:00">2020-01-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android%E4%B8%AD%E7%9A%84%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index">
+                    <span itemprop="name">Android中的线程</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ol>
+<li><p><strong>Android中的线程</strong><br> Android中的线程分为主线程和子线程，主线程即UI线程。UI线程运行四大组件并且处理他们和用户的交互，子线程用来执行耗时任务，比如网络请求，I/O操作等。这样做的好处是避免UI线程被阻塞，避免出现卡顿或者<code>ANR</code>等现象。<br> 当需要创建子线程的时候，我们最常用的做法就是使用<code>Thread</code>，其实扮演线程的角色还有很多，比如<code>AsyncTask</code>、<code>HandlerThread</code>、<code>IntentService</code>等。</p>
+</li>
+<li><p><strong>Out的AsyncTask</strong><br> 在几年以前，我们经常使用<code>AsyncTask</code>来处理异步请求，特别是网络请求，随着Android技术的发展，<code>AsyncTask</code>逐渐被打入冷宫，可是说到Android的<code>线程</code>，AsyncTask还是非常具有代表性的。<br> <code>AsyncTask</code>是轻量级的异步任务类，在<code>线程池</code>中执行后台任务，封装了<code>线程池</code>和<code>Handler</code>。<br> <code>AsyncTask</code>的使用方法我们就不再赘述，主要是4个核心方法</p>
+<ul>
+<li><code>onPreExecute()</code>，异步任务执行之前被调用，一些准备工作</li>
+<li><code>doInBackground()</code>，在<code>线程池</code>中执行异步任务</li>
+<li><code>onProgressUpdate()</code>，运行在<code>UI线程</code>，更新进度</li>
+<li><code>onPostExecute()</code>，运行在<code>UI线程</code>，异步任务执行之后被调用</li>
+</ul>
+</li>
+<li><p><strong>并行还是串行</strong><br> 相信很多人都曾经迷惑过<code>AsyncTask</code>到底是串行还是并行。<br> Android 1.6之前，是串行的，1.6的时候是并行，但是从Android 3.0开始，默认采用一个线程来串行执行任务，但是也可以通过<code>executeOnExecutor()</code>来并行执行。具体实现下面的章节再描述。</p>
+</li>
+<li><p><strong>原理分析</strong></p>
+<ul>
+<li><p><strong>入口</strong><br>  从<code>execute()</code>方法入手，<code>AsyncTask</code>的代码：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@MainThread</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> AsyncTask&lt;Params, Progress, Result&gt; <span class="title">execute</span><span class="params">(Params... params)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> executeOnExecutor(sDefaultExecutor, params);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  这里使用了注解<code>@MainThread</code>，是一种线程注解，基本和<code>UiThread</code>一致，代表需要运行在UI线程。<br>  <code>execute()</code>调用<code>executeOnExecutor()</code>，并且传入<code>Executor</code>——<code>sDefaultExecutor</code>，这是一个<code>串行Executor</code>，具体是什么等一下分析。</p>
+</li>
+<li><p><strong>第二步：executeOnExecutor()</strong><br>  <code>execute()</code>–&gt;<code>executeOnExecutor()</code>，我们看<code>executeOnExecutor()</code>的代码：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@MainThread</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> AsyncTask&lt;Params, Progress, Result&gt; <span class="title">executeOnExecutor</span><span class="params">(Executor exec, Params... params)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (mStatus != Status.PENDING) &#123;</span><br><span class="line">		<span class="keyword">switch</span> (mStatus) &#123;</span><br><span class="line">			<span class="keyword">case</span> RUNNING:</span><br><span class="line">				<span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"Cannot execute task:"</span> + <span class="string">" the task is already running."</span>);</span><br><span class="line">			<span class="keyword">case</span> FINISHED:</span><br><span class="line">				<span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"Cannot execute task:"</span> + <span class="string">" the task has already been executed "</span> + <span class="string">"(a task can be executed only once)"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	mStatus = Status.RUNNING;</span><br><span class="line">	<span class="comment">// execute() --&gt; executeOnExecutor() --&gt; onPreExecute() --&gt; Executor.execute()</span></span><br><span class="line">	onPreExecute();</span><br><span class="line">	mWorker.mParams = params;</span><br><span class="line">	exec.execute(mFuture);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  执行的顺序：<code>execute()</code> –&gt; <code>executeOnExecutor()</code> –&gt; <code>onPreExecute()</code> –&gt; <code>Executor.execute()</code>，这里的<code>Executor.execute()</code>就是<code>sDefaultExecutor</code>的<code>execute()</code>，<br>  我们看看<code>sDefaultExecutor</code>到底是什么鬼：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Executor SERIAL_EXECUTOR = <span class="keyword">new</span> SerialExecutor();</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> Executor sDefaultExecutor = SERIAL_EXECUTOR;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SerialExecutor</span> <span class="keyword">implements</span> <span class="title">Executor</span> </span>&#123;</span><br><span class="line">	<span class="keyword">final</span> ArrayDeque&lt;Runnable&gt; mTasks = <span class="keyword">new</span> ArrayDeque&lt;Runnable&gt;();</span><br><span class="line">	Runnable mActive;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(<span class="keyword">final</span> Runnable r)</span> </span>&#123;</span><br><span class="line">		mTasks.offer(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">				<span class="keyword">try</span> &#123;</span><br><span class="line">					r.run();</span><br><span class="line">				&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">					scheduleNext();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;);</span><br><span class="line">		<span class="keyword">if</span> (mActive == <span class="keyword">null</span>) &#123;</span><br><span class="line">			scheduleNext();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">scheduleNext</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> ((mActive = mTasks.poll()) != <span class="keyword">null</span>) &#123;</span><br><span class="line">			THREAD_POOL_EXECUTOR.execute(mActive);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  <code>sDefaultExecutor</code>是<code>SerialExecutor</code>类的对象，这是一个串行的<code>Executor</code>。<br>  <code>SerialExecutor</code>内部有一个<code>Runnable</code>类型的<code>Deque（双端队列）</code>。<br>  <code>execute()</code>方法就是将待执行的<code>Runnable</code>对象加入<code>Deque</code></p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mTasks.offer(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">	...</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>  这个<code>Runnable</code>对象的<code>run()</code>方法，会先执行完需要执行的逻辑<code>r.run()</code>，然后执行<strong><code>scheduleNext()</code></strong>，这样，就实现了任务的排队和任务的串行执行。这也是从Android 3.0开始，<code>AsyncTask</code>串行执行任务的原因。<br>  当然，这里加入<code>Deque</code>的<code>Runnable</code>对象并不会立即执行，要等待<code>scheduleNext()</code>才会启动<br>  把任务加入<code>Deque</code>之后，如果当前没有活动的任务会立即执行<code>scheduleNext()</code>以启动当前任务，如果当前有任务在执行，那就等待正在执行的任务执行完毕自动调用<code>scheduleNext()</code>以启动下一个。</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (mActive == <span class="keyword">null</span>) &#123;</span><br><span class="line">	scheduleNext();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  <code>scheduleNext()</code>执行的其实是</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">THREAD_POOL_EXECUTOR.execute(mActive);</span><br></pre></td></tr></table></figure>
+<p>  这里的<code>mActive</code>就是待执行的<code>Runnable</code>对象。</p>
+</li>
+<li><p>通过以上分析，<code>SerialExecutor</code>用于任务排队，真正执行任务的是<code>THREAD_POOL_EXECUTOR</code>。</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Executor THREAD_POOL_EXECUTOR</span><br><span class="line">	= <span class="keyword">new</span> ThreadPoolExecutor(CORE_POOL_SIZE, MAXIMUM_POOL_SIZE, KEEP_ALIVE,</span><br><span class="line">		TimeUnit.SECONDS, sPoolWorkQueue, sThreadFactory);</span><br></pre></td></tr></table></figure>
+
+<p>  <code>THREAD_POOL_EXECUTOR</code>是一个线程池，用于执行任务，关于创建这个对象参数的详解参考后续文章《Android中的线程——线程池》。</p>
+</li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://liziyang.top/2016/05/08/AIDL%E4%B9%8B%E4%BA%8C%E2%80%94%E2%80%94AIDL%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李子阳">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李子阳的Android笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/05/08/AIDL%E4%B9%8B%E4%BA%8C%E2%80%94%E2%80%94AIDL%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">AIDL之二——AIDL使用</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-05-08 17:32:13" itemprop="dateCreated datePublished" datetime="2016-05-08T17:32:13+08:00">2016-05-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-14 18:07:49" itemprop="dateModified" datetime="2020-01-14T18:07:49+08:00">2020-01-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AIDL/" itemprop="url" rel="index">
+                    <span itemprop="name">AIDL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>AIDL，Android Interface Definition Language （Android接口定义语言）<br>通过AIDL实现进程间通信（IPC），Service提供服务（比如一些供客户端调用的方法）给客户端使用，Service所在的进程我们称为服务端（下文的服务端也指该Service），去绑定Service的那个进程我们称为客户端，客户端使用Service所提供的服务</p>
+</blockquote>
+<ul>
+<li><p><strong>AIDL使用简介</strong>：</p>
+<ul>
+<li>两个进程需要有相同的aidl文件</li>
+<li>服务端里的Service类，定义一个IBinder对象继承自<code>Stub</code>，并且实现AIDL文件中的方法，这个对象通过<code>onBinder()</code>方法返回给Client端</li>
+<li><strong>两个进程之间的桥梁就是这个IBinder对象</strong></li>
+<li>客户端通过绑定Service获取到这个IBinder对象，两个进程就建立起了联系</li>
+</ul>
+</li>
+<li><p><strong>AIDL使用</strong>：</p>
+<ul>
+<li><p><strong>aidl文件</strong>，定义接口，比如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> top.liziyang.aidlservice;</span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">IAIDLDemo</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> number1, <span class="keyword">int</span> number2)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  这样，Android Studio在编译时会自动生成<code>IAIDLDemo.java</code>文件，这个文件我们以后再谈。</p>
+</li>
+<li><p><strong>服务端</strong></p>
+<ul>
+<li><p>在<code>AndroidManifest.xml</code>中设置<code>android:exported=&quot;true&quot;</code>，不然外部App无法bind</p>
+</li>
+<li><p>定义一个<code>IAIDLDemo.Stub</code>类型的对象，并且实现在aidl文件中定义的接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">IBinder iBinder = <span class="keyword">new</span> IAIDLDemo.Stub() &#123;</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 远程实际操作</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">       <span class="meta">@Override</span></span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> number1, <span class="keyword">int</span> number2)</span> <span class="keyword">throws</span> RemoteException </span>&#123;</span><br><span class="line">           <span class="keyword">return</span> number1 + number2;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Override <code>onBind()</code> 方法，并且返回<code>IAIDLDemo.Stub</code>（<code>IBinder</code>）对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> iBinder;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>  客户端绑定Service之后会得到这个IBinder对象</p>
+</li>
+</ul>
+</li>
+<li><p><strong>客户端</strong></p>
+<ul>
+<li>客户端执行<code>bindService(Intent intent, ServiceConnection conn, int flags)</code>绑定Service，这时，Service回调<code>onBind()</code>方法，并且返回<code>IAIDLDemo.Stub</code>（<code>IBinder</code>）对象，这样客户端在<code>ServiceConnection</code>的<code>onServiceConnected()</code>方法中就得到了这个<code>IBinder</code>对象<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">IAIDLDemo iaidlDemo;</span><br><span class="line"></span><br><span class="line">bindService(intent, <span class="keyword">new</span> ServiceConnection() &#123;</span><br><span class="line">          <span class="meta">@Override</span></span><br><span class="line">          <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceConnected</span><span class="params">(ComponentName name, IBinder service)</span> </span>&#123;</span><br><span class="line">              iaidlDemo = IAIDLDemo.Stub.asInterface(service);</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">          <span class="meta">@Override</span></span><br><span class="line">          <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceDisconnected</span><span class="params">(ComponentName name)</span> </span>&#123;</span><br><span class="line">              iaidlDemo = <span class="keyword">null</span>;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;, BIND_AUTO_CREATE);</span><br></pre></td></tr></table></figure></li>
+<li>Client里也要有和Server里相同的aidl文件，<strong>包名也要一样！！！</strong>，负责类型不一样，无法调用。</li>
+<li>客户端获取到的服务端Service的<code>IBinder</code>对象的类型是<code>IAIDLDemo.Stub</code>，所以要转换成’IAIDLDemo’<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// onServiceConnected()里</span></span><br><span class="line">iAIDLDemo = IAIDLDemo.Stub.asInterface(iBinder);</span><br></pre></td></tr></table></figure>
+  这时，客户端就可以通过<code>IAIDLDemo</code>对象直接调用服务端Service提供的方法了</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>其他</strong>：</p>
+<ul>
+<li><p><strong>参数</strong></p>
+<ul>
+<li>除short外的所有基本数据类型，byte、int、long、boolean、float、double、char等</li>
+<li>String、CharSequence</li>
+<li>List、Map</li>
+</ul>
+</li>
+<li><p><strong>传递自定义参数</strong></p>
+<ul>
+<li><p>传递参数时，非基本数据类型需要指定方向，in、out、inout，基本数据类型默认是in，即只向Server传递数据</p>
+<ul>
+<li>Client只向Server传递数据，<code>in</code></li>
+<li>Client只接收Server传回来的数据，<code>out</code></li>
+<li>Client向Server传递数据且需要Server返回，<code>inout</code></li>
+</ul>
+</li>
+<li><p>Service：</p>
+<ul>
+<li><strong>自定义数据类型</strong>，新建实现Parcelable接口的类，实现<code>describeContents()</code>、<code>writeToParcel（）</code>等接口，并创建<code>CREATEOR</code>变量</li>
+<li><strong>新建同名aidl文件</strong>作为该类的描述：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> top.liziyang.aidlservice;</span><br><span class="line">parcelable Person;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>Client:</p>
+<ul>
+<li>需要有相同的自定义数据类型的类和aidl文件，包名也要一样</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>与Binder的比较</strong></p>
+<ul>
+<li>本地后台播放音乐不需要使用AIDL，使用Binder即可</li>
+<li>在播放音乐的<code>Service</code>的<code>onBind()</code>方法中返回<code>Binder</code>对象，通过<code>Binder</code>对象可以获取<code>Service</code>对象，然后就可以调用<code>Service</code>里的方法了</li>
+<li>这种场景需要混合启动，如果只bind，Activity退出的时候Service也退出了</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>代码：<a href="https://github.com/CuteHero/AIDLDemo" target="_blank" rel="noopener">https://github.com/CuteHero/AIDLDemo</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://liziyang.top/2016/05/04/AIDL%E4%B9%8B%E4%B8%80%E2%80%94%E2%80%94Binder%EF%BC%8C%E8%BF%9B%E7%A8%8B%E5%86%85Binder%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李子阳">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李子阳的Android笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/05/04/AIDL%E4%B9%8B%E4%B8%80%E2%80%94%E2%80%94Binder%EF%BC%8C%E8%BF%9B%E7%A8%8B%E5%86%85Binder%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">AIDL之一——Binder，进程内Binder使用</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-05-04 15:43:04" itemprop="dateCreated datePublished" datetime="2016-05-04T15:43:04+08:00">2016-05-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-14 18:07:49" itemprop="dateModified" datetime="2020-01-14T18:07:49+08:00">2020-01-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AIDL/" itemprop="url" rel="index">
+                    <span itemprop="name">AIDL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>Binder可以用在进程内部也可以用在进程间实现IPC，进程内部的时候主要是作为Service和其他组件之间通信的桥梁。例如：Activity绑定Service之后会拿到一个Binder对象，Activity通过这个Binder对象可以获取到Service的对象，从而调用Service里面的方法。一个典型的应用场景就是后台播放音乐。</strong></p>
+<ol>
+<li><p><strong>一些要交代的</strong></p>
+<ul>
+<li><code>startService()</code>和<code>bindService()</code>的区别，生命周期不同，这也是实现后台播放的理论基础。</li>
+<li>Service中实现具体的音乐播放功能。</li>
+</ul>
+</li>
+<li><p><strong>在<code>MainActivity</code>中绑定服务</strong></p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">bindService(intent, <span class="keyword">new</span> ServiceConnection() &#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceConnected</span><span class="params">(ComponentName name, IBinder service)</span> </span>&#123;</span><br><span class="line">		musicService = ((MusicService.MusicBinder) service).getService();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceDisconnected</span><span class="params">(ComponentName name)</span> </span>&#123;</span><br><span class="line">		musicService = <span class="keyword">null</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;, BIND_AUTO_CREATE);</span><br></pre></td></tr></table></figure>
+
+<p> 绑定Service成功之后回调<code>onServiceConnected()</code>方法，这时候<code>MainActivity</code>获取到一个<code>IBinder</code>对象，就是<code>Service</code>中<code>onBind()</code>方法返回的。</p>
+</li>
+<li><p><strong>Service</strong><br> <code>MusicService.java</code>:<br> 继承<code>Service</code>并Override <code>onBind()</code>方法</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">new</span> MusicBinder();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="class"><span class="keyword">class</span> <span class="title">MusicBinder</span> <span class="keyword">extends</span> <span class="title">Binder</span> </span>&#123;</span><br><span class="line">       <span class="function">MusicService <span class="title">getService</span><span class="params">()</span> </span>&#123;</span><br><span class="line">           <span class="keyword">return</span> MusicService.<span class="keyword">this</span>;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p> 通过Binder可以获取到Service对象<br> 其他部分：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> MediaPlayer mediaPlayer;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">MusicService</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	mediaPlayer = <span class="keyword">new</span> MediaPlayer();</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		mediaPlayer.setDataSource(Environment.getExternalStorageDirectory().getAbsolutePath() + <span class="string">"/test.mp3"</span>);</span><br><span class="line">		mediaPlayer.prepare();</span><br><span class="line">	&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">play</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	mediaPlayer.start();</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pause</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	mediaPlayer.pause();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">super</span>.onDestroy();</span><br><span class="line">	mediaPlayer.release();</span><br><span class="line">	mediaPlayer = <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 方法<code>play()</code>和<code>pause()</code>是真正播放暂停的地方<br> 在<code>onDestroy()</code>里面要释放MediaPlayer，否则会造成内存泄露</p>
+</li>
+<li><p>这个时候已经可以在Activity里控制播放暂停了</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">musicService.play();</span><br><span class="line">musicService.pause();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>这时，如果在<code>Activity</code>中执行<code>musicService.play()</code>后再<code>finish()</code>，会发现音乐并不能播放，原因是我们是通过<code>bindService()</code>启动的<code>Service</code>，所以<code>MusicService</code>的生命周期是和启动它的<code>Activity</code>一致的，同生同死，所以当<code>Activity</code>finish的时候<code>MusicService</code>会回调<code>onDestroy()</code>，也就释放了<code>MediaPlayer</code>。</p>
+</li>
+<li><p>这就用到了<code>Service</code>的混合启动，在<code>bindService()</code>之前先<code>startService()</code>，这样即可以和<code>Service</code>通信又能延长其生命周期。</p>
+</li>
+<li><p>代码：<a href="https://github.com/CuteHero/BinderDemo" target="_blank" rel="noopener">https://github.com/CuteHero/BinderDemo</a></p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://liziyang.top/2016/03/27/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF%E5%BA%94%E7%94%A8%E4%B9%8B%E4%BA%8C%E2%80%94%E2%80%94%E6%B3%A2%E6%B5%AA%E5%8A%A8%E7%94%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李子阳">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李子阳的Android笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/03/27/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF%E5%BA%94%E7%94%A8%E4%B9%8B%E4%BA%8C%E2%80%94%E2%80%94%E6%B3%A2%E6%B5%AA%E5%8A%A8%E7%94%BB/" class="post-title-link" itemprop="url">贝塞尔曲线应用之二——波浪动画</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-03-27 16:43:07" itemprop="dateCreated datePublished" datetime="2016-03-27T16:43:07+08:00">2016-03-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-14 18:07:49" itemprop="dateModified" datetime="2020-01-14T18:07:49+08:00">2020-01-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/" itemprop="url" rel="index">
+                    <span itemprop="name">贝塞尔曲线</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>波浪动画是一种非常常见的动画，现实方式也很多。<br>波浪中的曲线可以用正(余)弦函数来实现，也可以通过Bezier曲线来实现。<br>这里我们使用Bezier曲线在<code>View</code>的<code>onDraw()</code>方法通过<code>canvas</code>绘制路径来实现动画。</p>
+<ol>
+<li><strong>实现的效果</strong><br> 点击一下View，就开始执行动画，循环往复……<img src="http://ogxoqrabi.bkt.clouddn.com/image/bezier/bezier_wave_1.gif" alt=""></li>
+<li><strong>思路剖析</strong><ul>
+<li><strong>静止的波浪</strong><ul>
+<li>波浪的每一个周期需要两段Bezier曲线，一段是波浪的上半部，一段是波浪的下半部，类似正弦曲线的一个周期。</li>
+<li>每个半波都需要<code>起点</code>、<code>终点</code>和<code>控制点</code>，上半波的<code>终点</code>就是紧接着的下半波的<code>起点</code>，同样，下半波的<code>终点</code>就是紧接着的上半波的<code>起点</code>，如此循环往复。</li>
+<li>所有的<code>起点</code>、<code>终点</code>是共线的，即波浪中间的那一条线，即这些点的<code>y坐标</code>相同。这些点的<code>x坐标</code>依次相差<code>半波长</code>。</li>
+<li>上半波的控制点在波浪的上方，其<code>x坐标</code>是<code>起点</code>和<code>终点</code>的<code>x坐标</code>相加的一半，<code>y坐标</code>波浪之上某个位置，<code>y坐标</code>的大小决定了波浪的高低。</li>
+</ul>
+</li>
+<li><strong>动起来</strong><ul>
+<li>运动的波浪，其实就是将静止的波浪向右平移一个波长，然后再从头开始平移一个波长，第一个波浪和第二个波浪无缝衔接，这样视觉上就一直在运动了。</li>
+<li>所以画波浪的时候，在View左侧看不见的位置，要多画一个波浪，这样，波浪移动的时候就会把View外面的波浪移进来。</li>
+<li>我们并不能直接使用<code>View</code>的<code>属性动画</code>，这是在<code>onDraw()</code>方法不断绘制不同的元素从而形成了动画，这是<code>View</code>内部的动画，不是作用在<code>View</code>上的动画。</li>
+<li>实现这种动画效果，通用的办法就是借助<strong><code>ValueAnimator</code></strong>，它只是产生一系列的值，并不直接作用于某个<code>View</code>。针对一系列变化的值，再去<code>invalidate()</code>发起<code>onDraw()</code>绘制。</li>
+<li>在当前的波浪动画中，<code>ValueAnimator</code>生成的值作为<code>偏移量</code>来加到每一个半波的起点、终点和控制点的<code>x坐标</code>，这样，<code>x坐标</code>依次增加，于是，就动起来了。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>代码实现</strong> <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BezierWaveView</span> <span class="keyword">extends</span> <span class="title">View</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> PointF pointStart;</span><br><span class="line">	<span class="keyword">private</span> PointF pointFlag;</span><br><span class="line">	<span class="keyword">private</span> PointF pointEnd;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> Path path;</span><br><span class="line">	<span class="keyword">private</span> Paint paint;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 半个波浪的长度，即半圆</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">float</span> HALF_WAVE_LENGTH = <span class="number">200f</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> BEZIER_FLAG_POINT_HEIGHT = <span class="number">50</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> bezierCount;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> ValueAnimator valueAnimator;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">float</span> offset;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> viewHeight;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">BezierWaveView</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>(context, <span class="keyword">null</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">BezierWaveView</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>(context, attrs, <span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">BezierWaveView</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>(context, attrs, defStyleAttr);</span><br><span class="line"></span><br><span class="line">		init();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		pointStart = <span class="keyword">new</span> PointF();</span><br><span class="line">		pointFlag = <span class="keyword">new</span> PointF();</span><br><span class="line">		pointEnd = <span class="keyword">new</span> PointF();</span><br><span class="line"></span><br><span class="line">		path = <span class="keyword">new</span> Path();</span><br><span class="line">		paint = <span class="keyword">new</span> Paint(Paint.ANTI_ALIAS_FLAG);</span><br><span class="line">		paint.setColor(<span class="number">0xff33a0f3</span>);</span><br><span class="line">		paint.setStyle(Paint.Style.FILL);</span><br><span class="line"></span><br><span class="line">		valueAnimator = ValueAnimator.ofFloat(<span class="number">0</span>, HALF_WAVE_LENGTH * <span class="number">2</span>);</span><br><span class="line">		valueAnimator.setDuration(<span class="number">2000</span>);</span><br><span class="line">		valueAnimator.setInterpolator(<span class="keyword">new</span> LinearInterpolator());</span><br><span class="line">		valueAnimator.setRepeatCount(ValueAnimator.INFINITE);</span><br><span class="line">		valueAnimator.addUpdateListener(<span class="keyword">new</span> ValueAnimator.AnimatorUpdateListener() &#123;</span><br><span class="line">			<span class="meta">@Override</span></span><br><span class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationUpdate</span><span class="params">(ValueAnimator valueAnimator)</span> </span>&#123;</span><br><span class="line">				offset = (<span class="keyword">float</span>) valueAnimator.getAnimatedValue();</span><br><span class="line">				invalidate();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onSizeChanged</span><span class="params">(<span class="keyword">int</span> w, <span class="keyword">int</span> h, <span class="keyword">int</span> oldw, <span class="keyword">int</span> oldh)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.onSizeChanged(w, h, oldw, oldh);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// View宽度除以半波长，然后向上取整</span></span><br><span class="line">		<span class="comment">// 这里再+2，是因为做动画时，Bezier的起始点都要向右移动，两个半波为一个周期，左边要保留2个半波，一上一下，避免左边出现空白</span></span><br><span class="line">		<span class="comment">// 画波浪时，在View左边看不见的位置多画一个</span></span><br><span class="line">		bezierCount = (<span class="keyword">int</span>) Math.ceil(w / HALF_WAVE_LENGTH) + <span class="number">2</span>;</span><br><span class="line">		pointStart.y = h / <span class="number">2f</span>;</span><br><span class="line">		pointEnd.y = pointStart.y;</span><br><span class="line">		viewHeight = h;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.onDraw(canvas);</span><br><span class="line"></span><br><span class="line">		path.reset();</span><br><span class="line"></span><br><span class="line">		pointStart.x = -HALF_WAVE_LENGTH * <span class="number">2</span> + offset;</span><br><span class="line">		pointEnd.x = pointStart.x + HALF_WAVE_LENGTH;</span><br><span class="line">		pointFlag.x = pointStart.x + HALF_WAVE_LENGTH / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 每次绘制第一个减 以后加减交替</span></span><br><span class="line">		pointFlag.y = pointStart.y + BEZIER_FLAG_POINT_HEIGHT;</span><br><span class="line"></span><br><span class="line">		path.moveTo(pointStart.x, pointStart.y);</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; bezierCount; i++) &#123;</span><br><span class="line">			path.quadTo(pointFlag.x, pointFlag.y, pointEnd.x, pointEnd.y);</span><br><span class="line">			pointEnd.x += HALF_WAVE_LENGTH;</span><br><span class="line">			pointFlag.x += HALF_WAVE_LENGTH;</span><br><span class="line">			<span class="keyword">if</span> (i % <span class="number">2</span> == <span class="number">0</span>) &#123;</span><br><span class="line">				pointFlag.y = pointStart.y - BEZIER_FLAG_POINT_HEIGHT;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				pointFlag.y = pointStart.y + BEZIER_FLAG_POINT_HEIGHT;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// 右下角</span></span><br><span class="line">		path.lineTo(pointEnd.x, viewHeight);</span><br><span class="line">		<span class="comment">// 左下角</span></span><br><span class="line">		path.lineTo(pointStart.x, viewHeight);</span><br><span class="line">		<span class="comment">// 左上角，终点与起点重合</span></span><br><span class="line">		path.lineTo(pointStart.x, pointStart.y);</span><br><span class="line"></span><br><span class="line">		canvas.drawPath(path, paint);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</span><br><span class="line">		valueAnimator.start();</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">super</span>.onTouchEvent(event);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://liziyang.top/2016/03/27/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF%E5%BA%94%E7%94%A8%E4%B9%8B%E4%B8%80%E2%80%94%E2%80%94%E6%89%8B%E5%86%99%E7%99%BD%E6%9D%BF%E7%9A%84%E7%AC%94%E8%BF%B9%E5%B9%B3%E6%BB%91%E5%A4%84%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李子阳">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李子阳的Android笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/03/27/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF%E5%BA%94%E7%94%A8%E4%B9%8B%E4%B8%80%E2%80%94%E2%80%94%E6%89%8B%E5%86%99%E7%99%BD%E6%9D%BF%E7%9A%84%E7%AC%94%E8%BF%B9%E5%B9%B3%E6%BB%91%E5%A4%84%E7%90%86/" class="post-title-link" itemprop="url">贝塞尔曲线应用之一——手写白板的笔迹平滑处理</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-03-27 16:13:18" itemprop="dateCreated datePublished" datetime="2016-03-27T16:13:18+08:00">2016-03-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-14 18:07:49" itemprop="dateModified" datetime="2020-01-14T18:07:49+08:00">2020-01-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/" itemprop="url" rel="index">
+                    <span itemprop="name">贝塞尔曲线</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>前两节我们介绍了Bezier曲线的概念公式等，以及如何在Android中绘制Bezier曲线。<br>Bezier曲线的其中一个用途就是用来处理手写白板上的轨迹，使其变得平滑没有折痕。</p>
+<ol>
+<li><strong>手写白板软件的实现思路</strong><br> 在<code>onTouchEvent()</code>方法记录每一个坐标，然后依次使用<code>canvas.lineTo()</code>连接起来，就形成了一条轨迹。<br> 这种做法的缺点是，当滑动或者手写速度非常快的时候，Android系统能捕获到的点个数有限，比较松散，这样得到的线甚至近似一条折线，效果差强人意。<img src="http://ogxoqrabi.bkt.clouddn.com/image/bezier/bezier_drawer_1.png" alt="enter image description here"></li>
+<li><strong>经过Bezier曲线处理对比</strong><br> 将这些点经过二阶Bezier曲线处理，以相近的速度画一条类似的曲线，我们看效果<img src="http://ogxoqrabi.bkt.clouddn.com/image/bezier/bezier_drawer_2.png" alt="enter image description here"><br> 我们发现，虽然仍然快速的画一条线，Android能捕获到的点依然有限，但绘制出来的线变的很圆滑，基本接近自然状态。</li>
+<li><strong>Bezier曲线处理手写轨迹实现分析</strong><ul>
+<li>经过前两节的讲解，我们知道，平面内任意不共线的三个点（按顺序）可以确定一条二阶Bezier曲线。</li>
+<li>为了消除手写轨迹中的折线效果，我们采用这样的方案处理：<ul>
+<li>轨迹中的连续的三个点，前两个点的中点作为Bezier曲线的起点，第二个点作为控制点，后面两个点的中点作为终点，画出一条二阶Bezier曲线。</li>
+<li>每增加一个点，都以最后的三个点按照上面的逻辑画出一条Bezier曲线，如此循环往复</li>
+<li>如下图所示，A、B、C、D是手写轨迹上的连续的四个点，如果采用连线的方式将四个点依次连接，就成了一条折线。所以我们取AB的中点和BC的中点分别作为二阶Bezier曲线的起点和终点，B作为控制点，画出一小段Bezier曲线，如下图中紫色曲线所示。连接下一个点的时候采取同样的办法，于是就消除了轨迹中的折线<img src="http://ogxoqrabi.bkt.clouddn.com/image/bezier/bezier_drawer_3.png" alt="enter image description here"></li>
+</ul>
+</li>
+<li>必须说明，这样的处理方式有一定的误差，实际上手写轨迹是经过B点和C点的，这样处理就像削掉了两个尖角，但是这种处理是微观上的，对整条曲线来说并没有影响。</li>
+<li>当然，你不必担心，这种消除的折线是由于画线的速度太快和Android捕获的点的个数有限造成的折线，并不会消除掉你刻意画的折线。一个是微观上的，一个是宏观上的。</li>
+</ul>
+</li>
+<li><strong>更直观的对比</strong><br> 为了更直观的对比，我们在同一个View上，只画一条曲线，用两种画线方式画出来两条曲线<img src="http://ogxoqrabi.bkt.clouddn.com/image/bezier/bezier_drawer_4.png" alt="enter image description here"><br> 是不是特别明显！原来的尖尖角角都没有了，变得非常平滑，同时整个曲线几乎和原来一样。</li>
+<li><strong>代码实现</strong> <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DrawerView</span> <span class="keyword">extends</span> <span class="title">View</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> Paint paint;</span><br><span class="line">	<span class="keyword">private</span> PointF pointPre;</span><br><span class="line">	<span class="keyword">private</span> Path path;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">DrawerView</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>(context, <span class="keyword">null</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">DrawerView</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>(context, attrs, <span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">DrawerView</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>(context, attrs, defStyleAttr);</span><br><span class="line"></span><br><span class="line">		init();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		paint = <span class="keyword">new</span> Paint(Paint.ANTI_ALIAS_FLAG);</span><br><span class="line">		paint.setStyle(Paint.Style.STROKE);</span><br><span class="line">		paint.setStrokeWidth(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">		path = <span class="keyword">new</span> Path();</span><br><span class="line">		pointPre = <span class="keyword">new</span> PointF();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">switch</span> (event.getAction()) &#123;</span><br><span class="line">			<span class="keyword">case</span> MotionEvent.ACTION_DOWN:</span><br><span class="line">				path.reset();</span><br><span class="line">				pointPre.x = event.getX();</span><br><span class="line">				pointPre.y = event.getY();</span><br><span class="line">				path.moveTo(pointPre.x, pointPre.y);</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> MotionEvent.ACTION_MOVE:</span><br><span class="line">				PointF pointNew = <span class="keyword">new</span> PointF(event.getX(), event.getY());</span><br><span class="line"></span><br><span class="line">				<span class="comment">// Bezier</span></span><br><span class="line">				<span class="comment">// 这里注意，和lineTo类似，quadTo之后，path的位置在最后一个点</span></span><br><span class="line">				<span class="comment">// 所以每一次quadTo的时候，Bezier曲线的起始点就是前两个点的中点，终点是当前的点</span></span><br><span class="line">				path.quadTo(pointPre.x, pointPre.y, (pointPre.x + pointNew.x) / <span class="number">2</span>, (pointPre.y + pointNew.y) / <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">				<span class="comment">// lineTo方式画线</span></span><br><span class="line">				<span class="comment">// path.lineTo(pointNew.x, pointNew.y);</span></span><br><span class="line">				pointPre.x = pointNew.x;</span><br><span class="line">				pointPre.y = pointNew.y;</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> MotionEvent.ACTION_UP:</span><br><span class="line">				<span class="comment">// 最后再连起来剩下的半段 这个时候是直线 用lineTo就好了</span></span><br><span class="line">				path.lineTo(event.getX(), event.getY());</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		invalidate();</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.onDraw(canvas);</span><br><span class="line"></span><br><span class="line">		canvas.drawPath(path, paint);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://liziyang.top/2016/03/26/Android%E4%B8%AD%E7%9A%84Bezier%E6%9B%B2%E7%BA%BF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李子阳">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李子阳的Android笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/03/26/Android%E4%B8%AD%E7%9A%84Bezier%E6%9B%B2%E7%BA%BF/" class="post-title-link" itemprop="url">Android中的Bezier曲线</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-03-26 23:53:07" itemprop="dateCreated datePublished" datetime="2016-03-26T23:53:07+08:00">2016-03-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-14 18:07:49" itemprop="dateModified" datetime="2020-01-14T18:07:49+08:00">2020-01-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/" itemprop="url" rel="index">
+                    <span itemprop="name">贝塞尔曲线</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Android给我们提供了绘制二阶Bezier曲线和三阶Bezier曲线的方法。我们通过自定义View实现二阶和三阶Bezier曲线，起点和终点固定，控制点可以拖动。</p>
+<ol>
+<li><p><strong>效果演示</strong><br> 达到的效果<img src="http://ogxoqrabi.bkt.clouddn.com/image/bezier/bezier_2nd_view.gif" alt="enter image description here"></p>
+</li>
+<li><p><strong>思路分析</strong></p>
+<ul>
+<li>二阶Bezier曲线的起点和终点固定，起点在View左侧1/6处，垂直方向上居中，终点在View右侧5/6处，下方也是5/6处。</li>
+<li>控制点的起始位置水平方向上居中，垂直方向上在1/6处。</li>
+<li><code>View</code>的<code>onSizeChanged()</code>方法在View大小改变时回调，所以在<code>onSizeChanged()</code>里对起点、终点和控制点初始化</li>
+<li>在<code>onDraw()</code>方法里，通过<code>canvas.drawLine()</code>画出两条直线，起点到控制点，控制点到终点。通过<code>canvas.drawCircle()</code>方法画出三个点。</li>
+<li>画Bezier曲线的时候要通过<code>Path</code>去画，然后通过<code>canvas.drawPath()</code>画出<code>Path</code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// path移动到起点</span></span><br><span class="line">path.moveTo(pointStart.x, pointStart.y);</span><br><span class="line"><span class="comment">// 画Bezier曲线，经过控制点和终点</span></span><br><span class="line">path.quadTo(pointFlag.x, pointFlag.y, pointEnd.x, pointEnd.y);</span><br></pre></td></tr></table></figure></li>
+<li>为了实现拖动控制点功能，需要覆写<code>onTouchEvent()</code>方法，改变控制点的坐标，然后调用<code>invalidate()</code>发起<code>onDraw()</code>。</li>
+</ul>
+</li>
+<li><p><strong>代码实现</strong></p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SecondBezierView</span> <span class="keyword">extends</span> <span class="title">View</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> PointF pointStart;</span><br><span class="line">	<span class="keyword">private</span> PointF pointEnd;</span><br><span class="line">	<span class="keyword">private</span> PointF pointFlag;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> Path path;</span><br><span class="line">	<span class="keyword">private</span> Paint paintBezier;</span><br><span class="line">	<span class="keyword">private</span> Paint paintPoint;</span><br><span class="line">	<span class="keyword">private</span> Paint paintLine;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">SecondBezierView</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>(context, <span class="keyword">null</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">SecondBezierView</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>(context, attrs, <span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">SecondBezierView</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>(context, attrs, defStyleAttr);</span><br><span class="line"></span><br><span class="line">		init();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		pointStart = <span class="keyword">new</span> PointF();</span><br><span class="line">		pointEnd = <span class="keyword">new</span> PointF();</span><br><span class="line">		pointFlag = <span class="keyword">new</span> PointF();</span><br><span class="line"></span><br><span class="line">		path = <span class="keyword">new</span> Path();</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Bezier Paint 红色实线</span></span><br><span class="line">		paintBezier = <span class="keyword">new</span> Paint(Paint.ANTI_ALIAS_FLAG);</span><br><span class="line">		paintBezier.setStrokeWidth(<span class="number">4</span>);</span><br><span class="line">		paintBezier.setColor(Color.RED);</span><br><span class="line">		paintBezier.setStyle(Paint.Style.STROKE);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Point Paint</span></span><br><span class="line">		paintPoint = <span class="keyword">new</span> Paint(Paint.ANTI_ALIAS_FLAG);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Line Paint</span></span><br><span class="line">		paintLine = <span class="keyword">new</span> Paint(Paint.ANTI_ALIAS_FLAG);</span><br><span class="line">		paintLine.setColor(Color.GRAY);</span><br><span class="line">		paintLine.setStrokeWidth(<span class="number">2</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onSizeChanged</span><span class="params">(<span class="keyword">int</span> w, <span class="keyword">int</span> h, <span class="keyword">int</span> oldw, <span class="keyword">int</span> oldh)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.onSizeChanged(w, h, oldw, oldh);</span><br><span class="line"></span><br><span class="line">		pointStart.x = w / <span class="number">6f</span>;</span><br><span class="line">		pointStart.y = h / <span class="number">2f</span>;</span><br><span class="line"></span><br><span class="line">		pointFlag.x = w / <span class="number">2f</span>;</span><br><span class="line">		pointFlag.y = h / <span class="number">6f</span>;</span><br><span class="line"></span><br><span class="line">		pointEnd.x = w / <span class="number">6f</span> * <span class="number">5</span>;</span><br><span class="line">		pointEnd.y = h / <span class="number">6f</span> * <span class="number">5</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.onDraw(canvas);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 画直线</span></span><br><span class="line">		canvas.drawLine(pointStart.x, pointStart.y, pointFlag.x, pointFlag.y, paintLine);</span><br><span class="line">		canvas.drawLine(pointFlag.x, pointFlag.y, pointEnd.x, pointEnd.y, paintLine);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 画点</span></span><br><span class="line">		canvas.drawCircle(pointStart.x, pointStart.y, <span class="number">8</span>, paintPoint);</span><br><span class="line">		canvas.drawCircle(pointFlag.x, pointFlag.y, <span class="number">8</span>, paintPoint);</span><br><span class="line">		canvas.drawCircle(pointEnd.x, pointEnd.y, <span class="number">8</span>, paintPoint);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 画贝塞尔曲线</span></span><br><span class="line">		path.reset();</span><br><span class="line">		path.moveTo(pointStart.x, pointStart.y);</span><br><span class="line"></span><br><span class="line">		path.quadTo(pointFlag.x, pointFlag.y, pointEnd.x, pointEnd.y);</span><br><span class="line"></span><br><span class="line">		canvas.drawPath(path, paintBezier);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">switch</span> (event.getAction()) &#123;</span><br><span class="line">			<span class="keyword">case</span> MotionEvent.ACTION_MOVE:</span><br><span class="line">				pointFlag.x = event.getX();</span><br><span class="line">				pointFlag.y = event.getY();</span><br><span class="line">				invalidate();</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 在<code>构造函数</code>里，将需要的<code>Paint</code>和<code>Path</code>等都初始化<br> 在<code>onSizeChanged()</code>方法，确定起始点的坐标<br> 在<code>onDraw()</code>方法，画出起始点，画出起点和控制点的连线、控制点和终点的连线，通过<code>Path</code>画出Bezier曲线的路径，最后调用<code>canvas.drawPath()</code>绘制出<code>Path</code><br> 拖动控制点时，在<code>onTouchEvent()</code>方法，改变控制点坐标，然后重新绘制<code>View</code></p>
+</li>
+<li><p><strong>三阶贝塞尔曲线</strong><br> Android也提供了绘制三阶Bezier曲线的方法，<code>path.cubicTo()</code>，实现思路和上面是一样的，我这里仅仅给出一个效果，如有兴趣，读着可自行实现。<img src="http://ogxoqrabi.bkt.clouddn.com/image/bezier/bezier_3rd_view.gif" alt="enter image description here"></p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://liziyang.top/2016/03/26/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李子阳">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李子阳的Android笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/03/26/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/" class="post-title-link" itemprop="url">贝塞尔曲线</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-03-26 17:29:34" itemprop="dateCreated datePublished" datetime="2016-03-26T17:29:34+08:00">2016-03-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-14 18:07:49" itemprop="dateModified" datetime="2020-01-14T18:07:49+08:00">2020-01-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/" itemprop="url" rel="index">
+                    <span itemprop="name">贝塞尔曲线</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ol>
+<li><p><strong>贝塞尔曲线（Bézier curve）观感</strong></p>
+<p> 我们先来直观感受一下什么是贝塞尔曲线</p>
+<p> 一阶贝塞尔曲线：<img src="https://upload.wikimedia.org/wikipedia/commons/0/00/B%C3%A9zier_1_big.gif" alt="enter image description here"></p>
+<p> 二阶贝塞尔曲线：<img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/B%C3%A9zier_2_big.gif" alt="enter image description here"></p>
+<p> 三阶贝塞尔曲线：<img src="https://upload.wikimedia.org/wikipedia/commons/d/db/B%C3%A9zier_3_big.gif" alt="enter image description here"></p>
+<p> 四阶贝塞尔曲线：<img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/B%C3%A9zier_4_big.gif" alt="enter image description here"></p>
+<p> 高阶贝塞尔曲线：<img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/BezierCurve.gif" alt="enter image description here"></p>
+</li>
+<li><p><strong>贝塞尔曲线的几何描述</strong><br> 通过以上动画，我们发现一阶Bezier就是一条直线，从起点到终点。<br> 二阶Bezier有三个点，起点、终点和一个控制点。<br> 三阶Bezier有四个点，起点、终点和两个控制点。<br> 其他高阶以此类推……</p>
+<p> 下面我们通过二阶Bezier曲线描述Bezier<img src="http://ogxoqrabi.bkt.clouddn.com/image/bezier/bezier_1.png" alt="enter image description here"></p>
+<p> 如上图所示，平面内有三个不共线的点<font color=#0000ff>A</font>、<font color=#0000ff>B</font>、<font color=#0000ff>C</font>。<br> 在某一时刻，在线段<font color=#ff0000>AB</font>上取一个点<font color=#0000ff>D</font>，线段<font color=#ff0000>BC</font>上取一个点<font color=#0000ff>E</font>，使得<font color=#ff0000>AD : AB</font> = <font color=#ff0000>BE : BC</font><br> 然后在线段<font color=#ff0000>DF</font>上取一个点<font color=#ff00ff>F</font>，使得<font color=#ff0000>AD : AB</font> = <font color=#ff0000>BE : BC</font> = <font color=#ff0000>DF : DE</font><br> 点<font color=#ff00ff>F</font>就是<font color=#0000ff>A</font>、<font color=#0000ff>B</font>、<font color=#0000ff>C</font>三个点确定的Bezier曲线上的一个点，<font color=#ff00ff>F</font>从<font color=#0000ff>A</font>到<font color=#0000ff>B</font>，得到的轨迹就是二阶Bezier曲线。</p>
+</li>
+<li><p><strong>Photoshop中的Bezier曲线</strong><br> Photoshop中的钢笔工具就是应用Bezier曲线，这里就不再展示了。</p>
+</li>
+<li><p><strong>贝塞尔曲线公式</strong><br> 前两部分我们从直观上和几何上对Bezier曲线进行了说明，现在看一下Bezier曲线的数学公式表达。</p>
+<p> 二阶Bezier曲线方程：<img src="http://ogxoqrabi.bkt.clouddn.com/image/bezier/bezier_math_2nd.png" alt="enter image description here"></p>
+<p>  三阶Bezier曲线方程：<img src="http://ogxoqrabi.bkt.clouddn.com/image/bezier/bezier_math_3rd.png" alt="enter image description here"></p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://liziyang.top/2015/12/26/OutputStream%E4%B9%8Bflush/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李子阳">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李子阳的Android笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/12/26/OutputStream%E4%B9%8Bflush/" class="post-title-link" itemprop="url">OutputStream之flush()</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-12-26 16:01:42" itemprop="dateCreated datePublished" datetime="2015-12-26T16:01:42+08:00">2015-12-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-14 18:07:49" itemprop="dateModified" datetime="2020-01-14T18:07:49+08:00">2020-01-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index">
+                    <span itemprop="name">其他</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最近在做一个网络下载功能，I/O操作时，操作完<code>OutputStream</code>时写了<code>flush()</code>，目的是刷新输出流，将缓存写入物理设备。突然就想，这里是否需要<code>flush()</code>呢？</p>
+<ul>
+<li><p>我当时的代码：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// file是本地文件的File对象</span></span><br><span class="line">FileOutputStream outputStream = <span class="keyword">new</span> FileOutputStream(file);</span><br><span class="line"><span class="comment">// 写入流</span></span><br><span class="line">outputStream.write(buffer, <span class="number">0</span>, length);</span><br><span class="line"><span class="comment">// flush()</span></span><br><span class="line">outputStream.flush();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>FileOutputStream</code>继承了<code>OutputStream</code>但是并没有覆写<code>flush()</code>方法，而<code>OutputStream</code>中<code>flush()</code>是一个空方法。</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// OutputStream.java</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">flush</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  所以，直接调用<code>OutputStream</code>的<code>flush()</code>方法是没有意义的。</p>
+</li>
+<li><p>再看一下<code>BufferedOutputStream</code></p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">flush</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">	flushBuffer();</span><br><span class="line">	out.flush();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  这个类才真的具有<code>flush()</code>功能。</p>
+</li>
+<li><p>需要注意的是，<code>flush()</code>方法不能保证缓存的数据一定写入了物理设备，它只是发起一个操作，具体写入物理设备由操作系统实现。</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://liziyang.top/2015/09/20/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李子阳">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李子阳的Android笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/09/20/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">设计模式——单例模式</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2015-09-20 17:22:24" itemprop="dateCreated datePublished" datetime="2015-09-20T17:22:24+08:00">2015-09-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-14 18:07:49" itemprop="dateModified" datetime="2020-01-14T18:07:49+08:00">2020-01-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>实现单例模式有两种方式，饿汉式、懒汉式。</p>
+<h2 id="饿汉式"><a href="#饿汉式" class="headerlink" title="饿汉式"></a><strong>饿汉式</strong></h2><p>先看代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> Singleton ourInstance = <span class="keyword">new</span> Singleton();</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> ourInstance;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>构造方法私有化，只能通过<code>getInstance()</code>方法返回<code>Singleton</code>实例。由于<code>static</code>的修饰，在类加载的时候就会执行</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> Singleton ourInstance = <span class="keyword">new</span> Singleton();</span><br></pre></td></tr></table></figure>
+
+<p>从而引起类的实例化，因为构造方法是私有的，这个唯一的实例在类加载的时候就创建好了。这种方式称为<em>饿汉式</em>。</p>
+<h2 id="懒汉式"><a href="#懒汉式" class="headerlink" title="懒汉式"></a><strong>懒汉式</strong></h2><p>先看代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> Singleton ourInstance;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (ourInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">			ourInstance = <span class="keyword">new</span> Singleton();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> ourInstance;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>仍然是私有构造方法，只能通过<code>getInstance()</code>方法返回<code>Singleton</code>实例。和<em>饿汉式</em>不同的是，<code>static</code>修饰的<code>Singleton ourInstance;</code>仅仅是声明，并没有实例化类，在<strong>第一次</strong>获取这个类的实例的时候才实例化。因为实例化要等到第一次获取的时候，所以称为<em>懒汉式</em>。</p>
+<h2 id="对比"><a href="#对比" class="headerlink" title="对比"></a><strong>对比</strong></h2><ul>
+<li><em>饿汉式</em>类的加载比较慢，因为要实例化</li>
+<li><em>懒汉式</em>类的加载比较快，但是运行时第一次获取对象的时候速度比较慢</li>
+<li><em>饿汉式</em>是线程安全的，因为是类加载过程中实例化的，<em>懒汉式</em>不是线程安全的，因为在运行时，可能存在两个线程并发的问题</li>
+</ul>
+<h2 id="双重锁"><a href="#双重锁" class="headerlink" title="双重锁"></a><strong>双重锁</strong></h2><p>为了解决<em>懒汉式</em>单例模式的线程不安全问题，可以引入使用双重锁</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> Singleton ourInstance;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (ourInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">synchronized</span> (Singleton<span class="class">.<span class="keyword">class</span>) </span>&#123;</span><br><span class="line">				<span class="keyword">if</span> (ourInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">					ourInstance = <span class="keyword">new</span> Singleton();	</span><br><span class="line">				&#125;	</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> ourInstance;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+  </div>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李子阳</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李子阳</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.7.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

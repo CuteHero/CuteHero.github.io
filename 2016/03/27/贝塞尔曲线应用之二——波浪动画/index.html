@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://liziyang.top').hostname,
+    root: '/',
+    scheme: 'Mist',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="波浪动画是一种非常常见的动画，现实方式也很多。波浪中的曲线可以用正(余)弦函数来实现，也可以通过Bezier曲线来实现。这里我们使用Bezier曲线在View的onDraw()方法通过canvas绘制路径来实现动画。  实现的效果 点击一下View，就开始执行动画，循环往复…… 思路剖析 静止的波浪 波浪的每一个周期需要两段Bezier曲线，一段是波浪的上半部，一段是波浪的下半部，类似正弦曲线的一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="贝塞尔曲线应用之二——波浪动画">
+<meta property="og:url" content="http://liziyang.top/2016/03/27/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF%E5%BA%94%E7%94%A8%E4%B9%8B%E4%BA%8C%E2%80%94%E2%80%94%E6%B3%A2%E6%B5%AA%E5%8A%A8%E7%94%BB/index.html">
+<meta property="og:site_name" content="李子阳的Android笔记">
+<meta property="og:description" content="波浪动画是一种非常常见的动画，现实方式也很多。波浪中的曲线可以用正(余)弦函数来实现，也可以通过Bezier曲线来实现。这里我们使用Bezier曲线在View的onDraw()方法通过canvas绘制路径来实现动画。  实现的效果 点击一下View，就开始执行动画，循环往复…… 思路剖析 静止的波浪 波浪的每一个周期需要两段Bezier曲线，一段是波浪的上半部，一段是波浪的下半部，类似正弦曲线的一">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://ogxoqrabi.bkt.clouddn.com/image/bezier/bezier_wave_1.gif">
+<meta property="article:published_time" content="2016-03-27T08:43:07.000Z">
+<meta property="article:modified_time" content="2020-01-14T10:07:49.604Z">
+<meta property="article:author" content="李子阳">
+<meta property="article:tag" content="Bezier">
+<meta property="article:tag" content="贝塞尔曲线">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://ogxoqrabi.bkt.clouddn.com/image/bezier/bezier_wave_1.gif">
+
+<link rel="canonical" href="http://liziyang.top/2016/03/27/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF%E5%BA%94%E7%94%A8%E4%B9%8B%E4%BA%8C%E2%80%94%E2%80%94%E6%B3%A2%E6%B5%AA%E5%8A%A8%E7%94%BB/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>贝塞尔曲线应用之二——波浪动画 | 李子阳的Android笔记</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">李子阳的Android笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://liziyang.top/2016/03/27/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF%E5%BA%94%E7%94%A8%E4%B9%8B%E4%BA%8C%E2%80%94%E2%80%94%E6%B3%A2%E6%B5%AA%E5%8A%A8%E7%94%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李子阳">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李子阳的Android笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          贝塞尔曲线应用之二——波浪动画
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-03-27 16:43:07" itemprop="dateCreated datePublished" datetime="2016-03-27T16:43:07+08:00">2016-03-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-14 18:07:49" itemprop="dateModified" datetime="2020-01-14T18:07:49+08:00">2020-01-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/" itemprop="url" rel="index">
+                    <span itemprop="name">贝塞尔曲线</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>波浪动画是一种非常常见的动画，现实方式也很多。<br>波浪中的曲线可以用正(余)弦函数来实现，也可以通过Bezier曲线来实现。<br>这里我们使用Bezier曲线在<code>View</code>的<code>onDraw()</code>方法通过<code>canvas</code>绘制路径来实现动画。</p>
+<ol>
+<li><strong>实现的效果</strong><br> 点击一下View，就开始执行动画，循环往复……<img src="http://ogxoqrabi.bkt.clouddn.com/image/bezier/bezier_wave_1.gif" alt=""></li>
+<li><strong>思路剖析</strong><ul>
+<li><strong>静止的波浪</strong><ul>
+<li>波浪的每一个周期需要两段Bezier曲线，一段是波浪的上半部，一段是波浪的下半部，类似正弦曲线的一个周期。</li>
+<li>每个半波都需要<code>起点</code>、<code>终点</code>和<code>控制点</code>，上半波的<code>终点</code>就是紧接着的下半波的<code>起点</code>，同样，下半波的<code>终点</code>就是紧接着的上半波的<code>起点</code>，如此循环往复。</li>
+<li>所有的<code>起点</code>、<code>终点</code>是共线的，即波浪中间的那一条线，即这些点的<code>y坐标</code>相同。这些点的<code>x坐标</code>依次相差<code>半波长</code>。</li>
+<li>上半波的控制点在波浪的上方，其<code>x坐标</code>是<code>起点</code>和<code>终点</code>的<code>x坐标</code>相加的一半，<code>y坐标</code>波浪之上某个位置，<code>y坐标</code>的大小决定了波浪的高低。</li>
+</ul>
+</li>
+<li><strong>动起来</strong><ul>
+<li>运动的波浪，其实就是将静止的波浪向右平移一个波长，然后再从头开始平移一个波长，第一个波浪和第二个波浪无缝衔接，这样视觉上就一直在运动了。</li>
+<li>所以画波浪的时候，在View左侧看不见的位置，要多画一个波浪，这样，波浪移动的时候就会把View外面的波浪移进来。</li>
+<li>我们并不能直接使用<code>View</code>的<code>属性动画</code>，这是在<code>onDraw()</code>方法不断绘制不同的元素从而形成了动画，这是<code>View</code>内部的动画，不是作用在<code>View</code>上的动画。</li>
+<li>实现这种动画效果，通用的办法就是借助<strong><code>ValueAnimator</code></strong>，它只是产生一系列的值，并不直接作用于某个<code>View</code>。针对一系列变化的值，再去<code>invalidate()</code>发起<code>onDraw()</code>绘制。</li>
+<li>在当前的波浪动画中，<code>ValueAnimator</code>生成的值作为<code>偏移量</code>来加到每一个半波的起点、终点和控制点的<code>x坐标</code>，这样，<code>x坐标</code>依次增加，于是，就动起来了。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>代码实现</strong> <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BezierWaveView</span> <span class="keyword">extends</span> <span class="title">View</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> PointF pointStart;</span><br><span class="line">	<span class="keyword">private</span> PointF pointFlag;</span><br><span class="line">	<span class="keyword">private</span> PointF pointEnd;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> Path path;</span><br><span class="line">	<span class="keyword">private</span> Paint paint;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 半个波浪的长度，即半圆</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">float</span> HALF_WAVE_LENGTH = <span class="number">200f</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> BEZIER_FLAG_POINT_HEIGHT = <span class="number">50</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> bezierCount;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> ValueAnimator valueAnimator;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">float</span> offset;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> viewHeight;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">BezierWaveView</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>(context, <span class="keyword">null</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">BezierWaveView</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>(context, attrs, <span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">BezierWaveView</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>(context, attrs, defStyleAttr);</span><br><span class="line"></span><br><span class="line">		init();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		pointStart = <span class="keyword">new</span> PointF();</span><br><span class="line">		pointFlag = <span class="keyword">new</span> PointF();</span><br><span class="line">		pointEnd = <span class="keyword">new</span> PointF();</span><br><span class="line"></span><br><span class="line">		path = <span class="keyword">new</span> Path();</span><br><span class="line">		paint = <span class="keyword">new</span> Paint(Paint.ANTI_ALIAS_FLAG);</span><br><span class="line">		paint.setColor(<span class="number">0xff33a0f3</span>);</span><br><span class="line">		paint.setStyle(Paint.Style.FILL);</span><br><span class="line"></span><br><span class="line">		valueAnimator = ValueAnimator.ofFloat(<span class="number">0</span>, HALF_WAVE_LENGTH * <span class="number">2</span>);</span><br><span class="line">		valueAnimator.setDuration(<span class="number">2000</span>);</span><br><span class="line">		valueAnimator.setInterpolator(<span class="keyword">new</span> LinearInterpolator());</span><br><span class="line">		valueAnimator.setRepeatCount(ValueAnimator.INFINITE);</span><br><span class="line">		valueAnimator.addUpdateListener(<span class="keyword">new</span> ValueAnimator.AnimatorUpdateListener() &#123;</span><br><span class="line">			<span class="meta">@Override</span></span><br><span class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationUpdate</span><span class="params">(ValueAnimator valueAnimator)</span> </span>&#123;</span><br><span class="line">				offset = (<span class="keyword">float</span>) valueAnimator.getAnimatedValue();</span><br><span class="line">				invalidate();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onSizeChanged</span><span class="params">(<span class="keyword">int</span> w, <span class="keyword">int</span> h, <span class="keyword">int</span> oldw, <span class="keyword">int</span> oldh)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.onSizeChanged(w, h, oldw, oldh);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// View宽度除以半波长，然后向上取整</span></span><br><span class="line">		<span class="comment">// 这里再+2，是因为做动画时，Bezier的起始点都要向右移动，两个半波为一个周期，左边要保留2个半波，一上一下，避免左边出现空白</span></span><br><span class="line">		<span class="comment">// 画波浪时，在View左边看不见的位置多画一个</span></span><br><span class="line">		bezierCount = (<span class="keyword">int</span>) Math.ceil(w / HALF_WAVE_LENGTH) + <span class="number">2</span>;</span><br><span class="line">		pointStart.y = h / <span class="number">2f</span>;</span><br><span class="line">		pointEnd.y = pointStart.y;</span><br><span class="line">		viewHeight = h;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.onDraw(canvas);</span><br><span class="line"></span><br><span class="line">		path.reset();</span><br><span class="line"></span><br><span class="line">		pointStart.x = -HALF_WAVE_LENGTH * <span class="number">2</span> + offset;</span><br><span class="line">		pointEnd.x = pointStart.x + HALF_WAVE_LENGTH;</span><br><span class="line">		pointFlag.x = pointStart.x + HALF_WAVE_LENGTH / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 每次绘制第一个减 以后加减交替</span></span><br><span class="line">		pointFlag.y = pointStart.y + BEZIER_FLAG_POINT_HEIGHT;</span><br><span class="line"></span><br><span class="line">		path.moveTo(pointStart.x, pointStart.y);</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; bezierCount; i++) &#123;</span><br><span class="line">			path.quadTo(pointFlag.x, pointFlag.y, pointEnd.x, pointEnd.y);</span><br><span class="line">			pointEnd.x += HALF_WAVE_LENGTH;</span><br><span class="line">			pointFlag.x += HALF_WAVE_LENGTH;</span><br><span class="line">			<span class="keyword">if</span> (i % <span class="number">2</span> == <span class="number">0</span>) &#123;</span><br><span class="line">				pointFlag.y = pointStart.y - BEZIER_FLAG_POINT_HEIGHT;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				pointFlag.y = pointStart.y + BEZIER_FLAG_POINT_HEIGHT;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// 右下角</span></span><br><span class="line">		path.lineTo(pointEnd.x, viewHeight);</span><br><span class="line">		<span class="comment">// 左下角</span></span><br><span class="line">		path.lineTo(pointStart.x, viewHeight);</span><br><span class="line">		<span class="comment">// 左上角，终点与起点重合</span></span><br><span class="line">		path.lineTo(pointStart.x, pointStart.y);</span><br><span class="line"></span><br><span class="line">		canvas.drawPath(path, paint);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</span><br><span class="line">		valueAnimator.start();</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">super</span>.onTouchEvent(event);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Bezier/" rel="tag"># Bezier</a>
+              <a href="/tags/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/" rel="tag"># 贝塞尔曲线</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2016/03/27/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF%E5%BA%94%E7%94%A8%E4%B9%8B%E4%B8%80%E2%80%94%E2%80%94%E6%89%8B%E5%86%99%E7%99%BD%E6%9D%BF%E7%9A%84%E7%AC%94%E8%BF%B9%E5%B9%B3%E6%BB%91%E5%A4%84%E7%90%86/" rel="prev" title="贝塞尔曲线应用之一——手写白板的笔迹平滑处理">
+      <i class="fa fa-chevron-left"></i> 贝塞尔曲线应用之一——手写白板的笔迹平滑处理
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2016/05/04/AIDL%E4%B9%8B%E4%B8%80%E2%80%94%E2%80%94Binder%EF%BC%8C%E8%BF%9B%E7%A8%8B%E5%86%85Binder%E4%BD%BF%E7%94%A8/" rel="next" title="AIDL之一——Binder，进程内Binder使用">
+      AIDL之一——Binder，进程内Binder使用 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李子阳</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李子阳</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.7.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
